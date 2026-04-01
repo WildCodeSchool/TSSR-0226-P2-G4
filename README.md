@@ -75,14 +75,26 @@ DNS                    : 8.8.8.8
 
 # _Technologies Utilisées_
 
-VsCode 
-Bash
-PowerShell
+Pour ce projet, l'infrastructure repose sur Proxmox VE, une plateforme de gestion de virtualisation "Bare Metal".
 
+Pourquoi un Hyperviseur de Type 1 ?
+Contrairement à des solutions comme VirtualBox (Type 2) qui s'installent comme de simples logiciels sur Windows, Proxmox est le "Gouverneur" direct du matériel :
 
+Performance brute : Installé directement sur le serveur physique, il n'y a pas de système d'exploitation intermédiaire (comme Windows 10/11) pour ralentir les échanges.
 
+Stabilité accrue : Moins de couches logicielles signifie moins de risques de plantage du convoi de données.
 
+## Les avantages :
 
+La configuration de mon PC personnel (peu de: CPU, RAM, SSD) n'est plus un frein . Il est juste utilisé comme un "terminal" pour accéder à l'interface web Proxmox. 
+
+Disponibilité H24 : Contrairement à une solution de virtualisation classique sur PC, les services (Web, BDD, VPN) restent en ligne 24h/24.
+
+Efficience énergétique : Le serveur est optimisé pour la basse consommation. Laisser tourner ces VMs sur Proxmox est bien plus économique et silencieux que de laisser mon PC de bureau allumé toute la nuit, ce qui préserve ma facture d'électricité et la durée de vie de mon matériel personnel.
+
+# _Logiciels_
+
+VsCode    |     Shell Bash     |    PowerShell
 
 
 
