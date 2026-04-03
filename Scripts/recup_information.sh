@@ -130,9 +130,6 @@ add_log "routage"
 retour_menu
 }
 
-
-
-
 #ajout d'une action passée en argument au fichier log
 function add_log {
 time
