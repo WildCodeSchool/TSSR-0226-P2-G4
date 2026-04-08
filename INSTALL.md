@@ -45,7 +45,7 @@ AuthorizedKeysFile .ssh/authorized_keys
 
 Ces deux lignes doivent être commentées :
 #Match Group administrators
-#AuthorizedKeysFile __PROGRAMDATA__/ssh/administrators_authorized_keys
+#AuthorizedKeysFile \_\_PROGRAMDATA\_\_/ssh/administrators_authorized_keys
 Redémarre SSH :
 powershell
 Restart-Service sshd
