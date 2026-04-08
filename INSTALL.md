@@ -33,7 +33,9 @@ Get-Content "$env:USERPROFILE\.ssh\ma_cle.pub" | Add-Content "C:\ProgramData\ssh
 Depuis PowerShell administrateur :
 powershell
 icacls "C:\ProgramData\ssh\administrators_authorized_keys" /inheritance:r
+
 icacls "C:\ProgramData\ssh\administrators_authorized_keys" /grant "SYSTEM:F"
+
 icacls "C:\ProgramData\ssh\administrators_authorized_keys" /grant "*S-1-5-32-544:F"
 
 ## Étape 6 — Vérifier le sshd_config sur Windows
