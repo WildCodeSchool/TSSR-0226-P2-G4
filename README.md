@@ -108,4 +108,10 @@ VsCode    |     Shell Bash     |    PowerShell
 4. Déboublement des cmd Bash en PowerShell
 5. Debug script sur server : VsCode ajoute un retour à la ligne causant des erreurs de synthaxe sur Debian
 
+# Améliorations possibles
+
+1. Configurer les VM pour copier/coller les cmd PowerShell 7.6
+2. Plus de temps !
+3. 
+
 
