@@ -1,8 +1,14 @@
+# __Connexion SSH par clé__
+
+1. [Debian → Windows 11](#Debian-→Windows-11)
+2. [Debian → Ubuntu](#Debian-→-Ubuntu)
+
+
 - Prérequis techniques à l’exécution des scripts
 - Installation/Mise en place des scripts (explication étape par étape, ligne de code, copie d’écran, etc.) sur le client et/ou le serveur
 - FAQ
 
-# Connexion SSH par clé : Debian → Windows 11 
+# Debian → Windows 11 
 
 ## Étape 1 — Activer le serveur SSH sur Windows
 Depuis PowerShell administrateur :
@@ -77,3 +83,23 @@ ssh user@ip-windows
 <img width="1919" height="177" alt="connexion_debian_windows11_debut" src="https://github.com/user-attachments/assets/4ff80e9b-758e-4ce8-82c7-e7f799d84483" />
 <img width="1918" height="305" alt="connexion_debian_windows11_etablie" src="https://github.com/user-attachments/assets/8637e570-8620-4e4a-889a-d0ca4edf75d3" />
 <img width="1908" height="276" alt="connexion_debian_windows11_exit" src="https://github.com/user-attachments/assets/e9681945-59ae-4484-8958-406af3d18723" />
+
+# Debian → Ubuntu
+
+## Étape 1 — Activer le serveur SSH sur Ubuntu
+Depuis Ubuntu 24 : sudo apt install openssh-server
+<img width="1811" height="1086" alt="activation_server_ssh" src="https://github.com/user-attachments/assets/d6f84775-266d-4d37-ac3e-12440c8e3bf7" />
+
+## Étape 2 — Copier la clé publique sur Ubuntu
+Depuis Debian : ssh-copy-id -i ~/.ssh/id_ed25519.pub wilder@172.16.40.30
+<img width="1504" height="258" alt="envoi_keyssh_debian_ubuntu" src="https://github.com/user-attachments/assets/79e0cbc9-0277-45ed-864c-70a0b57b1d82" />
+
+## Étape 3 — Vérifier le fichier authorized_keys sur Ubuntu
+Depuis Ubuntu : cd .ssh 
+cat authorized_keys
+<img width="1917" height="349" alt="authorized_keys_ubuntu" src="https://github.com/user-attachments/assets/0782cf23-d71b-4354-a3a1-73b9782daec3" />
+
+## Étape 4 — Tester depuis Debian
+<img width="1025" height="456" alt="connexion_debian_ubuntu" src="https://github.com/user-attachments/assets/79e1d7e1-2a13-4853-af35-e44ff9a04938" />
+
+
