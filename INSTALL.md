@@ -44,12 +44,15 @@ Get-Content "$env:USERPROFILE\.ssh\ma_cle.pub" | Add-Content "C:\ProgramData\ssh
 
 ## Étape 5 — Corriger les permissions sur Windows
 Depuis PowerShell administrateur :
-powershell
+PowerShell 7.6
 icacls "C:\ProgramData\ssh\administrators_authorized_keys" /inheritance:r
+<img width="1910" height="96" alt="icacls_inheritance_r" src="https://github.com/user-attachments/assets/e6691f0c-07ce-402b-85dc-d3841472f3c7" />
 
 icacls "C:\ProgramData\ssh\administrators_authorized_keys" /grant "SYSTEM:F"
+<img width="1920" height="99" alt="icacls_grant" src="https://github.com/user-attachments/assets/db869b7e-7c40-4f91-85a3-380a14be7e6e" />
 
 icacls "C:\ProgramData\ssh\administrators_authorized_keys" /grant "*S-1-5-32-544:F"
+<img width="1909" height="99" alt="icacls_grant_S" src="https://github.com/user-attachments/assets/e55820ca-f5af-44a9-9698-7c2f583541de" />
 
 ## Étape 6 — Vérifier le sshd_config sur Windows
 Ouvre C:\ProgramData\ssh\sshd_config et vérifie :
