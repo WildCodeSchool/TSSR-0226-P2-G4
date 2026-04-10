@@ -18,6 +18,8 @@
 Gestion des utilisateurs | Gestion admin | Collecte d'infos | Recherche d'infos | Traitement d'infos |
 | --- | --- | --- | --- | --- |
 
+<img width="461" height="461" alt="P2G4 drawio" src="https://github.com/user-attachments/assets/3dad82ad-09ee-4bde-9c0a-5d265825fb20" />
+----------------------------------------------------------------------------------------------------------------------------------------
 * Création de compte utilisateur local
 * Changement de mot de passe
 * Suppression de compte utilisateur local
