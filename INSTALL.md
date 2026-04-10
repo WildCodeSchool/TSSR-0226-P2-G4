@@ -1,7 +1,7 @@
 # __Connexion SSH par clé__
 
-1. [Debian → Windows 11](#Debian-→Windows-11)
-2. [Debian → Ubuntu](#Debian-→-Ubuntu)
+1. [Debian → Windows 11](#Debian--Windows-11)
+2. [Debian → Ubuntu](#Debian--Ubuntu)
 
 
 - Prérequis techniques à l’exécution des scripts
