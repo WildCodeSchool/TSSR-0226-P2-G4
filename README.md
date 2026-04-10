@@ -6,7 +6,7 @@
 2.  [Membre du groupe et Rôle des Membres](#Membre-du-groupe-et-Rôle-des-Membres)
 3.  [Architecture technique](#Architecture-technique)
 4.  [Technologies Utilisées](#Technologies-Utilisées)
-5.  [Logiciel](#Logiciel)
+5.  [Logiciels](#Logiciels)
 6.  [Difficultés et solutions rencontrées](#Difficultés-et-solutions-rencontrées)
 7.  [Améliorations possibles](#Améliorations-possibles)
 
@@ -100,6 +100,12 @@ Efficience énergétique : Le serveur est optimisé pour la basse consommation. 
 
 VsCode    |     Shell Bash     |    PowerShell
 
+# _Difficultés et solutions rencontrées_
 
+1. Passerelle par defaut non routée sur Proxmox pour l'accès à internet permettant de récupérer le script sur le drive
+2. Conexion SSH par clé sans mdp (envoi de la clé ssh publique dans le mauvais fichier "authorized_keys" du mauvais utilisateur "administrator au lieu de wilder") 
+3. Trouver la cmd à ajouter devant les fonctions pour l'execution des cmd depuis le server vers les hôtes en ssh 
+4. Déboublement des cmd Bash en PowerShell
+5. Debug script sur server : VsCode ajoute un retour à la ligne causant des erreurs de synthaxe sur Debian
 
 
