@@ -112,6 +112,8 @@ VsCode    |     Shell Bash     |    PowerShell
 
 1. Configurer les VM pour copier/coller les cmd PowerShell 7.6
 2. Plus de temps !
-3. 
+3. Entrer l'ip en argument du script au lieu de le demander 
+4. Ajouter un clear dans le menu
+
 
 
