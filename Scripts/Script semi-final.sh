@@ -852,8 +852,8 @@ function ss_menu_log_user {
     read choix
         case $choix in 
             1)last_connexion ;;
-            2)echo "test";;
-            3)echo "test";;
+            2)last_modif_mdp ;;
+            3)list_open_user ;;
             4)quitter ;;
             *)echo "ERREUR" 
             ss_menu_log_user ;;
