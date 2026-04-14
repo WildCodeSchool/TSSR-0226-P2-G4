@@ -386,7 +386,7 @@ function w_modif_doss {
         if [[ $(ssh_cible Test-Path -Path "$absol_path") == "True" ]]
             then
                 read -p " Quel est le nom du dossier à modifier dans $absol_path ? " ancien_doss
-                    if [[ $(ssh_cible Test-Path -Path "$ancien_doss") == "True" ]]
+                    if [[ $(ssh_cible "Test-Path -Path '$absol_path\\$ancien_doss'") == "True" ]]
                         then
                             read -p " Faut-il Renommer le dossier ou en Modifier les droits ? [R/M] " rep4
                                 if [[ "$rep4" = "R" ]]
