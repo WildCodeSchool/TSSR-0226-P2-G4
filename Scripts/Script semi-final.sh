@@ -329,7 +329,7 @@ function w_suppr_doss {
                                         then
                                                 if [[ $(ssh_cible Get-ChildItem "$absol_path/$nom_doss" | Measure-Object).Count -eq 0 ]]
                                                         then
-                                                                ssh_cible ssh_cible "Remove-Item -Recurse -Force '$absol_path/$nom_doss'" && echo "Le dossier $nom_doss a bien été supprimé dans $absol_path"
+                                                                ssh_cible "Remove-Item -Recurse -Force '$absol_path/$nom_doss'" && echo "Le dossier $nom_doss a bien été supprimé dans $absol_path"
                                                         else
                                                                 read -p "Le dossier choisi n'est pas vide, voulez vous continuer et supprimer son contenu ? [o/n] " rep2
                                                                 if [[ "$rep2" = "o" ]]
