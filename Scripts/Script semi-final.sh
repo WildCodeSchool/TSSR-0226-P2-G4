@@ -86,7 +86,7 @@ function l_new_user {
             then
                 echo "Utilisateur $user_name déjà existant"
             else
-                ssh_cible "adduser --allow-bad-names '$user_name'" && echo "Utilisateur $user_name créé avec succès"
+                ssh_cible "sudo -S adduser --allow-bad-names '$user_name'" && echo "Utilisateur $user_name créé avec succès"
             fi
         done
 }
@@ -114,7 +114,7 @@ function l_change_password {
         do
             if ssh_cible "grep -q '^$user_name:' /etc/passwd"
             then
-                ssh_cible "passwd '$user_name'" && echo "Mot de passe de $user_name changé avec succès" 
+                ssh_cible "sudo -S passwd '$user_name'" && echo "Mot de passe de $user_name changé avec succès" 
             else
                 echo "L'utilisateur $user_name n'existe pas"
             fi
@@ -144,7 +144,7 @@ function l_del_user {
         do
             if ssh_cible "grep -q '^$user_name:' /etc/passwd"
             then
-                ssh_cible "deluser '$user_name'" && echo "L'utilisateur $user_name à bien été supprimé"
+                ssh_cible "sudo -S deluser '$user_name'" && echo "L'utilisateur $user_name à bien été supprimé"
             else
                 echo "L'utilisateur $user_name n'existe pas"
             fi
@@ -174,7 +174,7 @@ function l_add_admin {
         do
             if ssh_cible "grep -q '^$user_name:' /etc/passwd"
             then
-                ssh_cible "usermod -aG sudo '$user_name'" && echo "L'utilisateur $user_name a été ajouté au groupe Admin"
+                ssh_cible "sudo -S usermod -aG sudo '$user_name'" && echo "L'utilisateur $user_name a été ajouté au groupe Admin"
             else
                 echo "L'utilisateur $user_name n'existe pas"
             fi
@@ -210,12 +210,12 @@ function l_add_group {
                         read -p "Le groupe choisi n'existe pas, voulez-vous le créer ? [o/n] " rep
                             if [ "$rep" = "o" ]
                             then
-                                ssh_cible "groupadd '$group_name'" && echo "Groupe $group_name créé"
+                                ssh_cible "sudo -S groupadd '$group_name'" && echo "Groupe $group_name créé"
                             else
                                 echo "D'accord, retour au menu principal" && retour_menu
                             fi
                     fi
-                ssh_cible "usermod -aG $group_name '$user_name'" && echo "L'utilisateur $user_name a été ajouté avec succès au groupe $group_name"
+                ssh_cible "sudo -S usermod -aG $group_name '$user_name'" && echo "L'utilisateur $user_name a été ajouté avec succès au groupe $group_name"
             else
                 echo "L'utilisateur $user_name n'existe pas"
             fi
@@ -253,7 +253,7 @@ function l_redemarrage {
     read -p "$user_cible@$ip_cible est-ce bien la machine que vous souhaitez redémarrer ? [o/n] " rep5
         if [[ "$rep5" = "o" ]]
             then 
-                ssh_cible "reboot" && echo " La machine cible est en cours de redémarrage "
+                ssh_cible "sudo -S reboot" && echo " La machine cible est en cours de redémarrage "
             else
                 echo "D'accord, retour au menu principal" && retour_menu
         fi
@@ -280,7 +280,7 @@ function l_creer_doss {
                                 if [[ "$rep1" = "o" ]]
                                         then
                                                 read -p "D'accord, quel est le nom du dossier à créer dans $absol_path ? " nom_doss
-                                                ssh_cible "mkdir -p '$absol_path/$nom_doss'" && echo "Le dossier $nom_doss a bien été créé dans $absol_path"
+                                                ssh_cible "sudo -S mkdir -p '$absol_path/$nom_doss'" && echo "Le dossier $nom_doss a bien été créé dans $absol_path"
                                         else
                                                 echo "D'accord, retour au menu principal" && retour_menu
                                 fi
@@ -364,12 +364,12 @@ function l_suppr_doss {
                                         then
                                                 if ssh_cible "[[ -z $(find '$absol_path/$nom_doss' -mindepth 1 -print -quit) ]]"
                                                         then
-                                                                ssh_cible "rmdir '$absol_path/$nom_doss'" && echo "Le dossier $nom_doss a bien été supprimé dans $absol_path"
+                                                                ssh_cible "sudo -S rmdir '$absol_path/$nom_doss'" && echo "Le dossier $nom_doss a bien été supprimé dans $absol_path"
                                                         else
                                                                 read -p "Le dossier choisi n'est pas vide, voulez vous continuer et supprimer son contenu ? [o/n] " rep2
                                                                 if [[ "$rep2" = "o" ]]
                                                                         then
-                                                                                ssh_cible "rm -r '$absol_path/$nom_doss'" && echo "Le dossier $nom_doss et son contenu ont bien été supprimé dans $absol_path"
+                                                                                ssh_cible "sudo -S rm -r '$absol_path/$nom_doss'" && echo "Le dossier $nom_doss et son contenu ont bien été supprimé dans $absol_path"
                                                                         else 
                                                                                 echo "D'accord, retour au menu" && retour_menu
                                                                 fi
