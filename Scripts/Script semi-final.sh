@@ -430,7 +430,7 @@ function l_modif_doss {
                                         read -p "Quels droits voulez vous accorder sur le dossier $ancien_doss ? [r/w/x] " chxdroit
                                             if [[ "$chxdroit" =~ ^[rwx]+$ ]]
                                                 then
-                                                    ssh_cible "chmod $user_name+$chxdroit '$absol_path/$ancien_doss'"
+                                                    ssh_cible "chmod u+$chxdroit '$absol_path/$ancien_doss'"
                                                 else
                                                     echo "Ce type de droit n'existe pas"
                                             fi
