@@ -28,7 +28,6 @@ function test_ip {
 function ask_cible {
     echo -e "Bonjour et bienvenue sur ce script d'administration \n"
     read -e -p "Quelle est l'ip de la machine cliente? \n  Veuillez rentrer une ip correcte sous la forme **.**.**.**" ip_cible
-    test_ip
     read -p "Veuillez rentrer le nom exacte de l'utilisateur cible  " user_cible
     read -s -p "Mot de passe sudo de $user_cible sur la machine distante : " sudo_pass
 }
