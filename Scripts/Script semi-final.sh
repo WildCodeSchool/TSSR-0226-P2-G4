@@ -794,7 +794,6 @@ function menu_principal {
 
 function ss_menu_gestion {
     echo -e "Quelle action voulez vous effectuer? \n 1)Création de compte \n 2)Changement de mdp \n 3)Suppression de compte \n 4)Ajout à un groupe admin \n 5)Ajout à un groupe \n 6)Quitter"
-    echo " 8)Quitter"
     local choix
     read choix
         case $choix in
