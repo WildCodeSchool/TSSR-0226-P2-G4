@@ -824,7 +824,7 @@ function ss_menu_Admin {
             7)echo "test";;
             8) quitter ;;
             *)echo "ERREUR" 
-            ss_menu_gestion ;;
+            ss_menu_Admin ;;
         esac
 }
 function ss_menu_receuil {
