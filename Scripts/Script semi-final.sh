@@ -774,6 +774,7 @@ get_time
 # Menu principal
 
 function menu_principal {
+    clear
     echo "================================"
     echo "         MENU PRINCIPAL"
     echo "================================"
@@ -793,6 +794,7 @@ function menu_principal {
 }
 
 function ss_menu_gestion {
+    clear
     echo -e "Quelle action voulez vous effectuer? \n 1)Création de compte \n 2)Changement de mdp \n 3)Suppression de compte \n 4)Ajout à un groupe admin \n 5)Ajout à un groupe \n 6)Quitter"
     local choix
     read choix
@@ -808,6 +810,7 @@ function ss_menu_gestion {
         esac
 }
 function ss_menu_Admin {
+    clear
     echo -e "Que voulez-vous faire? \n 1)Redemarrer le poste \n 2)Créer un repertoire \n 3)Modifier un repertoire \n 4)Supprimer un repertoire \n 5)Activer/Désactiver le parefeu \n 6)Prise en main a distance (CLI) \n 7)Execution de script sur la machine \n 8)Quitter"
     local choix 
     read choix
@@ -825,6 +828,7 @@ function ss_menu_Admin {
         esac
 }
 function ss_menu_receuil {
+    clear
     echo -e "Quelles informations voulez vous recuperer?\n 1)DNS actuels\n 2)Liste des interfaces\n 3)Tables ARP\n 4)Table de routage\n 5)Version BIOS\n 6)IP,masque et passerelle\n 7)Version OS"
     echo -e " 8)Carte graphique\n 9)Uptime\n 10)Derniers evenements critiques\n 11)Quitter"
     local choix
@@ -846,6 +850,7 @@ function ss_menu_receuil {
         esac
 }
 function ss_menu_log_user {
+    clear
     echo -e "Quelle informations voulez vous?\n 1)Date de dernière connexion d'un utilisateur\n 2)Dernière modification de mdp\n 3)Listes des cessions ouvertes par l'utilisateur\n 4)Quitter"
     local choix
     read choix
@@ -859,6 +864,7 @@ function ss_menu_log_user {
         esac
 }
 function ss_menu_recherche {
+    clear
     echo -e "Quelles informations de journalisation recherchez vous?\n 1)Informations sur un utilisateur precis\n 2)Informations sur un ordinateur précis\n 3)Quitter"
     local choix
     read choix
@@ -871,6 +877,7 @@ function ss_menu_recherche {
         esac
 }
 function retour_menu {
+    clear
     echo -e "Que voulez vous faire?\n 1)Retourner au menu principal\n 2)Retourner au dernier menu\n 3)Quitter"
     local choix
     local fonction="$1"
