@@ -417,7 +417,7 @@ function l_modif_doss {
         if ssh_cible "[[ -e '$absol_path' ]]"
             then
                 read -p " Quel est le nom du dossier à modifier dans $absol_path ? " ancien_doss
-                    if ssh_cible "[[ -d '$ancien_doss' ]]"
+                    if ssh_cible "[[ -d '$absol_path/$ancien_doss' ]]"
                         then
                             read -p " Faut-il Renommer le dossier ou en Modifier les droits ? [R/M] " rep4
                                 if [[ "$rep4" = "R" ]]
