@@ -746,14 +746,14 @@ retour_menu ss_menu_receuil
 # Date de dernière connexion d'un utilisateur
 function last_connexion {
 read -p "Entrez le nom de l'utilisateur ? " last_co 
-    ssh_cible last -1 "$last_co"
+    ssh_cible "last -1 '$last_co'"
     retour_menu ss_menu_log_user
 }
 
 # Date de dernière modification du mot de passe
 function last_modif_mdp {
 read -p "Entrez le nom de l'utilisateur du mdp ? " modif_mdp 
-    ssh_cible chage -l "$modif_mdp"
+    ssh_cible "chage -l '$modif_mdp'"
     retour_menu ss_menu_log_user
 }
 
