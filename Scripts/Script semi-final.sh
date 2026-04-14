@@ -806,7 +806,7 @@ function ss_menu_gestion {
             5)add_group;;
             6) quitter ;;
             *)echo "ERREUR" 
-            ss_menu_Admin ;;
+            ss_menu_gestion ;;
         esac
 }
 function ss_menu_Admin {
