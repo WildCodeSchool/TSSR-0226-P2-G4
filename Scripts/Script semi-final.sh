@@ -32,6 +32,11 @@ function ask_cible {
     read -p "Veuillez rentrer le nom exacte de l'utilisateur cible  " user_cible
 }
 
+# Prépare un alias pour la connexion ssh
+function ssh_cible {
+    ssh -o ConnectTimeout=5 "${user_cible}@${ip_cible}" "$@"
+}
+
 # Teste la connexion ssh et demande l'OS de la cible pour identifier windows ou linux
 function connexion_ssh {
     local test1=$(ssh -o ConnectTimeout=5 "$user_cible@$ip_cible" "echo test" 2>/dev/null)
@@ -48,11 +53,6 @@ function connexion_ssh {
             echo "erreur"
             exit 1
     fi
-}
-
-# Prépare un alias pour la connexion ssh
-function ssh_cible {
-    ssh -o ConnectTimeout=5 "${user_cible}@${ip_cible}" "$@"
 }
 
 # Crée le fichier log et l'initialise
