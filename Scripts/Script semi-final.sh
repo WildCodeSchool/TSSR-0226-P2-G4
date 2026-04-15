@@ -43,7 +43,7 @@ function connexion_ssh {
     if [ "$test1" ]
         then
             version_de_lOS=$(ssh_cible "uname -s" 2>/dev/null)
-            if [[ "$version_de_lOS" == *"linux"* ]]
+            if [[ "$version_de_lOS" == *"Linux"* ]]
                 then
                     detect_os=0  # Linux
                 else
