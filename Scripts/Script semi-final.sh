@@ -605,6 +605,7 @@ function dns_actuel {
                 local dns=$(ssh_cible "ipconfig /all | grep 'DNS'")
         fi
     echo "$dns" >> DNS_"$cibleordi"_"$date".txt
+    echo "$dns"
 add_log "DNS"
 retour_menu ss_menu_receuil
 }
@@ -619,6 +620,7 @@ function passerelle_ip {
 
     fi
     echo "$reseau" >> reseau_"$cibleordi"_"$date".txt
+    echo "$reseau"
 add_log "reseau"
 retour_menu ss_menu_receuil
 }
@@ -632,6 +634,7 @@ function version_OS {
             local os=$(ssh_cible "[System.Environment]::OSVersion.VersionString")
     fi
     echo "$os" >> version_OS_"$cibleordi"_"$date".txt
+    echo "$os"
 add_log "version_OS"
 retour_menu ss_menu_receuil
 }
@@ -646,6 +649,7 @@ function carte_graph {
 
     fi
     echo "$carte" >> carte_"$cibleordi"_"$date".txt
+    echo "$carte"
 add_log "carte"
 retour_menu ss_menu_receuil
 }
@@ -659,6 +663,7 @@ function  donne_uptime {
             local var1=$(ssh_cible "(Get-CimInstance Win32_OperatingSystem).LastBootUpTime")
     fi
     echo "$var1" >> uptime_"$cibleordi"_"$date".txt
+    echo "$var1"
 add_log "uptime"
 retour_menu ss_menu_receuil
 }
@@ -672,6 +677,7 @@ function vers_bios {
             local bios=$(ssh_cible "Get-CimInstance Win32_BIOS | Select-Object SMBIOSBIOSVersion, Manufacturer, ReleaseDate")
     fi
     echo "$bios" >> bios_"$cibleordi"_"$date".txt
+    echo "$bios"
 add_log "bios"
 retour_menu ss_menu_receuil
 }
@@ -685,6 +691,7 @@ function table_arp {
             local var_arp=$(ssh_cible "Get-NetNeighbor")
     fi
     echo "$var_arp" >> arp_"$cibleordi"_"$date".txt
+    echo "$var_arp"
 add_log "arp"
 retour_menu ss_menu_receuil
 }
@@ -698,6 +705,7 @@ function event_crit {
             local event=$(ssh_cible "Get-EventLog -LogName System -EntryType Error -Newest 10")
     fi
     echo "$event" >> critiques_"$cibleordi"_"$date".txt
+    echo "$event"
 add_log "critiques"
 retour_menu ss_menu_receuil
 }
@@ -710,6 +718,7 @@ function table_routage {
         else
             local routage=$(ssh_cible "Get-NetRoute")
     fi
+    echo "$routage"
     echo "$routage" >> routage_"$cibleordi"_"$date".txt
 add_log "routage"
 retour_menu ss_menu_receuil
@@ -724,6 +733,7 @@ function interfaces {
             local interfaces=$(ssh_cible "Get-NetAdapter")
     fi
     echo "$interfaces" >> interfaces_"$cibleordi"_"$date".txt
+    echo "$interfaces"
 add_log "interfaces"
 retour_menu ss_menu_receuil
 }
