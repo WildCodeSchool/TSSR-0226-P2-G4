@@ -877,7 +877,6 @@ function ss_menu_recherche {
         esac
 }
 function retour_menu {
-    clear
     echo -e "Que voulez vous faire?\n 1)Retourner au menu principal\n 2)Retourner au dernier menu\n 3)Quitter"
     local choix
     local fonction="$1"
@@ -889,6 +888,7 @@ function retour_menu {
             *)echo "ERREUR" 
             retour_menu ;;
         esac
+        clear
 }
 
 ask_cible
