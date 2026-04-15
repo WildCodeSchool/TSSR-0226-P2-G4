@@ -43,11 +43,11 @@ function connexion_ssh {
     if [ "$test1" ]
         then
             version_de_lOS=$(ssh_cible "uname -s" 2>/dev/null)
-            if [ -z "$version_de_lOS" ]
+            if [[ "$version_de_lOS" == *"linux"* ]]
                 then
-                    detect_os=1  # Windows
-                else
                     detect_os=0  # Linux
+                else
+                    detect_os=1  # Windows
             fi
         else
             echo "erreur"
