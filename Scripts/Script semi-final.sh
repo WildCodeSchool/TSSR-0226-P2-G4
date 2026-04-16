@@ -213,7 +213,7 @@ function l_add_group {
                             then
                                 ssh_cible "sudo -S groupadd '$group_name'" && echo "Groupe $group_name créé"
                             else
-                                echo "D'accord, retour au menu principal" && retour_menu
+                                echo "D'accord, retour au menu principal"
                             fi
                     fi
                 ssh_cible "sudo -S usermod -aG $group_name '$user_name'" && echo "L'utilisateur $user_name a été ajouté avec succès au groupe $group_name"
@@ -239,7 +239,7 @@ function w_add_group {
                             then
                                 ssh_cible "New-LocalGroup '$group_name'" && echo "Groupe $group_name créé"
                             else
-                                echo "D'accord, retour au menu principal" && retour_menu
+                                echo "D'accord, retour au menu principal"
                             fi
                     fi
                     ssh_cible "Add-LocalGroupmember -Group '$group_name' -Member '$user_name'" && echo "L'utilisateur $user_name a été ajouté avec succès au groupe $group_name"
@@ -256,7 +256,7 @@ function l_redemarrage {
             then 
                 ssh_cible "sudo -S reboot" && echo " La machine cible est en cours de redémarrage "
             else
-                echo "D'accord, retour au menu principal" && retour_menu
+                echo "D'accord, retour au menu principal"
         fi
 }
 
@@ -267,7 +267,7 @@ function w_redemarrage {
             then 
                 ssh_cible "Restart-Computer -ComputerName '$ip_cible' -Force" && echo " La machine cible est en cours de redémarrage "
             else
-                echo "D'accord, retour au menu principal" && retour_menu
+                echo "D'accord, retour au menu principal"
         fi
 }
 
