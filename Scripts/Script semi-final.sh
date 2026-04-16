@@ -637,6 +637,38 @@ add_log "fire_wall"
 retour_menu ss_menu_Admin
 }
 
+function last_connexion {
+    if [[ $detect_os -eq 0 ]]
+        then
+            l_last_connexion
+        else
+            w_last_connexion
+    fi
+add_log "last_connexion"
+retour_menu ss_menu_log_user
+}
+
+function last_modif_mdp {
+    if [[ $detect_os -eq 0 ]]
+        then
+            l_modif_mdp
+        else
+            w_modif_mdp
+    fi
+add_log "last_modif_mdp"
+retour_menu ss_log_user
+}
+
+function last_list_open_user {
+    if [[ $detect_os -eq 0 ]]
+        then
+            l_list_open_user
+        else
+            w_list_open_user
+    fi
+add_log "list_open_user"
+retour_menu ss_log_user
+}
 # Dns actuel
 function dns_actuel {
         if [[ $detect_os -eq 0 ]]
@@ -792,26 +824,6 @@ function recherche_ordinateur {
     read -p "Entrez l'adresse IP pour la recherche des evenements:" ordi_rech
         grep "$ordi_rech" /var/log/log_evt.log  
 retour_menu ss_menu_receuil
-}
-
-# Date de dernière connexion d'un utilisateur
-function last_connexion {
-read -p "Entrez le nom de l'utilisateur ? " last_co 
-    ssh_cible "last -1 '$last_co'"
-    retour_menu ss_menu_log_user
-}
-
-# Date de dernière modification du mot de passe
-function last_modif_mdp {
-read -p "Entrez le nom de l'utilisateur du mdp ? " modif_mdp 
-    ssh_cible "chage -l '$modif_mdp'"
-    retour_menu ss_menu_log_user
-}
-
-# Liste des sessions ouvertes par l'utilisateur
-function list_open_user { 
-    ssh_cible w
-    retour_menu ss_menu_log_user
 }
 
 
