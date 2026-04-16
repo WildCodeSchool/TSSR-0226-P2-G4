@@ -472,6 +472,26 @@ function w_fire_wall {
         fi
 }
 
+# Date de dernière connexion d'un utilisateur
+function l_last_connexion {
+read -p "Entrez le nom de l'utilisateur ? " last_co 
+    ssh_cible "last -1 '$last_co'"
+    retour_menu ss_menu_log_user
+}
+
+# Date de dernière modification du mot de passe
+function l_last_modif_mdp {
+read -p "Entrez le nom de l'utilisateur du mdp ? " modif_mdp 
+    ssh_cible "chage -l '$modif_mdp'"
+    retour_menu ss_menu_log_user
+}
+
+# Liste des sessions ouvertes par l'utilisateur
+function l_list_open_user { 
+    ssh_cible w
+    retour_menu ss_menu_log_user
+}
+
 # Heure courante
 function get_time {
 date=$(date +"%Y%m%d")
