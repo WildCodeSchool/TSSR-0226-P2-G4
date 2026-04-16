@@ -492,6 +492,26 @@ function l_list_open_user {
     retour_menu ss_menu_log_user
 }
 
+# Date de dernière connexion d'un utilisateur
+function w_last_connexion {
+$last_co = Read-Host "Entrez le nom de l'utilisateur ? "  
+    ssh_cible "last -1 '$last_co'"
+    retour_menu ss_menu_log_user
+}
+
+# Date de dernière modification du mot de passe
+function w_last_modif_mdp {
+$modif_mdp = Read-Host "Entrez le nom de l'utilisateur du mdp ? " modif_mdp 
+    ssh_cible "chage -l '$modif_mdp'"
+    retour_menu ss_menu_log_user
+}
+
+# Liste des sessions ouvertes par l'utilisateur
+function w_list_open_user { 
+    ssh_cible w
+    retour_menu ss_menu_log_user
+}
+
 # Heure courante
 function get_time {
 date=$(date +"%Y%m%d")
