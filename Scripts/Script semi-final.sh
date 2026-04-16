@@ -35,7 +35,7 @@ function ask_cible {
 
 # Prépare un alias pour la connexion ssh
 function ssh_cible {
-    ssh -t -o ConnectTimeout=5 "${user_cible}@${ip_cible}" "$*"
+    ssh -t -o ConnectTimeout=5 "${user_cible}@${ip_cible}" "$*" 2>/dev/null
 }
 
 # Teste la connexion ssh et demande l'OS de la cible pour identifier windows ou linux
