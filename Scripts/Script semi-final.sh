@@ -282,7 +282,7 @@ function l_creer_doss {
                                                 read -p "D'accord, quel est le nom du dossier à créer dans $absol_path ? " nom_doss
                                                 ssh_cible "sudo -S mkdir -p '$absol_path/$nom_doss'" && echo "Le dossier $nom_doss a bien été créé dans $absol_path"
                                         else
-                                                echo "D'accord, retour au menu principal" && retour_menu
+                                                echo "D'accord, retour au menu principal"
                                 fi
                 else 
                         read -p "D'accord, quel est le nom du dossier à créer dans $absol_path ? " nom_doss
@@ -303,7 +303,7 @@ function w_creer_doss {
                                                 read -p "D'accord, quel est le nom du dossier à créer dans $absol_path ? " nom_doss
                                                 ssh_cible "New-Item -ItemType Directory -Path '$absol_path/$nom_doss'" && echo "Le dossier $nom_doss a bien été créé dans $absol_path"
                                         else
-                                                echo "D'accord, retour au menu principal" && retour_menu
+                                                echo "D'accord, retour au menu principal"
                                 fi
                 else 
                         read -p "D'accord, quel est le nom du dossier à créer dans $absol_path ? " nom_doss
@@ -321,7 +321,7 @@ function w_suppr_doss {
                                         then
                                                 w_suppr_doss
                                         else 
-                                                echo "D'accord, retour au menu" && retour_menu
+                                                echo "D'accord, retour au menu"
                                 fi
                 else
                         read -p "D'accord, quel est le nom du dossier à supprimer dans $absol_path ? " nom_doss
@@ -336,11 +336,11 @@ function w_suppr_doss {
                                                                         then
                                                                                 ssh_cible "Remove-Item '$absol_path/$nom_doss'" && echo "Le dossier $nom_doss et son contenu ont bien été supprimé dans $absol_path"
                                                                         else 
-                                                                                echo "D'accord, retour au menu" && retour_menu
+                                                                                echo "D'accord, retour au menu"
                                                                 fi
                                                 fi
                                         else 
-                                                echo "La valeur saisie n'existe pas ou n'est pas un dossier" && retour_menu
+                                                echo "La valeur saisie n'existe pas ou n'est pas un dossier"
                                 fi
         fi
 }
@@ -356,7 +356,7 @@ function l_suppr_doss {
                                         then
                                                 l_suppr_doss
                                         else 
-                                                echo "D'accord, retour au menu" && retour_menu
+                                                echo "D'accord, retour au menu"
                                 fi
                 else
                         read -p "D'accord, quel est le nom du dossier à supprimer dans $absol_path ? " nom_doss
@@ -371,11 +371,11 @@ function l_suppr_doss {
                                                                         then
                                                                                 ssh_cible "sudo -S rm -r '$absol_path/$nom_doss'" && echo "Le dossier $nom_doss et son contenu ont bien été supprimé dans $absol_path"
                                                                         else 
-                                                                                echo "D'accord, retour au menu" && retour_menu
+                                                                                echo "D'accord, retour au menu"
                                                                 fi
                                                 fi
                                         else 
-                                                echo "La valeur saisie n'existe pas ou n'est pas un dossier" && retour_menu
+                                                echo "La valeur saisie n'existe pas ou n'est pas un dossier"
                                 fi
         fi
 }
@@ -404,10 +404,10 @@ function w_modif_doss {
                                             fi
                                 fi
                         else
-                            echo " Le dossier $ancien_doss n'existe pas " && retour_menu
+                            echo " Le dossier $ancien_doss n'existe pas "
                     fi
             else 
-                echo " Le chemin vers le dossier n'existe pas " && retour_menu
+                echo " Le chemin vers le dossier n'existe pas "
         fi
 }
 
@@ -435,10 +435,10 @@ function l_modif_doss {
                                             fi
                                 fi
                         else
-                            echo " Le dossier $ancien_doss n'existe pas " && retour_menu
+                            echo " Le dossier $ancien_doss n'existe pas "
                     fi
             else 
-                echo " Le chemin vers le dossier n'existe pas " && retour_menu
+                echo " Le chemin vers le dossier n'existe pas "
         fi
 }
 
