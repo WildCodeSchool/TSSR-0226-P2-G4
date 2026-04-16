@@ -11,6 +11,7 @@ utilisateur=$USER
 var_OS=$(uname -s)
 var_ss=1
 user_cible="wilder"
+verif_link="[[ -z \$(find '$absol_path/$nom_doss' -mindepth 1 -print -quit) ]]"
 ########## declaration fonctions ##########
 # Fonction test ip
 function test_ip {
@@ -362,7 +363,7 @@ function l_suppr_doss {
                         read -p "D'accord, quel est le nom du dossier à supprimer dans $absol_path ? " nom_doss
                                 if ssh_cible "[[ -d '$absol_path/$nom_doss' ]]"
                                         then
-                                                if ssh_cible "[[ -z $(find '$absol_path/$nom_doss' -mindepth 1 -print -quit) ]]"
+                                                if ssh_cible "$verif_link"
                                                         then
                                                                 ssh_cible "sudo -S rmdir '$absol_path/$nom_doss'" && echo "Le dossier $nom_doss a bien été supprimé dans $absol_path"
                                                         else
