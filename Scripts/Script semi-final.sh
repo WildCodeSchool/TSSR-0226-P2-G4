@@ -28,7 +28,7 @@ function test_ip {
 # Demande l'ip et le compte distant
 function ask_cible {
     echo -e "Bonjour et bienvenue sur ce script d'administration \n"
-    read -e -p "Quelle est l'ip de la machine cliente? \n  Veuillez rentrer une ip correcte sous la forme **.**.**.**" ip_cible
+    read -p "Quelle est l'ip de la machine cliente?  Veuillez rentrer une ip correcte sous la forme **.**.**.**" ip_cible
     test_ip
     read -p "Veuillez rentrer le nom exacte de l'utilisateur cible  " user_cible
 }
@@ -858,34 +858,36 @@ function menu_principal {
 
 function ss_menu_gestion {
     clear
-    echo -e "Quelle action voulez vous effectuer? \n 1)Création de compte \n 2)Changement de mdp \n 3)Suppression de compte \n 4)Ajout à un groupe admin \n 5)Ajout à un groupe \n 6)Quitter"
+    echo -e "Quelle action voulez vous effectuer? \n 1)Création de compte \n 2)Changement de mdp \n 3)Suppression de compte \n 4)Ajout à un groupe admin \n 5)Ajout à un groupe \n 6)Retour au Menu Principal \n 7)Quitter"
     local choix
     read choix
         case $choix in
-            1)new_user;;
-            2)change_passwd;;
-            3)del_user;;
-            4)add_admin;;
-            5)add_group;;
-            6) quitter ;;
+            1)new_user ;;
+            2)change_passwd ;;
+            3)del_user ;;
+            4)add_admin ;;
+            5)add_group ;;
+            6)menu_principal ;;
+            7)quitter ;;
             *)echo "ERREUR" 
             ss_menu_gestion ;;
         esac
 }
 function ss_menu_Admin {
     clear
-    echo -e "Que voulez-vous faire? \n 1)Redemarrer le poste \n 2)Créer un repertoire \n 3)Modifier un repertoire \n 4)Supprimer un repertoire \n 5)Activer/Désactiver le parefeu \n 6)Prise en main a distance (CLI) \n 7)Execution de script sur la machine \n 8)Quitter"
+    echo -e "Que voulez-vous faire? \n 1)Redemarrer le poste \n 2)Créer un repertoire \n 3)Modifier un repertoire \n 4)Supprimer un repertoire \n 5)Activer/Désactiver le parefeu \n 6)Prise en main a distance (CLI) \n 7)Execution de script sur la machine \n 8)Retour au Menu Principal \n 9)Quitter"
     local choix 
     read choix
         case $choix in 
-            1)redemarrage;;
-            2)creer_doss;;
-            3)modif_doss;;
-            4)suppr_doss;;
-            5)fire_wall;;
-            6)ssh_cible;;
-            7)echo "test";;
-            8) quitter ;;
+            1)redemarrage ;;
+            2)creer_doss ;;
+            3)modif_doss ;;
+            4)suppr_doss ;;
+            5)fire_wall ;;
+            6)ssh_cible ;;
+            7)echo "test" ;;
+            8)menu_principal ;;
+            9) quitter ;;
             *)echo "ERREUR" 
             ss_menu_Admin ;;
         esac
@@ -893,7 +895,7 @@ function ss_menu_Admin {
 function ss_menu_receuil {
     clear
     echo -e "Quelles informations voulez vous recuperer?\n 1)DNS actuels\n 2)Liste des interfaces\n 3)Tables ARP\n 4)Table de routage\n 5)Version BIOS\n 6)IP,masque et passerelle\n 7)Version OS"
-    echo -e " 8)Carte graphique\n 9)Uptime\n 10)Derniers evenements critiques\n 11)Quitter"
+    echo -e " 8)Carte graphique\n 9)Uptime\n 10)Derniers evenements critiques\n 11)Retour au Menu Principal\n 12)Quitter"
     local choix
     read choix
         case $choix in 
@@ -907,34 +909,37 @@ function ss_menu_receuil {
             8)carte_graph ;;
             9)donne_uptime ;;
             10)event_crit ;;
-            11) quitter ;;
+            11)menu_principal ;;
+            12) quitter ;;
             *) echo "ERREUR" 
             ss_menu_receuil ;;
         esac
 }
 function ss_menu_log_user {
     clear
-    echo -e "Quelle informations voulez vous?\n 1)Date de dernière connexion d'un utilisateur\n 2)Dernière modification de mdp\n 3)Listes des cessions ouvertes par l'utilisateur\n 4)Quitter"
+    echo -e "Quelle informations voulez vous?\n 1)Date de dernière connexion d'un utilisateur\n 2)Dernière modification de mdp\n 3)Listes des cessions ouvertes par l'utilisateur\n 4)Retour au Menu Principal\n 5)Quitter"
     local choix
     read choix
         case $choix in 
             1)last_connexion ;;
             2)last_modif_mdp ;;
             3)list_open_user ;;
-            4)quitter ;;
+            4)menu_principal ;;
+            5)quitter ;;
             *)echo "ERREUR" 
             ss_menu_log_user ;;
         esac
 }
 function ss_menu_recherche {
     clear
-    echo -e "Quelles informations de journalisation recherchez vous?\n 1)Informations sur un utilisateur precis\n 2)Informations sur un ordinateur précis\n 3)Quitter"
+    echo -e "Quelles informations de journalisation recherchez vous?\n 1)Informations sur un utilisateur precis\n 2)Informations sur un ordinateur précis\n 3)Retour au Menu Principal\n 4)Quitter"
     local choix
     read choix
         case $choix in 
-            1)recherche_utilisateur;;
-            2)recherche_ordinateur;;
-            3)quitter ;;
+            1)recherche_utilisateur ;;
+            2)recherche_ordinateur ;;
+            3)menu_principal ;;
+            4)quitter ;;
             *)echo "ERREUR" 
             ss_menu_recherche ;;
         esac
