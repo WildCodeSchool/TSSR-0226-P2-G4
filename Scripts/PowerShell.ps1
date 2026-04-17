@@ -30,7 +30,7 @@ function askCible {
     Write-Host "Bonjour et bienvenue sur ce script d'administration`n"
     $script:ipCIble = Read-Host "Quelle est l'ip de la machine cliente? Veuillez rentrer une ip correcte sous la forme **.**.**.** " 
     testIp
-    $script:userCible = Read-Host "Veuillez rentrer le nom exacte de la macheine cible"
+    $script:userCible = Read-Host "Veuillez rentrer le nom exacte de l'utilisateur cible"
 }
 
 askCible
