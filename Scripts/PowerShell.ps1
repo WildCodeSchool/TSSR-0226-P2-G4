@@ -22,9 +22,8 @@ function testIp {
 
 # Prépare un alias pour la connexion ssh
 function sshCible {
-    ssh -o ConnectTimeout=5 "${userCible}@${ipCible}" "$*"
+    ssh -t -o ConnectTimeout=5 "${$userCible}@${$ipCible}" "$*" 2>$null
 }
-
 
 # Demande l'ip et le compte distant (camel case- echo = write host $script contraire du local, backtic au lieu de backslash)
 function askCible {
@@ -36,28 +35,12 @@ function askCible {
 
 askCible
 
-# Heure courante
-function getTime {
-    $script:date = Get-Date -Format "yyyyMMdd"
-    $script:heure = Get-Date -Format "HHmmss"
-}
-
-getTime
-
 # Crée le fichier log et l'initialise
 function debutJournalisation {
     Add-Content -Path "C:\Windows\System32\LogFiles\log_evt.log" -Value "StartScript`n"
 }
 
 debutJournalisation
-
-# Ferme le fichier quand l'utilisateur quitte
-function quitter {
-    Add-Content -Path "C:\Windows\System32\LogFiles\log_evt.log" -Value "EndScript`n"
-    exit 0
-}
-
-quitter
 
 # Mise en variable du nom d'utilisateur
 
@@ -71,8 +54,9 @@ function testAdd {
 }
 
 function NewLocalUsers {
+    testAdd
     foreach ($userName in $tableauNew) {
-        if (Get-LocalUser -Name $userName -ErrorAction SilentlyContinue) {
+        if (sshCible (Get-LocalUser -Name $userName -ErrorAction SilentlyContinue)) {
             Write-Host "Utilisateur $userName déjà existant"
         }
         else {
