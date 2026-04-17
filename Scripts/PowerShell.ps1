@@ -22,7 +22,7 @@ function testIp {
 
 # Prépare un alias pour la connexion ssh
 function sshCible {
-    ssh -t -o ConnectTimeout=5 "${$userCible}@${$ipCible}" "$*" 2>$null
+    ssh -o ConnectTimeout=5 "${userCible}@${ipCible}" "$args"
 }
 
 # Demande l'ip et le compte distant (camel case- echo = write host $script contraire du local, backtic au lieu de backslash)
