@@ -7,15 +7,15 @@ function Test-AdminContext {
     }
 
 }
- 
+
 function testIp {
-    if (script:ipCible) -match "^([1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])(\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])){3}$") { 
-    Write-Host "IP valide : ($script:$ipCible)"
-}
-else {
-    Write-Host "Erreur : '$($script:ipCible)' n'est pas une adresse IP valide"
-    askCible
-}    
+    if ($script:ipCible -match "^([1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])(\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])){3}$") { 
+        Write-Host "IP valide : $script:ipCible"
+    }
+    else {
+        Write-Host "Erreur : '$script:ipCible' n'est pas une adresse IP valide"
+        askCible
+    }       
 }
 
 # Demande l'ip et le compte distant (camel case- echo = write host $script contraire du local, backtic au lieu de backslash)
@@ -72,7 +72,7 @@ function W_NewLocalUsers {
 function L_NewLocalUsers {
     testAdd
     foreach ($userName in $script:tableauNew) {
-        sshCible "grep -q "^$userName:" /etc/passwd"
+        sshCible "grep -q '^{$userName}:' /etc/passwd"
         if ($LASTEXITCODE -eq 0) {    
             Write-Host "Utilisateur $userName déjà existant"
         } 
@@ -89,7 +89,7 @@ function L_NewLocalUsers {
 function L_ChangePassword {
     testAdd
     foreach ($userName in $script:tableauNew) {
-        sshCible "grep -q '^$userName:' /etc/passwd"
+        sshCible "grep -q '^{$userName}:' /etc/passwd"
         if ($LASTEXITCODE -eq 0) {    
             sshCible "sudo -S passwd $userName" 
             Write-Host "Mot de passe de $userName changé avec succès" 
@@ -120,7 +120,7 @@ function W_ChangePassword {
 function L_DelUser {
     testAdd
     foreach ($userName in $script:tableauNew) {
-        sshCible "grep -q '^$userName:' /etc/passwd"
+        sshCible "grep -q '^{$userName}:' /etc/passwd"
         if ($LASTEXITCODE -eq 0) {    
             sshCible "sudo -S deluser $userName" 
             Write-Host "L'utilisateur $userName à bien été supprimé"
@@ -152,7 +152,7 @@ function W_DelUser {
 function L_AddAdmin {
     testAdd
     foreach ($userName in $script:tableauNew) {
-        sshCible "grep -q '^$userName:' /etc/passwd"
+        sshCible "grep -q '^{$userName}:' /etc/passwd"
         if ($LASTEXITCODE -eq 0) {    
             sshCible "sudo -S usermod -aG sudo $userName" 
             Write-Host "L'utilisateur $userName a été ajouté au groupe Admin"
@@ -183,10 +183,10 @@ function W_AddAdmin {
 function L_AddGroup {
     testAdd
     foreach ($userName in $script:tableauNew) {
-        sshCible "grep -q '^$userName:' /etc/passwd"
+        sshCible "grep -q '^{$userName}:' /etc/passwd"
         if ($LASTEXITCODE -eq 0) {    
             $groupName = Read-Host "Dans quel groupe voulez-vous ajouter $userName ? "
-            sshCible "grep -q '^$groupName:' /etc/group"
+            sshCible "grep -q '^{$groupName}:' /etc/group"
             if ($LASTEXITCODE -eq 0) {    
                 $Rep = Read-Host "Le groupe choisi n'existe pas, voulez-vous le créer ? [o/n] "
                 If ($Rep -eq "o") {
