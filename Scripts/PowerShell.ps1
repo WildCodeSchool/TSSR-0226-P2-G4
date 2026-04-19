@@ -7,33 +7,30 @@ function Test-AdminContext {
     }
 
 }
-
-Test-AdminContext 
-
+ 
 function testIp {
-    if ($($ipCible) -match "^([1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])(\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])){3}$") { 
-        Write-Host "IP valide : $($ipCible)"
-    }
-    else {
-        Write-Host "Erreur : '$($ipCible)' n'est pas une adresse IP valide"
-        askCible
-    }    
+    if (script:ipCible) -match "^([1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])(\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])){3}$") { 
+    Write-Host "IP valide : ($script:$ipCible)"
 }
-
-# Prépare un alias pour la connexion ssh
-function sshCible {
-    ssh -o ConnectTimeout=5 "${userCible}@${ipCible}" "$args"
+else {
+    Write-Host "Erreur : '$($script:ipCible)' n'est pas une adresse IP valide"
+    askCible
+}    
 }
 
 # Demande l'ip et le compte distant (camel case- echo = write host $script contraire du local, backtic au lieu de backslash)
 function askCible {
     Write-Host "Bonjour et bienvenue sur ce script d'administration`n"
-    $script:ipCIble = Read-Host "Quelle est l'ip de la machine cliente? Veuillez rentrer une ip correcte sous la forme **.**.**.** " 
+    $script:ipCible = Read-Host "Quelle est l'ip de la machine cliente? Veuillez rentrer une ip correcte sous la forme **.**.**.** " 
     testIp
     $script:userCible = Read-Host "Veuillez rentrer le nom exacte de l'utilisateur cible"
 }
 
 askCible
+# Prépare un alias pour la connexion ssh
+function sshCible {
+    ssh -o ConnectTimeout=5 "${script:userCible}@${script:ipCible}" "$args"
+}
 
 # Crée le fichier log et l'initialise
 function debutJournalisation {
@@ -45,24 +42,26 @@ debutJournalisation
 # Mise en variable du nom d'utilisateur
 
 function testAdd {
-    if ($Args -ne 0) {
-        $tableauNew = ("$ARGS")   
+    if ($args.Count -gt 0) {
+        $script:tableauNew = $args   
     }
     else {
-        $tableauNew = Read-Host "Veuillez rentrer les noms des utilisateurs (séparés par des espaces) : "
-    } 
+        $inputUsers = Read-Host "Veuillez rentrer les noms des utilisateurs (séparés par des espaces) : "
+        $script:tableauNew = $inputUsers -split " "
+    }
 }
 
 # Création de compte Windows
 
 function W_NewLocalUsers {
     testAdd
-    foreach ($userName in $tableauNew) {
-        If (sshCible (Get-LocalUser -Name $userName -ErrorAction SilentlyContinue)) {
+    foreach ($userName in $script:tableauNew) {
+        sshCible "powershell Get-LocalUser -Name "$userName"" 
+        if ($LASTEXITCODE -eq 0) {
             Write-Host "Utilisateur $userName déjà existant"
         } 
         else {
-            sshCible New-LocalUser -Name $userName -NoPassword
+            sshCible "powershell New-LocalUser -Name $userName -NoPassword"
             Write-Host "Utilisateur $userName créé avec succès"
         }
     }
@@ -72,12 +71,13 @@ function W_NewLocalUsers {
 
 function L_NewLocalUsers {
     testAdd
-    foreach ($userName in $tableauNew) {
-        If (sshCible (grep -q "^$userName:" /etc/passwd)) {
+    foreach ($userName in $script:tableauNew) {
+        sshCible "grep -q "^$userName:" /etc/passwd"
+        if ($LASTEXITCODE -eq 0) {    
             Write-Host "Utilisateur $userName déjà existant"
         } 
         else {
-            sshCible (sudo -S adduser --allow-bad-names "$userName")
+            sshCible "sudo -S adduser --allow-bad-names --disabled-password --gecos '' $userName"
             Write-Host "Utilisateur $userName créé avec succès"
         }
     }
@@ -88,9 +88,11 @@ function L_NewLocalUsers {
 
 function L_ChangePassword {
     testAdd
-    foreach ($userName in $tableauNew) {
-        If (sshCible (sudo -S grep -q "^$userName:" /etc/passwd)) {
-            sshCible (sudo -S passwd "$userName") && Write-Host "Mot de passe de $userName changé avec succès" 
+    foreach ($userName in $script:tableauNew) {
+        sshCible "grep -q '^$userName:' /etc/passwd"
+        if ($LASTEXITCODE -eq 0) {    
+            sshCible "sudo -S passwd $userName" 
+            Write-Host "Mot de passe de $userName changé avec succès" 
         }
         else {
             Write-Host "L'utilisateur $userName n'existe pas"
@@ -102,12 +104,12 @@ function L_ChangePassword {
 
 function W_ChangePassword {
     testAdd
-    foreach ($userName in $tableauNew) {
-        If (sshCible (Get-LocalUser -Name "$userName")) {
-            sshCible ($NewPwd = Read-Host -AsSecureString; Get-LocalUser -Name "$userName" | Set-LocalUser -Password $NewPwd)
+    foreach ($userName in $script:tableauNew) {
+        sshCible "powershell Get-LocalUser -Name $userName"
+        if ($LASTEXITCODE -eq 0) {    
+            sshCible "powershell `$pw = Read-Host -AsSecureString; Set-LocalUser -Name $userName -Password `$pw"
         }
-        else
-        {
+        else {
             Write-Host "L'utilisateur $userName n'existe pas"
         }
     }
@@ -117,9 +119,11 @@ function W_ChangePassword {
 
 function L_DelUser {
     testAdd
-    foreach ($userName in $tableauNew) {
-        If (sshCible (grep -q "^$userName:" /etc/passwd)) {
-            sshCible (sudo -S deluser "$userName") && Write-Host "L'utilisateur $userName à bien été supprimé"
+    foreach ($userName in $script:tableauNew) {
+        sshCible "grep -q '^$userName:' /etc/passwd"
+        if ($LASTEXITCODE -eq 0) {    
+            sshCible "sudo -S deluser $userName" 
+            Write-Host "L'utilisateur $userName à bien été supprimé"
         }
         else {
             Write-Host "L'utilisateur $userName n'existe pas"
@@ -131,9 +135,11 @@ function L_DelUser {
 
 function W_DelUser {
     testAdd
-    foreach ($userName in $tableauNew) {
-        If (sshCible (Get-LocalUser -Name "$userName")) {
-            sshCible (Remove-LocalUser -Name "$userName") && Write-Host "L'utilisateur $userName à bien été supprimé"
+    foreach ($userName in $script:tableauNew) {
+        sshCible "powershell Get-LocalUser -Name $userName"
+        if ($LASTEXITCODE -eq 0) {    
+            sshCible "powershell Remove-LocalUser -Name $userName" 
+            Write-Host "L'utilisateur $userName à bien été supprimé"
         }    
         else {
             Write-Host "L'utilisateur $userName n'existe pas"
@@ -145,9 +151,11 @@ function W_DelUser {
 
 function L_AddAdmin {
     testAdd
-    foreach ($userName in $tableauNew) {
-        If (sshCible (grep -q "^$userName:" /etc/passwd)) {
-            sshCible (sudo -S usermod -aG sudo "$userName") && Write-Host "L'utilisateur $userName a été ajouté au groupe Admin"
+    foreach ($userName in $script:tableauNew) {
+        sshCible "grep -q '^$userName:' /etc/passwd"
+        if ($LASTEXITCODE -eq 0) {    
+            sshCible "sudo -S usermod -aG sudo $userName" 
+            Write-Host "L'utilisateur $userName a été ajouté au groupe Admin"
         }    
         else {
             Write-Host "L'utilisateur $userName n'existe pas"
@@ -159,28 +167,33 @@ function L_AddAdmin {
 
 function W_AddAdmin {
     testAdd
-    foreach ($userName in $tableauNew) {
-        If (sshCible (Get-LocalUser -Name "$userName")) {
-            sshCible (Add-LocalGroupmember -Group 'Administrators' -Member "$userName") && Write-Host "L'utilisateur $userName a été ajouté avec succès au groupe Administrateur"
-        }
-        else {
-            Write-Host "L'utilisateur $userName n'existe pas"
-        }
+    foreach ($userName in $script:tableauNew) {
+        sshCible "powershell Get-LocalUser -Name $userName"
+        sshCible "powershell Add-LocalGroupmember -Group 'Administrators' -Member $userName"
+        Write-Host "L'utilisateur $userName a été ajouté avec succès au groupe Administrateur"
+    }
+    else {
+        Write-Host "L'utilisateur $userName n'existe pas"
     }
 }
+
 
 # Ajout à un groupe Linux
 
 function L_AddGroup {
     testAdd
-    foreach ($userName in $tableauNew) {
-        If (sshCible (grep -q "^$userName:" /etc/passwd)) {
-            $GroupName = Read-Host "Dans quel groupe voulez-vous ajouter $userName ? "
-            If (! (sshCible (grep -q "^$groupName:" /etc/group))) {
+    foreach ($userName in $script:tableauNew) {
+        sshCible "grep -q '^$userName:' /etc/passwd"
+        if ($LASTEXITCODE -eq 0) {    
+            $groupName = Read-Host "Dans quel groupe voulez-vous ajouter $userName ? "
+            sshCible "grep -q '^$groupName:' /etc/group"
+            if ($LASTEXITCODE -eq 0) {    
                 $Rep = Read-Host "Le groupe choisi n'existe pas, voulez-vous le créer ? [o/n] "
                 If ($Rep -eq "o") {
-                    sshCible (sudo -S groupadd "$groupName") && Write-Host "Groupe $groupName créé"
-                    sshCible (sudo -S usermod -aG $groupName "$userName") && Write-Host "L'utilisateur $userName a été ajouté avec succès au groupe $groupName"
+                    sshCible "sudo -S groupadd $groupName" 
+                    Write-Host "Groupe $groupName créé"
+                    sshCible "sudo -S usermod -aG $groupName $userName"
+                    Write-Host "L'utilisateur $userName a été ajouté avec succès au groupe $groupName"
                 }
                 else {
                     Write-Host "D'accord, retour au menu principal"
@@ -197,14 +210,18 @@ function L_AddGroup {
 
 function W_AddGroup {
     testAdd
-    foreach ($userName in $tableauNew) {
-        If (sshCible (Get-LocalUser -Name "$userName")) {
-            $GroupName = Read-Host "Dans quel groupe voulez-vous ajouter $userName ? "
-            If (! (sshCible (grep -q "^$groupName:" /etc/group))) {
+    foreach ($userName in $script:tableauNew) {
+        sshCible "powershell Get-LocalUser -Name $userName"
+        if ($LASTEXITCODE -eq 0) {    
+            $groupName = Read-Host "Dans quel groupe voulez-vous ajouter $userName ? "
+            sshCible "powershell Get-LocalGroup -Name $groupName"
+            if ($LASTEXITCODE -eq 0) {    
                 $Rep = Read-Host "Le groupe choisi n'existe pas, voulez-vous le créer ? [o/n] "
                 If ($Rep -eq "o") {
-                    sshCible (New-LocalGroup "$groupName") && Write-Host "Groupe $groupName créé"
-                    sshCible "Add-LocalGroupmember -Group "$groupName" -Member "$userName"" && Write-Host "L'utilisateur $userName a été ajouté avec succès au groupe $groupName"
+                    sshCible "powershell New-LocalGroup -Name $groupName"
+                    Write-Host "Groupe $groupName créé"
+                    sshCible "powershell Add-LocalGroupmember -Group $groupName -Member $userName" 
+                    Write-Host "L'utilisateur $userName a été ajouté avec succès au groupe $groupName"
                 }            
                 else {
                     Write-Host "D'accord, retour au menu principal"
@@ -219,9 +236,10 @@ function W_AddGroup {
 
 # Choix de redémarrage Linux
 function L_Redemarrage {
-    $Rep5 = Read-Host "$userCible@$ipCible est-ce bien la machine que vous souhaitez redémarrer ? [o/n] "
+    $Rep5 = Read-Host "$script:userCible@$script:ipCible est-ce bien la machine que vous souhaitez redémarrer ? [o/n] "
     If ($Rep5 -eq "o") {
-        sshCible (sudo -S reboot) && Write-Host " La machine cible est en cours de redémarrage "
+        sshCible "sudo -S reboot" 
+        Write-Host " La machine cible est en cours de redémarrage "
     }    
     else {
         Write-Host "D'accord, retour au menu principal"
@@ -230,9 +248,10 @@ function L_Redemarrage {
 
 # Choix de redémarrage Windows
 function W_Redemarrage {
-    $Rep5 = Read-Host "$userCible@$ipCible est-ce bien la machine que vous souhaitez redémarrer ? [o/n] "
+    $Rep5 = Read-Host "$script:userCible@$script:ipCible est-ce bien la machine que vous souhaitez redémarrer ? [o/n] "
     If ($Rep5 -eq "o") {
-        sshCible "Restart-Computer -ComputerName "$ipCible" -Force" && Write-Host " La machine cible est en cours de redémarrage "
+        sshCible "powershell Restart-Computer -Force" 
+        Write-Host " La machine cible est en cours de redémarrage "
     }    
     else {
         Write-Host "D'accord, retour au menu principal"
@@ -242,11 +261,12 @@ function W_Redemarrage {
 # Création de répertoire Windows
 function w_creerDoss {
     $absolPath = Read-Host "Où voulez-vous créer votre dossier : " 
-    if ((sshCible "Test-Path -Path '$absolPath'") -eq $false) {
+    sshCible "powershell Test-Path -Path '$absolPath'" 
+    if ($LASTEXITCODE -ne 0) {
         $rep1 = Read-Host " Le chemin vers le dossier n'existe pas, voulez-vous le créer ? [o/n] "                  
         if ("$rep1" -eq "o") {
             $nomDoss = Read-Host "D'accord, quel est le nom du dossier à créer dans $absolPath ? " 
-            sshCible "New-Item -ItemType Directory -Path '$absolPath/$nomDoss'" 
+            sshCible "powershell New-Item -ItemType Directory -Path '$absolPath/$nomDoss'" 
             Write-Host "Le dossier $nomDoss a bien été créé dans $absolPath"                                 
         }
         else {
@@ -256,17 +276,19 @@ function w_creerDoss {
     }
     else {
         $nomDoss = Read-Host "D'accord, quel est le nom du dossier à créer dans $absolPath ? "                 
-        sshCible "New-Item -ItemType Directory -Path '$absolPath/$nomDoss'" 
+        sshCible "powershell New-Item -ItemType Directory -Path '$absolPath/$nomDoss'" 
         Write-Host "Le dossier $nomDoss a bien été créé dans $absolPath"  
     }
 }
 function l_creerDoss {
     $absolPath = Read-Host "Où voulez-vous créer votre dossier : " 
-    if ((sshCible "test -d '$absol_path'") -eq $false) {
+    sshCible "test -d '$absolPath'"
+    if ($LASTEXITCODE -ne 0) {
         $rep1 = Read-Host "Le chemin vers le dossier n'existe pas, voulez-vous le créer ? [o/n] " 
         if ($rep1 -eq "o") {
             $nomDoss = Read-Host "D'accord, quel est le nom du dossier à créer dans $absolPath ? " 
-            sshCible "sudo -S mkdir -p '$absolPath/$nomDoss'" 
+            $fullPath = "$absolPath/$nomDoss"
+            sshCible "sudo -S mkdir -p '$fullPath'" 
             Write-Host "Le dossier $nomDoss a bien été créé dans $absolPath"
         }
         else {
@@ -275,28 +297,30 @@ function l_creerDoss {
     }
     else {
         $nomDoss = Read-Host "D'accord, quel est le nom du dossier à créer dans $absolPath ? " 
-        sshCible "sudo -S mkdir -p '$absolPath/$nomDoss'" 
+        $fullPath = "$absolPath/$nomDoss"
+        sshCible "sudo -S mkdir -p '$fullPath'" 
         Write-Host "Le dossier $nomDoss a bien été créé dans $absolPath"
     }
 }
 # Modification de répertoire (changement de nom ou de droits d'accès) Windows
 function w_modifDoss {
     $absolPath = Read-Host "Où se situe le dossier à modifier : " 
-    if ((sshCible "Test-Path -Path '$absolPath'") -eq $true) {
+    sshCible "powershell Test-Path -Path '$absolPath'"
+    if ($LASTEXITCODE -eq 0) {
         $ancienDoss = Read-Host " Quel est le nom du dossier à modifier dans $absolPath ? " 
-        if ((sshCible "Test-Path -Path '$absolPath\$ancienDoss'") -eq $true) {                
+        sshCible "powershell Test-Path -Path '$absolPath\$ancienDoss'"
+        if ($LASTEXITCODE -eq 0) {                
             $rep4 = Read-Host " Faut-il Renommer le dossier ou en Modifier les droits ? [R/M] "                
             if ($rep4 -eq "R") {
                 $newDoss = Read-Host "D'accord, quel est le nouveau nom du dossier ? "
-                sshCible "Rename-Item -Path '$absolPath\$ancienDoss' -NewName '$newDoss'" 
+                sshCible "powershell Rename-Item -Path '$absolPath\$ancienDoss' -NewName '$newDoss'" 
                 Write-Host "Le dossier $ancienDoss a bien été renommé en $newDoss dans $absolPath"
             }
             elseif ($rep4 -eq "M") { 
                 # La réponse attendue est toute attachée Sous la forme rwx ou xw ou r 
-                $chxdroit = Read-Host "Quels droits voulez vous accorder sur le dossier $ancienDoss ? [r/w/x] " 
-                                                        
+                $chxdroit = Read-Host "Quels droits voulez vous accorder sur le dossier $ancienDoss ? [r/w/x] "                                   
                 if ("$chxdroit" -match "^[rwx]+$") {
-                    sshCible "icacls '$absolPath\$ancienDoss' /grant '${userName}:($chxdroit)'"
+                    sshCible "powershell icacls '$absolPath\$ancienDoss' /grant '${script:userCible}:($chxdroit)'"
                     Write-Host "Droits mis à jour pour $ancienDoss"
                 }                                        
                 else {                                            
@@ -316,9 +340,11 @@ function w_modifDoss {
 
 function l_modifDoss {
     $absolPath = Read-Host "Où se situe le dossier à modifier : " 
-    if ((sshCible "test -d '$absolPath'") -eq $true) {
+    sshCible "test -d '$absolPath'"
+    if ($LASTEXITCODE -eq 0) {
         $ancienDoss = Read-Host " Quel est le nom du dossier à modifier dans $absolPath ? " 
-        if ((sshCible "test -d '$absolPath/$ancienDoss'") -eq $true) {
+        sshCible "test -d '$absolPath/$ancienDoss'"
+        if ($LASTEXITCODE -eq 0) {
             $rep4 = Read-Host " Faut-il Renommer le dossier ou en Modifier les droits ? [R/M] " 
             if ($rep4 -eq "R") {
                 $newDoss = Read-Host "D'accord, quel est le nouveau nom du dossier ? " 
@@ -349,7 +375,8 @@ function l_modifDoss {
 # Suppression de répertoire Windows
 function w_supprDoss {
     $absolPath = Read-Host "Où se trouve le dossier à supprimer ? " 
-    if ((sshCible "Test-Path -Path '$absolPath'") -eq $false) {
+    sshCible "powershell Test-Path -Path '$absolPath'"
+    if ($LASTEXITCODE -ne 0) {
         $rep1 = Read-Host "Le chemin vers le dossier n'existe pas, voulez-vous rentrer un autre chemin ? [o/n] "                         
         if ($rep1 -eq "o") {                                
             w_supprDoss                            
@@ -359,18 +386,20 @@ function w_supprDoss {
         }
     }        
     else {                
-        $nomDoss = Read-Host "D'accord, quel est le nom du dossier à supprimer dans $absolPath ? "
-        $fullPath = "$absolPath/$nomDoss"                         
-        if ((sshCible "Test-Path -Path '$fullPath'") -eq $true) {                                        
-            $count = sshCible "(Get-ChildItem '$fullPath' | Measure-Object).Count"
+        $nomDoss = Read-Host "D'accord, quel est le nom du dossier à supprimer dans $absolPath ? "  
+        $fullPath = "$absolPath/$nomDoss"                       
+        sshCible "powershell Test-Path -Path '$fullPath'"
+        if ($LASTEXITCODE -eq 0) {                                      
+            $result = sshCible "powershell (Get-ChildItem '$fullPath' | Measure-Object).Count"
+            $count = [int]$result    
             if ($count -eq 0) {
-                sshCible "Remove-Item -Recurse -Force '$fullPath'" 
+                sshCible "powershell Remove-Item -Recurse -Force '$fullPath'" 
                 Write-Host "Le dossier $nomDoss a bien été supprimé dans $absolPath"
             }                                                
             else {
                 $rep2 = Read-Host "Le dossier choisi n'est pas vide, voulez vous continuer et supprimer son contenu ? [o/n] "                                                      
                 if ($rep2 -eq "o") {
-                    sshCible "Remove-Item '$fullPath'" 
+                    sshCible "powershell Remove-Item '$fullPath'" 
                     Write-Host "Le dossier $nomDoss et son contenu ont bien été supprimés dans $absolPath"    
                 }                                                                
                 else {                        
@@ -387,7 +416,8 @@ function w_supprDoss {
 
 function l_supprDoss {
     $absolPath = Read-Host "Où se trouve le dossier à supprimer ? " 
-    if ((sshCible "test -d '$absolPath'") -eq $false) {
+    sshCible "test -d '$absolPath'"
+    if ($LASTEXITCODE -ne 0) {    
         $rep1 = Read-Host " Le chemin vers le dossier n'existe pas, voulez-vous rentrer un autre chemin ? [o/n] " 
         if ($rep1 -eq "o") {
             l_supprDoss
@@ -397,9 +427,10 @@ function l_supprDoss {
         }
     }
     else {
-        $nomDoss = Read-Host "D'accord, quel est le nom du dossier à supprimer dans $absolPath ? "
-        $fullPath = "$absolPath/$nomDoss"     
-        if ((sshCible "test -d '$absolPath/$nomDoss'") -eq $true) {
+        $nomDoss = Read-Host "D'accord, quel est le nom du dossier à supprimer dans $absolPath ? " 
+        $fullPath = "$absolPath/$nomDoss"   
+        sshCible "test -d '$absolPath/$nomDoss'"
+        if ($LASTEXITCODE -eq 0) {
             $isEmpty = sshCible "[ -z ""\$(ls -A '$fullPath')"" ] && echo 'vrai' || echo 'faux'" 
             if ($isEmpty -eq "vrai") { 
                 sshCible "sudo -S rmdir '$fullPath'" 
@@ -426,11 +457,11 @@ function l_supprDoss {
 function w_fireWall {
     $rep3 = Read-Host "Voulez-vous Activer ou Désactiver le pare-feu du poste distant $ipCible ? [A/D] " 
     if ($rep3 -eq "A") {         
-        sshCible "Set-NetFirewallProfile -Profile Domain, Private, Public -Enabled True"
+        sshCible "powershell Set-NetFirewallProfile -Profile Domain, Private, Public -Enabled True"
         Write-Host "Le pare-feu cible a été activé"
     }    
     elseif ($rep3 -eq "D") {        
-        sshCible "Set-NetFirewallProfile -Profile Domain, Private, Public -Enabled False" 
+        sshCible "powershell Set-NetFirewallProfile -Profile Domain, Private, Public -Enabled False" 
         Write-Host "Le pare-feu cible a été désactivé"
     }
     else {        
@@ -456,162 +487,173 @@ function l_fireWall {
 #####################################################
 #####################################################
 function getTime {
-[string]$date = Get-Date -Format yyyyMMdd
-[string]$heure = Get-Date -Format HHmmss
+    $script:date = Get-Date -Format yyyyMMdd
+    $script:heure = Get-Date -Format HHmmss
 }
 
 function dnsActuel {
-    if ($(boul_os) -eq 0)
-    {
-        $dns=$(sshCible "cat /etc/resolv.conf")
+    if ($script:boul_os -eq 0) {
+        $dns = sshCible "cat /etc/resolv.conf"
     }
     else {
-        $dns=$(sshCible "ipconfig /all | Select-String 'DNS'")
+        # Correction : Get-DnsClientServerAddress (sans le 's' à Client)
+        $dns = sshCible "powershell -Command ""Get-DnsClientServerAddress -AddressFamily IPv4 | Select-Object -ExpandProperty ServerAddresses""" 
     }
-Write-Host "$($dns)"
-Add-Content -Path "DNS_${cibleordi}_${date}.txt" -Value $dns
-AddLog -Arg "DNS"
-SsMenu-Recueil
+    Write-Host "DNS trouvé : $dns"
+    getTime
+    Add-Content -Path "DNS_${cibleordi}_${script:date}.txt" -Value $dns
+    AddLog -Arg "DNS"
+    SsMenu-Recueil
 }
+
 # ip et passerelle
 function Ips {
-    if ($(boul_os) -eq 0)
-    {
-        $reseau=$(sshCible "ip a")
+    if ($script:boul_os -eq 0) {
+        $reseau = sshCible "ip a"
     }
     else {
-        $reseau=$(sshCible "ipconfig /all")
+        $reseau = sshCible "ipconfig /all"
     }
-Write-Host "$($Ips)"
-Add-Content -Path "Reseau_${cibleordi}_${date}.txt" -Value $Ips
-AddLog -Arg "reseau"
-SsMenu-Recueil
+    Write-Host $reseau
+    getTime
+    Add-Content -Path "Reseau_${cibleordi}_${script:date}.txt" -Value $reseau
+    AddLog -Arg "reseau"
+    SsMenu-Recueil
 }
+
 #La version de l'OS de l'ordi cible
 function VersionOs {
-    if ($(boul_os) -eq 0)
-    {
-        $os=$(sshCible "uname -a")
+    if ($script:boul_os -eq 0) {
+        $os = sshCible "uname -a"
     }
     else {
-        $os=$(sshCible "[System.Environment]::OSVersion.VersionString")
+        $os = sshCible "powershell -Command ""[System.Environment]::OSVersion.VersionString"""
     }
-Write-Host "$($os)"
-Add-Content -Path "VersionOS_${cibleordi}_${date}.txt" -Value $os
-AddLog -Arg "Os"
-SsMenu-Recueil
+    Write-Host "$($os)"
+    getTime # Ajout de l'appel pour peupler $script:date
+    Add-Content -Path "VersionOS_${cibleordi}_${script:date}.txt" -Value $os
+    AddLog -Arg "Os"
+    SsMenu-Recueil
 }
 
 #trouve le nom de la carte graphique
 function CarteGraph {
-    if ($(boul_os) -eq 0)
-    {
-        $carte=$(sshCible "lspci | grep -i 'vga'")
+    if ($script:boul_os -eq 0) {
+        $carte = sshCible "lspci | grep -i 'vga'"
     }
     else {
-        $carte=$(sshCible "Get-CimInstance Win32_VideoController | Select-Object -ExpandProperty Name")
+        $carte = sshCible "powershell ""Get-CimInstance Win32_VideoController | Select-Object -ExpandProperty Name"""
     }
-Write-Host "$($carte)"
-Add-Content -Path "VersionOS_${cibleordi}_${date}.txt" -Value $carte
-AddLog -Arg "Carte"
-SsMenu-Recueil
+    Write-Host $carte
+    getTime
+    Add-Content -Path "GPU_${cibleordi}_${script:date}.txt" -Value $carte
+    AddLog -Arg "Carte"
+    SsMenu-Recueil
 }
+
 #fonction uptime
 function DonneUptime {
-    if ($(boul_os) -eq 0)
-    {
-        $uptime=$(sshCible "uptime")
+    if ($script:boul_os -eq 0) {
+        $uptime = sshCible "uptime -p"
     }
     else {
-        $uptime=$(sshCible "(Get-CimInstance Win32_OperatingSystem).LastBootUpTime")
+        $uptime = sshCible "powershell -Command ""(Get-Date) - (Get-CimInstance Win32_OperatingSystem).LastBootUpTime"""
     }
-Write-Host "$($uptime)"
-Add-Content -Path "Uptime_${cibleordi}_${date}.txt" -Value $uptime
-AddLog -Arg "Uptime"
-SsMenu-Recueil
+    Write-Host "$($uptime)"
+    getTime # Ajout de l'appel pour peupler $script:date
+    Add-Content -Path "Uptime_${cibleordi}_${script:date}.txt" -Value $uptime
+    AddLog -Arg "Uptime"
+    SsMenu-Recueil
+}   
+
 #version BIOS
 function VersBios {
-    if ($(boul_os) -eq 0)
-    {
-        $bios=$(sshCible "sudo dmidecode -t bios system")
+    if ($script:boul_os -eq 0) {
+        $bios = sshCible "sudo dmidecode -t bios"
     }
     else {
-        $bios=$(sshCible "Get-CimInstance Win32_BIOS | Select-Object SMBIOSBIOSVersion, Manufacturer, ReleaseDate")
+        $bios = sshCible "powershell -Command ""Get-CimInstance Win32_BIOS | Select SMBIOSBIOSVersion, Manufacturer"""
     }
-Write-Host "$($bios)"
-Add-Content -Path "Bios_${cibleordi}_${date}.txt" -Value $bios
-AddLog -Arg "Bios"
-SsMenu-Recueil
+    Write-Host "$($bios)"
+    getTime
+    Add-Content -Path "Bios_${cibleordi}_${script:date}.txt" -Value $bios
+    AddLog -Arg "Bios"
+    SsMenu-Recueil
 }
 
 #Table Arp
 function Arp {
-    if ($(boul_os) -eq 0)
-    {
-        $arp=$(sshCible "ip n")
+    if ($script:boul_os -eq 0) {
+        $arp = sshCible "ip n"
     }
     else {
-        $arp=$(sshCible "Get-NetNeighbor")
+        $arp = sshCible "Get-NetNeighbor"
     }
-Write-Host "$($arp)"
-Add-Content -Path "Arp_${cibleordi}_${date}.txt" -Value $arp
-AddLog -Arg "Arp"
-SsMenu-Recueil
+    Write-Host "$($arp)"
+    getTime
+    Add-Content -Path "Arp_${cibleordi}_${script:date}.txt" -Value $arp
+    AddLog -Arg "Arp"
+    SsMenu-Recueil
 }
 
 # evenements critiques
 function EventCrit {
-    if ($(boul_os) -eq 0)
-    {
-        $event=$(sshCible "journalctl -p crit -n 10")
+    if ($script:boul_os -eq 0) {
+        $event = sshCible "journalctl -p crit -n 10"
     }
     else {
-        $event=$(sshCible "Get-EventLog -LogName System -EntryType Error -Newest 10")
+        $event = sshCible "Get-EventLog -LogName System -EntryType Error -Newest 10"
     }
-Write-Host "$($event)"
-Add-Content -Path "Event_${cibleordi}_${date}.txt" -Value $event
-AddLog -Arg "Event"
-SsMenu-Recueil
+    Write-Host "$($event)"
+    getTime
+    Add-Content -Path "Event_${cibleordi}_${script:date}.txt" -Value $event
+    AddLog -Arg "Event"
+    SsMenu-Recueil
 }
+    
 #table de routage
 function TableRoutage {
-    if ($(boul_os) -eq 0)
-    {
-        $routage=$(sshCible "ip r")
+    if ($script:boul_os -eq 0) {
+        $routage = sshCible "ip r"
     }
     else {
-        $routage=$(sshCible "Get-NetRoute")
+        $routage = sshCible "Get-NetRoute"
     }
-Write-Host "$($routage)"
-Add-Content -Path "Routage_${cibleordi}_${date}.txt" -Value $routage
-AddLog -Arg "Routage"
-SsMenu-Recueil
+    Write-Host "$($routage)"
+    getTime
+    Add-Content -Path "Routage_${cibleordi}_${script:date}.txt" -Value $routage
+    AddLog -Arg "Routage"
+    SsMenu-Recueil
 }
+
 #liste des interfaces reseaux
 function Interface {
-    if ($(boul_os) -eq 0)
-    {
-        $interface=$(sshCible "ip link show")
+    if ($script:boul_os -eq 0) {
+        $interface = sshCible "ip link show"
     }
     else {
-        $interface=$(sshCible "Get-NetAdapter")
+        $interface = sshCible "Get-NetAdapter"
     }
-Write-Host "$($interface)"
-Add-Content -Path "Interfaces_${cibleordi}_${date}.txt" -Value $interface
-AddLog -Arg "Interfaces"
-SsMenu-Recueil
+    Write-Host "$($interface)"
+    getTime
+    Add-Content -Path "Interfaces_${cibleordi}_${script:date}.txt" -Value $interface
+    AddLog -Arg "Interfaces"
+    SsMenu-Recueil
 }
+
 # ajout d'une action passée en argument au fichier log
 function AddLog {
-    param([string]$param1)
-    GetTime
-    Add-Content -Path "C:\Windows\System32\LogFiles\log_evt.log" -Value "${date}_${heure}_${utilisateur}_${param1}"
+    param([string]$Arg)
+    getTime
+    Add-Content -Path "C:\Windows\System32\LogFiles\log_evt.log" -Value "${script:date}_${script:heure}_$Arg"
 }
+
 # Ferme le fichier quand l'utilisateur quitte
 function Quitter {
     Add-Content -Path "C:\Windows\System32\LogFiles\log_evt.log" -Value "EndScript"
     exit 0
 }
+
 # Retour menu
 function Retour-Menu {
     param($DernierMenu)
@@ -630,6 +672,7 @@ function Retour-Menu {
 }
 ########################################################
 ########################################################
+
 # Menu principal
 function Menu-Principal {
     Clear-Host
@@ -720,16 +763,16 @@ function SsMenu-Recueil {
     Write-Host " 11) Quitter"
     $choix = Read-Host "Votre choix"
     switch ($choix) {
-        "1"  { dnsActuel }
-        "2"  { Interface }
-        "3"  { Arp }
-        "4"  { TableRoutage }
-        "5"  { VersBios }
-        "6"  { Ips }
-        "7"  { VersionOs }
-        "8"  { CarteGraph }
-        "9"  { DonneUptime }
-        "10" { EventCrit}
+        "1" { dnsActuel }
+        "2" { Interface }
+        "3" { Arp }
+        "4" { TableRoutage }
+        "5" { VersBios }
+        "6" { Ips }
+        "7" { VersionOs }
+        "8" { CarteGraph }
+        "9" { DonneUptime }
+        "10" { EventCrit }
         "11" { Quitter }
         default { Write-Host "ERREUR"; SsMenu-Recueil }
     }
@@ -769,7 +812,8 @@ function SsMenu-Recherche {
     }
 }
 # Lancement du script
-Ask-Cible
+Test-AdminContext
+AskCible
 Connexion-SSH
 Debut-Journalisation
 Menu-Principal
