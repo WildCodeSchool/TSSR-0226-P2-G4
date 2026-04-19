@@ -360,10 +360,10 @@ function w_modifDoss {
 function l_modifDoss {
     $absolPath = Read-Host "Où se situe le dossier à modifier : " 
     sshCible "test -d '$absolPath'"
-    if ($LASTEXITCODE -eq 0) {
+    if ($LASTEXITCODE -eq 0) { 
         $ancienDoss = Read-Host " Quel est le nom du dossier à modifier dans $absolPath ? " 
         sshCible "test -d '$absolPath/$ancienDoss'"
-        if ($LASTEXITCODE -eq 0) {
+        if ($LASTEXITCODE -eq 0) { 
             $rep4 = Read-Host " Faut-il Renommer le dossier ou en Modifier les droits ? [R/M] " 
             if ($rep4 -eq "R") {
                 $newDoss = Read-Host "D'accord, quel est le nouveau nom du dossier ? " 
@@ -378,7 +378,7 @@ function l_modifDoss {
                     Write-Host "Droits u+$chxdroit appliqués sur $ancienDoss"
                 }
                 else {
-                    Write-Host "Ce type de droit n'existe pas"
+                    Write-Host "Ce type de droit n'existe pas" 
                 }
             }
         }   
@@ -512,7 +512,7 @@ function lastConnexion {
     else {
         sshCible "Get-LocalUser $lastCo | Select-Object Name, LastLogon" # windows
     }
-    retour_menu ss_menu_log_user
+    Retour-Menu SsMenu-LogUser
 }
 # Date dernière modification password
 function lastModifMdp {
@@ -523,7 +523,7 @@ $modifMdp = Read-Host "Entrez le nom de l'utilisateur du mdp ? "
     else {
         sshCible "Get-LocalUser '$modifMdp' | Select-Object Name, PasswordLastSet" # windows
     }
-    retour_menu ss_menu_log_user
+    Retour-Menu SsMenu-LogUser
 }
 
 # Liste des sessions ouvertes par l'utilisateur
@@ -534,7 +534,7 @@ function listOpenUser {
     else {
         sshCible "query user" # windows
     }
-    retour_menu ss_menu_log_user
+    Retour-Menu SsMenu-LogUser
 }
 #####################################################
 #####################################################
@@ -551,7 +551,7 @@ function newUser {
         W_NewLocalUsers
     }
     addLog "newUser"
-    retour_menu ss_menu_gestion
+    Retour-Menu SsMenu-Gestion
 }
 # Changement de Mot de Passe
 function changePasswd {
@@ -562,7 +562,7 @@ function changePasswd {
         W_ChangePassword
     }
     addLog "changePasswd"
-    retour_menu ss_menu_gestion
+    Retour-Menu SsMenu-Gestion
 }
 # Suppression utilisateur
 function delUser {
@@ -573,7 +573,7 @@ function delUser {
         W_DelUser
     }
     addLog "delUser"
-    retour_menu ss_menu_gestion
+    Retour-Menu SsMenu-Gestion
 }
 # Ajout au groupe Admin
 function addAdmin {
@@ -584,7 +584,7 @@ function addAdmin {
         W_AddAdmin
     }
     addLog "addAdmin"
-    retour_menu ss_menu_gestion
+    Retour-Menu SsMenu-Gestion
 }
 # Ajout à un groupe utilisateur
 function addGroup {
@@ -595,7 +595,7 @@ function addGroup {
         W_AddGroup
     }
     addLog "addGroup"
-    retour_menu ss_menu_gestion
+    Retour-Menu SsMenu-Gestion
 }
 # Redemarrage du pc distant
 function redemarrage {
@@ -606,7 +606,7 @@ function redemarrage {
         W_Redemarrage
     }
     addLog "redemarrage"
-    retour_menu ss_menu_Admin
+    Retour-Menu SsMenu-Gestion
 }
 # Création de répertoire
 function creerDoss {
@@ -617,7 +617,7 @@ function creerDoss {
         w_creerDoss
     }
     addLog "creerDoss"
-    retour_menu ss_menu_Admin
+    Retour-Menu SsMenu-Admin
 }
 # Suppression de répertoire
 function supprDoss {
@@ -628,7 +628,7 @@ function supprDoss {
         w_supprDoss
     }
     addLog "supprDoss"
-    retour_menu ss_menu_Admin
+    Retour-Menu SsMenu-Admin
 }
 # Modification de répertoire (changement de nom et droits d'accès)
 function modifDoss {
@@ -639,7 +639,7 @@ function modifDoss {
         w_modifDoss
     }
     addLog "modifDoss"
-    retour_menu ss_menu_Admin
+    Retour-Menu SsMenu-Admin
 }
 # Contrôle du pare-feu
 function fireWall {
@@ -650,7 +650,7 @@ function fireWall {
         w_fireWall
     }
     addLog "fireWall"
-    retour_menu ss_menu_Admin
+    Retour-Menu SsMenu-Admin
 }
 
 function dnsActuel {
@@ -811,7 +811,7 @@ function rechercheUtilisateur {
         else {
         sshCible "powershell Select-String -Path 'C:\logs\log_evt.log' -Pattern '$userRech'"
         }
-        retour_menu ss_menu_receuil
+        Retour-Menu ss_menu_receuil
 }
 # Recherche evenement par ordinateur
 function rechercheOrdinateur {
@@ -822,7 +822,7 @@ function rechercheOrdinateur {
         else {
             sshCible "powershell Select-String -Path 'C:\log_evt.log' -Pattern '$ordiRech'"
         }
-        retour_menu ss_menu_receuil
+        Retour-Menu ss_menu_receuil
 }
 # ajout d'une action passée en argument au fichier log
 function AddLog {
