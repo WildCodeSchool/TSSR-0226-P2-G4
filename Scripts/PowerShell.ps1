@@ -26,10 +26,26 @@ function askCible {
     $script:userCible = Read-Host "Veuillez rentrer le nom exacte de l'utilisateur cible"
 }
 
-askCible
 # Prépare un alias pour la connexion ssh
 function sshCible {
     ssh -o ConnectTimeout=5 "${script:userCible}@${script:ipCible}" "$args"
+}
+
+# Teste la connexion ssh et demande l'OS de la cible pour identifier windows ou linux
+function connexionSsh {
+    $test1 = ssh -o ConnectTimeout=5 "${script:userCible}@${script:ipCible}" "echo test" 2>$null
+    if ($test1 -eq "test") {
+        $versionDeLOS = sshCible "uname -s" 2>$null
+        if ($versionDeLOS -like "*Linux*") { 
+            $script:detectOs = 0  # Linux
+        }    
+        else {
+            $script:detectOs = 1  # Windows
+        }
+    }
+    else {
+        Write-Host "erreur"
+    }
 }
 
 # Crée le fichier log et l'initialise
@@ -37,8 +53,11 @@ function debutJournalisation {
     Add-Content -Path "C:\Windows\System32\LogFiles\log_evt.log" -Value "StartScript`n"
 }
 
-debutJournalisation
-
+# Ferme le fichier quand l'utilisateur quitte
+function Quitter {
+    Add-Content -Path "C:\Windows\System32\LogFiles\log_evt.log" -Value "EndScript"
+    exit 0
+}
 # Mise en variable du nom d'utilisateur
 
 function testAdd {
@@ -484,11 +503,154 @@ function l_fireWall {
     }
 }
 
+# Date de dernière connexion d'un utilisateur
+function lastConnexion {
+    $lastCo = Read-Host "Entrez le nom de l'utilisateur ? "  
+    if ($script:detectOs -eq 0) {
+        sshCible "last -n 1 '$lastCo'" # linux
+    }
+    else {
+        sshCible "Get-LocalUser $lastCo | Select-Object Name, LastLogon" # windows
+    }
+    retour_menu ss_menu_log_user
+}
+# Date dernière modification password
+function lastModifMdp {
+$modifMdp = Read-Host "Entrez le nom de l'utilisateur du mdp ? "  
+    if ($script:detectOs -eq 0) {
+        sshCible "chage -l '$modifMdp'" # linux
+    }
+    else {
+        sshCible "Get-LocalUser '$modifMdp' | Select-Object Name, PasswordLastSet" # windows
+    }
+    retour_menu ss_menu_log_user
+}
+
+# Liste des sessions ouvertes par l'utilisateur
+function listOpenUser { 
+    if ($script:detectOs -eq 0) {
+    sshCible "w" # linux
+    }
+    else {
+        sshCible "query user" # windows
+    }
+    retour_menu ss_menu_log_user
+}
 #####################################################
 #####################################################
 function getTime {
     $script:date = Get-Date -Format yyyyMMdd
     $script:heure = Get-Date -Format HHmmss
+}
+# Création utilisateur
+function newUser {
+    if ($script:detectOs -eq 0) {
+        L_NewLocalUsers
+    }
+    else {
+        W_NewLocalUsers
+    }
+    addLog "newUser"
+    retour_menu ss_menu_gestion
+}
+# Changement de Mot de Passe
+function changePasswd {
+    if ($script:detectOs -eq 0) {
+        L_ChangePassword
+    }
+    else {
+        W_ChangePassword
+    }
+    addLog "changePasswd"
+    retour_menu ss_menu_gestion
+}
+# Suppression utilisateur
+function delUser {
+    if ($script:detectOs -eq 0) {
+        L_DelUser
+    }
+    else {
+        W_DelUser
+    }
+    addLog "delUser"
+    retour_menu ss_menu_gestion
+}
+# Ajout au groupe Admin
+function addAdmin {
+    if ($script:detectOs -eq 0) {
+        L_AddAdmin
+    }
+    else {
+        W_AddAdmin
+    }
+    addLog "addAdmin"
+    retour_menu ss_menu_gestion
+}
+# Ajout à un groupe utilisateur
+function addGroup {
+    if ($script:detectOs -eq 0) {
+        L_AddGroup
+    }
+    else {
+        W_AddGroup
+    }
+    addLog "addGroup"
+    retour_menu ss_menu_gestion
+}
+# Redemarrage du pc distant
+function redemarrage {
+    if ($script:detectOs -eq 0) {
+        L_Redemarrage
+    }
+    else {
+        W_Redemarrage
+    }
+    addLog "redemarrage"
+    retour_menu ss_menu_Admin
+}
+# Création de répertoire
+function creerDoss {
+    if ($script:detectOs -eq 0) {
+            l_creerDoss
+    }
+    else {
+        w_creerDoss
+    }
+    addLog "creerDoss"
+    retour_menu ss_menu_Admin
+}
+# Suppression de répertoire
+function supprDoss {
+    if ($script:detectOs -eq 0) {
+        l_supprDoss
+    }
+    else {
+        w_supprDoss
+    }
+    addLog "supprDoss"
+    retour_menu ss_menu_Admin
+}
+# Modification de répertoire (changement de nom et droits d'accès)
+function modifDoss {
+    if ($script:boul_os -eq 0) {
+        l_modifDoss
+    }
+    else {
+        w_modifDoss
+    }
+    addLog "modifDoss"
+    retour_menu ss_menu_Admin
+}
+# Contrôle du pare-feu
+function fireWall {
+    if ($script:boul_os -eq 0) {
+        l_fireWall
+    }
+    else {
+        w_fireWall
+    }
+    addLog "fireWall"
+    retour_menu ss_menu_Admin
 }
 
 function dnsActuel {
@@ -640,35 +802,33 @@ function Interface {
     AddLog -Arg "Interfaces"
     SsMenu-Recueil
 }
-
+# Recherche evenement par utilisateur
+function rechercheUtilisateur {
+    $userRech = Read-Host "Entrez le nom de l'utilisateur pour la recherche des evenements:" 
+        if ($script:boul_os -eq 0) {    
+            sshCible "grep '$userRech' /var/log/log_evt.log"  
+        }
+        else {
+        sshCible "powershell Select-String -Path 'C:\logs\log_evt.log' -Pattern '$userRech'"
+        }
+        retour_menu ss_menu_receuil
+}
+# Recherche evenement par ordinateur
+function rechercheOrdinateur {
+    $ordiRech = Read-Host "Entrez l'adresse IP pour la recherche des evenements:" ordi_rech
+        if ($script:boul_os -eq 0) {
+            sshCible "grep '$ordiRech' /var/log/log_evt.log"  
+        }
+        else {
+            sshCible "powershell Select-String -Path 'C:\log_evt.log' -Pattern '$ordiRech'"
+        }
+        retour_menu ss_menu_receuil
+}
 # ajout d'une action passée en argument au fichier log
 function AddLog {
     param([string]$Arg)
     getTime
     Add-Content -Path "C:\Windows\System32\LogFiles\log_evt.log" -Value "${script:date}_${script:heure}_$Arg"
-}
-
-# Ferme le fichier quand l'utilisateur quitte
-function Quitter {
-    Add-Content -Path "C:\Windows\System32\LogFiles\log_evt.log" -Value "EndScript"
-    exit 0
-}
-
-# Retour menu
-function Retour-Menu {
-    param($DernierMenu)
-    Clear-Host
-    Write-Host "Que voulez-vous faire?"
-    Write-Host " 1) Retourner au menu principal"
-    Write-Host " 2) Retourner au dernier menu"
-    Write-Host " 3) Quitter"
-    $choix = Read-Host "Votre choix"
-    switch ($choix) {
-        "1" { Menu-Principal }
-        "2" { & $DernierMenu }
-        "3" { Quitter }
-        default { Write-Host "ERREUR"; Retour-Menu -DernierMenu $DernierMenu }
-    }
 }
 ########################################################
 ########################################################
@@ -811,9 +971,26 @@ function SsMenu-Recherche {
         default { Write-Host "ERREUR"; SsMenu-Recherche }
     }
 }
+
+# Retour menu
+function Retour-Menu {
+    param($DernierMenu)
+    Clear-Host
+    Write-Host "Que voulez-vous faire?"
+    Write-Host " 1) Retourner au menu principal"
+    Write-Host " 2) Retourner au dernier menu"
+    Write-Host " 3) Quitter"
+    $choix = Read-Host "Votre choix"
+    switch ($choix) {
+        "1" { Menu-Principal }
+        "2" { & $DernierMenu }
+        "3" { Quitter }
+        default { Write-Host "ERREUR"; Retour-Menu -DernierMenu $DernierMenu }
+    }
+}
 # Lancement du script
 Test-AdminContext
 AskCible
-Connexion-SSH
-Debut-Journalisation
+connexionSsh
+debutJournalisation
 Menu-Principal
