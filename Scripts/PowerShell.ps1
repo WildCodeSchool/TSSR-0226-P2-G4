@@ -811,7 +811,7 @@ function rechercheUtilisateur {
         else {
         sshCible "powershell Select-String -Path 'C:\logs\log_evt.log' -Pattern '$userRech'"
         }
-        Retour-Menu ss_menu_receuil
+        Retour-Menu SsMenu-Recueil
 }
 # Recherche evenement par ordinateur
 function rechercheOrdinateur {
@@ -822,7 +822,7 @@ function rechercheOrdinateur {
         else {
             sshCible "powershell Select-String -Path 'C:\log_evt.log' -Pattern '$ordiRech'"
         }
-        Retour-Menu ss_menu_receuil
+        Retour-Menu SsMenu-Recueil
 }
 # ajout d'une action passée en argument au fichier log
 function AddLog {
