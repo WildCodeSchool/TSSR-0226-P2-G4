@@ -870,11 +870,11 @@ function SsMenu-Gestion {
     Write-Host " 6) Quitter"
     $choix = Read-Host "Votre choix"
     switch ($choix) {
-        "1" { New-User }
-        "2" { Change-Passwd }
-        "3" { Del-User }
-        "4" { Add-Admin }
-        "5" { Add-Group }
+        "1" { newUser }
+        "2" { changePasswd }
+        "3" { delUser }
+        "4" { addAdmin }
+        "5" { addGroup }
         "6" { Quitter }
         default { Write-Host "ERREUR"; SsMenu-Gestion }
     }
@@ -894,12 +894,12 @@ function SsMenu-Admin {
     Write-Host " 8) Quitter"
     $choix = Read-Host "Votre choix"
     switch ($choix) {
-        "1" { Redemarrage }
-        "2" { Creer-Doss }
-        "3" { Modif-Doss }
-        "4" { Suppr-Doss }
-        "5" { Fire-Wall }
-        "6" { Ssh-Cible }
+        "1" { redemarrage }
+        "2" { creerDoss }
+        "3" { modifDoss }
+        "4" { supprDoss }
+        "5" { fireWall }
+        "6" { sshCible }
         "7" { Write-Host "test" }
         "8" { Quitter }
         default { Write-Host "ERREUR"; SsMenu-Admin }
@@ -948,9 +948,9 @@ function SsMenu-LogUser {
     Write-Host " 4) Quitter"
     $choix = Read-Host "Votre choix"
     switch ($choix) {
-        "1" { Last-Connexion }
-        "2" { Last-ModifMdp }
-        "3" { List-OpenUser }
+        "1" { lastConnexion }
+        "2" { lastModifMdp }
+        "3" { listOpenUser }
         "4" { Quitter }
         default { Write-Host "ERREUR"; SsMenu-LogUser }
     }
@@ -965,8 +965,8 @@ function SsMenu-Recherche {
     Write-Host " 3) Quitter"
     $choix = Read-Host "Votre choix"
     switch ($choix) {
-        "1" { Recherche-Utilisateur }
-        "2" { Recherche-Ordinateur }
+        "1" { rechercheUtilisateur }
+        "2" { rechercheOrdinateur }
         "3" { Quitter }
         default { Write-Host "ERREUR"; SsMenu-Recherche }
     }
