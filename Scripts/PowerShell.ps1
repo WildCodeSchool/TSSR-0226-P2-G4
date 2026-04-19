@@ -46,7 +46,7 @@ debutJournalisation
 
 function testAdd {
     if ($Args -ne 0) {
-        tableauNew=("$ARGS")   
+        $tableauNew = ("$ARGS")   
     }
     else {
         $tableauNew = Read-Host "Veuillez rentrer les noms des utilisateurs (séparés par des espaces) : "
@@ -304,13 +304,13 @@ function w_modifDoss {
                 }
             }
         }                
-            else {                    
-                Write-Host " Le dossier $ancienDoss n'existe pas "
-            } 
+        else {                    
+            Write-Host " Le dossier $ancienDoss n'existe pas "
+        } 
     }   
     else {        
         Write-Host " Le chemin vers le dossier n'existe pas "
-        }
+    }
 }
 
 
@@ -352,7 +352,7 @@ function w_supprDoss {
     if ((sshCible "Test-Path -Path '$absolPath'") -eq $false) {
         $rep1 = Read-Host "Le chemin vers le dossier n'existe pas, voulez-vous rentrer un autre chemin ? [o/n] "                         
         if ($rep1 -eq "o") {                                
-                w_supprDoss                            
+            w_supprDoss                            
         }
         else {                                        
             Write-Host "D'accord, retour au menu"
@@ -361,26 +361,26 @@ function w_supprDoss {
     else {                
         $nomDoss = Read-Host "D'accord, quel est le nom du dossier à supprimer dans $absolPath ? "
         $fullPath = "$absolPath/$nomDoss"                         
-            if ((sshCible "Test-Path -Path '$fullPath'") -eq $true) {                                        
-                $count = sshCible "(Get-ChildItem '$fullPath' | Measure-Object).Count"
-                if ($count -eq 0) {
-                    sshCible "Remove-Item -Recurse -Force '$fullPath'" 
-                    Write-Host "Le dossier $nomDoss a bien été supprimé dans $absolPath"
-                }                                                
-                else {
-                    $rep2 = Read-Host "Le dossier choisi n'est pas vide, voulez vous continuer et supprimer son contenu ? [o/n] "                                                      
-                    if ($rep2 -eq "o") {
-                        sshCible "Remove-Item '$fullPath'" 
-                        Write-Host "Le dossier $nomDoss et son contenu ont bien été supprimés dans $absolPath"    
-                    }                                                                
-                    else {                        
-                        Write-Host "D'accord, retour au menu"
-                    }
-                }                                   
-            }
-            else { 
-                Write-Host "La valeur saisie n'existe pas ou n'est pas un dossier"
-            }        
+        if ((sshCible "Test-Path -Path '$fullPath'") -eq $true) {                                        
+            $count = sshCible "(Get-ChildItem '$fullPath' | Measure-Object).Count"
+            if ($count -eq 0) {
+                sshCible "Remove-Item -Recurse -Force '$fullPath'" 
+                Write-Host "Le dossier $nomDoss a bien été supprimé dans $absolPath"
+            }                                                
+            else {
+                $rep2 = Read-Host "Le dossier choisi n'est pas vide, voulez vous continuer et supprimer son contenu ? [o/n] "                                                      
+                if ($rep2 -eq "o") {
+                    sshCible "Remove-Item '$fullPath'" 
+                    Write-Host "Le dossier $nomDoss et son contenu ont bien été supprimés dans $absolPath"    
+                }                                                                
+                else {                        
+                    Write-Host "D'accord, retour au menu"
+                }
+            }                                   
+        }
+        else { 
+            Write-Host "La valeur saisie n'existe pas ou n'est pas un dossier"
+        }        
     } 
 }
 
@@ -452,3 +452,324 @@ function l_fireWall {
         Write-Host "Demande invalide"
     }
 }
+
+#####################################################
+#####################################################
+function getTime {
+[string]$date = Get-Date -Format yyyyMMdd
+[string]$heure = Get-Date -Format HHmmss
+}
+
+function dnsActuel {
+    if ($(boul_os) -eq 0)
+    {
+        $dns=$(sshCible "cat /etc/resolv.conf")
+    }
+    else {
+        $dns=$(sshCible "ipconfig /all | Select-String 'DNS'")
+    }
+Write-Host "$($dns)"
+Add-Content -Path "DNS_${cibleordi}_${date}.txt" -Value $dns
+AddLog -Arg "DNS"
+SsMenu-Recueil
+}
+# ip et passerelle
+function Ips {
+    if ($(boul_os) -eq 0)
+    {
+        $reseau=$(sshCible "ip a")
+    }
+    else {
+        $reseau=$(sshCible "ipconfig /all")
+    }
+Write-Host "$($Ips)"
+Add-Content -Path "Reseau_${cibleordi}_${date}.txt" -Value $Ips
+AddLog -Arg "reseau"
+SsMenu-Recueil
+}
+#La version de l'OS de l'ordi cible
+function VersionOs {
+    if ($(boul_os) -eq 0)
+    {
+        $os=$(sshCible "uname -a")
+    }
+    else {
+        $os=$(sshCible "[System.Environment]::OSVersion.VersionString")
+    }
+Write-Host "$($os)"
+Add-Content -Path "VersionOS_${cibleordi}_${date}.txt" -Value $os
+AddLog -Arg "Os"
+SsMenu-Recueil
+}
+
+#trouve le nom de la carte graphique
+function CarteGraph {
+    if ($(boul_os) -eq 0)
+    {
+        $carte=$(sshCible "lspci | grep -i 'vga'")
+    }
+    else {
+        $carte=$(sshCible "Get-CimInstance Win32_VideoController | Select-Object -ExpandProperty Name")
+    }
+Write-Host "$($carte)"
+Add-Content -Path "VersionOS_${cibleordi}_${date}.txt" -Value $carte
+AddLog -Arg "Carte"
+SsMenu-Recueil
+}
+#fonction uptime
+function DonneUptime {
+    if ($(boul_os) -eq 0)
+    {
+        $uptime=$(sshCible "uptime")
+    }
+    else {
+        $uptime=$(sshCible "(Get-CimInstance Win32_OperatingSystem).LastBootUpTime")
+    }
+Write-Host "$($uptime)"
+Add-Content -Path "Uptime_${cibleordi}_${date}.txt" -Value $uptime
+AddLog -Arg "Uptime"
+SsMenu-Recueil
+#version BIOS
+function VersBios {
+    if ($(boul_os) -eq 0)
+    {
+        $bios=$(sshCible "sudo dmidecode -t bios system")
+    }
+    else {
+        $bios=$(sshCible "Get-CimInstance Win32_BIOS | Select-Object SMBIOSBIOSVersion, Manufacturer, ReleaseDate")
+    }
+Write-Host "$($bios)"
+Add-Content -Path "Bios_${cibleordi}_${date}.txt" -Value $bios
+AddLog -Arg "Bios"
+SsMenu-Recueil
+}
+
+#Table Arp
+function Arp {
+    if ($(boul_os) -eq 0)
+    {
+        $arp=$(sshCible "ip n")
+    }
+    else {
+        $arp=$(sshCible "Get-NetNeighbor")
+    }
+Write-Host "$($arp)"
+Add-Content -Path "Arp_${cibleordi}_${date}.txt" -Value $arp
+AddLog -Arg "Arp"
+SsMenu-Recueil
+}
+
+# evenements critiques
+function EventCrit {
+    if ($(boul_os) -eq 0)
+    {
+        $event=$(sshCible "journalctl -p crit -n 10")
+    }
+    else {
+        $event=$(sshCible "Get-EventLog -LogName System -EntryType Error -Newest 10")
+    }
+Write-Host "$($event)"
+Add-Content -Path "Event_${cibleordi}_${date}.txt" -Value $event
+AddLog -Arg "Event"
+SsMenu-Recueil
+}
+#table de routage
+function TableRoutage {
+    if ($(boul_os) -eq 0)
+    {
+        $routage=$(sshCible "ip r")
+    }
+    else {
+        $routage=$(sshCible "Get-NetRoute")
+    }
+Write-Host "$($routage)"
+Add-Content -Path "Routage_${cibleordi}_${date}.txt" -Value $routage
+AddLog -Arg "Routage"
+SsMenu-Recueil
+}
+#liste des interfaces reseaux
+function Interface {
+    if ($(boul_os) -eq 0)
+    {
+        $interface=$(sshCible "ip link show")
+    }
+    else {
+        $interface=$(sshCible "Get-NetAdapter")
+    }
+Write-Host "$($interface)"
+Add-Content -Path "Interfaces_${cibleordi}_${date}.txt" -Value $interface
+AddLog -Arg "Interfaces"
+SsMenu-Recueil
+}
+# ajout d'une action passée en argument au fichier log
+function AddLog {
+    param([string]$param1)
+    GetTime
+    Add-Content -Path "C:\Windows\System32\LogFiles\log_evt.log" -Value "${date}_${heure}_${utilisateur}_${param1}"
+}
+# Ferme le fichier quand l'utilisateur quitte
+function Quitter {
+    Add-Content -Path "C:\Windows\System32\LogFiles\log_evt.log" -Value "EndScript"
+    exit 0
+}
+# Retour menu
+function Retour-Menu {
+    param($DernierMenu)
+    Clear-Host
+    Write-Host "Que voulez-vous faire?"
+    Write-Host " 1) Retourner au menu principal"
+    Write-Host " 2) Retourner au dernier menu"
+    Write-Host " 3) Quitter"
+    $choix = Read-Host "Votre choix"
+    switch ($choix) {
+        "1" { Menu-Principal }
+        "2" { & $DernierMenu }
+        "3" { Quitter }
+        default { Write-Host "ERREUR"; Retour-Menu -DernierMenu $DernierMenu }
+    }
+}
+########################################################
+########################################################
+# Menu principal
+function Menu-Principal {
+    Clear-Host
+    Write-Host "================================"
+    Write-Host "         MENU PRINCIPAL"
+    Write-Host "================================"
+    Write-Host "Que voulez-vous faire?"
+    Write-Host " 1) Gestion utilisateur"
+    Write-Host " 2) Administration"
+    Write-Host " 3) Recueil d'information"
+    Write-Host " 4) Consultation des logs"
+    Write-Host " 5) Consultation des logs d'utilisation du script"
+    Write-Host " 6) Quitter"
+    $choix = Read-Host "Votre choix"
+    switch ($choix) {
+        "1" { SsMenu-Gestion }
+        "2" { SsMenu-Admin }
+        "3" { SsMenu-Recueil }
+        "4" { SsMenu-Recherche }
+        "5" { SsMenu-LogUser }
+        "6" { Quitter }
+        default { Write-Host "ERREUR"; Menu-Principal }
+    }
+}
+
+# Sous-menu gestion utilisateurs
+function SsMenu-Gestion {
+    Clear-Host
+    Write-Host "Quelle action voulez-vous effectuer?"
+    Write-Host " 1) Création de compte"
+    Write-Host " 2) Changement de mdp"
+    Write-Host " 3) Suppression de compte"
+    Write-Host " 4) Ajout à un groupe admin"
+    Write-Host " 5) Ajout à un groupe"
+    Write-Host " 6) Quitter"
+    $choix = Read-Host "Votre choix"
+    switch ($choix) {
+        "1" { New-User }
+        "2" { Change-Passwd }
+        "3" { Del-User }
+        "4" { Add-Admin }
+        "5" { Add-Group }
+        "6" { Quitter }
+        default { Write-Host "ERREUR"; SsMenu-Gestion }
+    }
+}
+
+# Sous-menu administration
+function SsMenu-Admin {
+    Clear-Host
+    Write-Host "Que voulez-vous faire?"
+    Write-Host " 1) Redémarrer le poste"
+    Write-Host " 2) Créer un répertoire"
+    Write-Host " 3) Modifier un répertoire"
+    Write-Host " 4) Supprimer un répertoire"
+    Write-Host " 5) Activer/Désactiver le pare-feu"
+    Write-Host " 6) Prise en main à distance (CLI)"
+    Write-Host " 7) Exécution de script sur la machine"
+    Write-Host " 8) Quitter"
+    $choix = Read-Host "Votre choix"
+    switch ($choix) {
+        "1" { Redemarrage }
+        "2" { Creer-Doss }
+        "3" { Modif-Doss }
+        "4" { Suppr-Doss }
+        "5" { Fire-Wall }
+        "6" { Ssh-Cible }
+        "7" { Write-Host "test" }
+        "8" { Quitter }
+        default { Write-Host "ERREUR"; SsMenu-Admin }
+    }
+}
+
+# Sous-menu recueil d'informations
+function SsMenu-Recueil {
+    Clear-Host
+    Write-Host "Quelles informations voulez-vous récupérer?"
+    Write-Host " 1)  DNS actuels"
+    Write-Host " 2)  Liste des interfaces"
+    Write-Host " 3)  Tables ARP"
+    Write-Host " 4)  Table de routage"
+    Write-Host " 5)  Version BIOS"
+    Write-Host " 6)  IP, masque et passerelle"
+    Write-Host " 7)  Version OS"
+    Write-Host " 8)  Carte graphique"
+    Write-Host " 9)  Uptime"
+    Write-Host " 10) Derniers évènements critiques"
+    Write-Host " 11) Quitter"
+    $choix = Read-Host "Votre choix"
+    switch ($choix) {
+        "1"  { dnsActuel }
+        "2"  { Interface }
+        "3"  { Arp }
+        "4"  { TableRoutage }
+        "5"  { VersBios }
+        "6"  { Ips }
+        "7"  { VersionOs }
+        "8"  { CarteGraph }
+        "9"  { DonneUptime }
+        "10" { EventCrit}
+        "11" { Quitter }
+        default { Write-Host "ERREUR"; SsMenu-Recueil }
+    }
+}
+
+# Sous-menu logs utilisateur
+function SsMenu-LogUser {
+    Clear-Host
+    Write-Host "Quelles informations voulez-vous?"
+    Write-Host " 1) Date de dernière connexion d'un utilisateur"
+    Write-Host " 2) Dernière modification de mdp"
+    Write-Host " 3) Liste des sessions ouvertes par l'utilisateur"
+    Write-Host " 4) Quitter"
+    $choix = Read-Host "Votre choix"
+    switch ($choix) {
+        "1" { Last-Connexion }
+        "2" { Last-ModifMdp }
+        "3" { List-OpenUser }
+        "4" { Quitter }
+        default { Write-Host "ERREUR"; SsMenu-LogUser }
+    }
+}
+
+# Sous-menu recherche logs
+function SsMenu-Recherche {
+    Clear-Host
+    Write-Host "Quelles informations de journalisation recherchez-vous?"
+    Write-Host " 1) Informations sur un utilisateur précis"
+    Write-Host " 2) Informations sur un ordinateur précis"
+    Write-Host " 3) Quitter"
+    $choix = Read-Host "Votre choix"
+    switch ($choix) {
+        "1" { Recherche-Utilisateur }
+        "2" { Recherche-Ordinateur }
+        "3" { Quitter }
+        default { Write-Host "ERREUR"; SsMenu-Recherche }
+    }
+}
+# Lancement du script
+Ask-Cible
+Connexion-SSH
+Debut-Journalisation
+Menu-Principal
