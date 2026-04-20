@@ -12,21 +12,21 @@
 |Activation du pare-feu |sudo -S ufw enable | Set-NetFirewallProfile -Profile Domain,Private,Public -Enabled True|
 |Prise de main à distance (CLI) | | |
 |Exécution de script sur la machine distante |ssh -t -o ConnectTimeout=5 "${user_cible}@${ip_cible}" "$*" 2>/dev/null |ssh -o ConnectTimeout=5 "${script:userCible}@${script:ipCible}" "$args" |
-|DNS actuels | | |
-|Liste des interfaces | | |
-|Table ARP | | |
-|Table de routage | | |
-|BIOS/UEFI version | | |
-|Adresse IP, masque, passerelle | | |
-|Version de l'OS | | |
-|Carte graphique | | |
-|uptime | | |
-|10 derniers événements critiques | | | 
-|Recherche des evenements dans le fichier log_evt.log pour un utilisateur | | |
-|Recherche des evenements dans le fichier log_evt.log pour un ordinateur | | |
-|Date de dernière connexion d’un utilisateur | | |
-|Date de dernière modification du mot de passe | | |
-|Liste des sessions ouvertes par l'utilisateur | | |
+|DNS actuels |cat /etc/resolv.conf - ipconfig /all | grep 'DNS' | Get-DnsClientServerAddress -AddressFamily IPv4 / Select-Object -ExpandProperty ServerAddresses|
+|Liste des interfaces |ip link show |Get-NetAdapter |
+|Table ARP | ip n|Get-NetNeighbor |
+|Table de routage | ip r | Get-NetRoute|
+|BIOS/UEFI version |sudo dmidecode -t bios | Get-CimInstance Win32_BIOS \ Select SMBIOSBIOSVersion, Manufacturer |
+|Adresse IP, masque, passerelle | ip a|ipconfig /all |
+|Version de l'OS |uname -a | [System.Environment]::OSVersion.VersionString|
+|Carte graphique |lspci \ grep -i 'vga |Get-CimInstance Win32_VideoController / Select-Object -ExpandProperty Name |
+|uptime |uptime -p |(Get-Date) - (Get-CimInstance Win32_OperatingSystem).LastBootUpTime |
+|10 derniers événements critiques | journalctl -p crit -n 10| Get-EventLog -LogName System -EntryType Error -Newest 10| 
+|Recherche des evenements dans le fichier log_evt.log pour un utilisateur |grep '$userRech' /var/log/log_evt.log |Select-String -Path 'C:\logs\log_evt.log' -Pattern '$userRech' |
+|Recherche des evenements dans le fichier log_evt.log pour un ordinateur |grep '$ordiRech' /var/log/log_evt.log |Select-String -Path 'C:\log_evt.log' -Pattern '$ordiRech' |
+|Date de dernière connexion d’un utilisateur | last -n 1 '$lastCo'| Get-LocalUser $lastCo \ Select-Object Name, LastLogon|
+|Date de dernière modification du mot de passe |chage -l '$modifMdp' |Get-LocalUser '$modifMdp' \ Select-Object Name, PasswordLastSet |
+|Liste des sessions ouvertes par l'utilisateur | w|query user |
 
 
 
