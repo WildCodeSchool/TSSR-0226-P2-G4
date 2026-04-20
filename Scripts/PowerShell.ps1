@@ -489,11 +489,12 @@ function l_supprDoss {
 function w_fireWall {
     $rep3 = Read-Host "Voulez-vous Activer ou Désactiver le pare-feu du poste distant $ipCible ? [A/D] " 
     if ($rep3 -eq "A") {         
-        sshCible "powershell Set-NetFirewallProfile -Profile Domain, Private, Public -Enabled 0"
+        sshCible "powershell Set-NetFirewallProfile -Profile Domain,Private,Public -Enabled 1"
         Write-Host "Le pare-feu cible a été activé"
+        Retour-Menu
     }    
     elseif ($rep3 -eq "D") {        
-        sshCible "powershell Set-NetFirewallProfile -Profile Domain, Private, Public -Enabled 0" 
+        sshCible "powershell Set-NetFirewallProfile -Profile Domain,Private,Public -Enabled 0" 
         Write-Host "Le pare-feu cible a été désactivé"
     }
     else {        
