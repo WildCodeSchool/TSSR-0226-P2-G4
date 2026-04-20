@@ -20,3 +20,12 @@ A. [Comment exécuter le script](#Comment-exécuter-le-script)
 # Screen du menu principal et ses 5 sous menus
 <img width="1920" height="543" alt="Capture d&#39;écran 2026-04-20 132204" src="https://github.com/user-attachments/assets/fd9f41b7-8422-48d2-a54e-f591f16f44d0" />
 
+# Menu Principal
+## Tapez sur la touche 1 pour accéder au menu gestion utilisateur
+<img width="956" height="257" alt="image" src="https://github.com/user-attachments/assets/1369b17e-8970-416e-8454-e768c6fb5e03" />
+
+## Tapez sur la touche 1 pour créer un nouveau utilisateur 
+<img width="960" height="293" alt="image" src="https://github.com/user-attachments/assets/85bdbc28-b30f-4a09-827b-f4a11d4702a8" />
+<img width="962" height="322" alt="image" src="https://github.com/user-attachments/assets/c4669d5c-f0dc-4829-adb8-6cb5bde0bc8c" />
+<img width="958" height="190" alt="image" src="https://github.com/user-attachments/assets/2d439d6c-c8d7-403b-a471-d50314626365" />
+
