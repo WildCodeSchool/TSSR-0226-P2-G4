@@ -76,7 +76,7 @@ function W_NewLocalUsers {
     testAdd
     foreach ($userName in $script:tableauNew) {
         sshCible "powershell Get-LocalUser -Name "$userName"" 2>$null
-        if ($LASTEXITCODE -eq TRUE) {
+        if ($LASTEXITCODE -eq 0) {
             Write-Host "Utilisateur $userName déjà existant"
         } 
         else {
@@ -92,7 +92,7 @@ function L_NewLocalUsers {
     testAdd
     foreach ($userName in $script:tableauNew) {
         sshCible "grep -q '^{$userName}:' /etc/passwd" 
-        if ($LASTEXITCODE -eq TRUE) {    
+        if ($LASTEXITCODE -eq 0) {    
             Write-Host "Utilisateur $userName déjà existant"
         } 
         else {
@@ -109,7 +109,7 @@ function L_ChangePassword {
     testAdd
     foreach ($userName in $script:tableauNew) {
         sshCible "grep -q '^{$userName}:' /etc/passwd" 
-        if ($LASTEXITCODE -eq TRUE) {    
+        if ($LASTEXITCODE -eq 0) {    
             sshCible "sudo -S passwd $userName" 
             Write-Host "Mot de passe de $userName changé avec succès" 
         }
@@ -125,7 +125,7 @@ function W_ChangePassword {
     testAdd
     foreach ($userName in $script:tableauNew) {
         sshCible "powershell Get-LocalUser -Name $userName" 2>$null
-        if ($LASTEXITCODE -eq TRUE) {    
+        if ($LASTEXITCODE -eq 0) {    
             sshCible "powershell `$pw = Read-Host -AsSecureString; Set-LocalUser -Name $userName -Password `$pw"
         }
         else {
@@ -140,7 +140,7 @@ function L_DelUser {
     testAdd
     foreach ($userName in $script:tableauNew) {
         sshCible "grep -q '^{$userName}:' /etc/passwd" 
-        if ($LASTEXITCODE -eq TRUE) {    
+        if ($LASTEXITCODE -eq 0) {    
             sshCible "sudo -S deluser $userName" 
             Write-Host "L'utilisateur $userName à bien été supprimé"
         }
@@ -156,7 +156,7 @@ function W_DelUser {
     testAdd
     foreach ($userName in $script:tableauNew) {
         sshCible "powershell Get-LocalUser -Name $userName" 2>$null
-        if ($LASTEXITCODE -eq TRUE) {    
+        if ($LASTEXITCODE -eq 0) {    
             sshCible "powershell Remove-LocalUser -Name $userName" 
             Write-Host "L'utilisateur $userName à bien été supprimé"
         }    
@@ -172,7 +172,7 @@ function L_AddAdmin {
     testAdd
     foreach ($userName in $script:tableauNew) {
         sshCible "grep -q '^{$userName}:' /etc/passwd"
-        if ($LASTEXITCODE -eq TRUE) {    
+        if ($LASTEXITCODE -eq 0) {    
             sshCible "sudo -S usermod -aG sudo $userName" 
             Write-Host "L'utilisateur $userName a été ajouté au groupe Admin"
         }    
@@ -203,7 +203,7 @@ function L_AddGroup {
     testAdd
     foreach ($userName in $script:tableauNew) {
         sshCible "grep -q '^{$userName}:' /etc/passwd"
-        if ($LASTEXITCODE -eq TRUE) {    
+        if ($LASTEXITCODE -eq 0) {    
             $groupName = Read-Host "Dans quel groupe voulez-vous ajouter $userName ? "
             sshCible "grep -q '^{$groupName}:' /etc/group"
             if ($LASTEXITCODE -eq FALSE) {    
@@ -231,7 +231,7 @@ function W_AddGroup {
     testAdd
     foreach ($userName in $script:tableauNew) {
         sshCible "powershell Get-LocalUser -Name $userName"
-        if ($LASTEXITCODE -eq TRUE) {    
+        if ($LASTEXITCODE -eq 0) {    
             $groupName = Read-Host "Dans quel groupe voulez-vous ajouter $userName ? "
             sshCible "powershell Get-LocalGroup -Name $groupName"
             if ($LASTEXITCODE -eq FALSE) {    
@@ -325,10 +325,10 @@ function l_creerDoss {
 function w_modifDoss {
     $absolPath = Read-Host "Où se situe le dossier à modifier : " 
     sshCible "powershell Test-Path -Path '$absolPath'" 2>$null
-    if ($LASTEXITCODE -eq TRUE) {
+    if ($LASTEXITCODE -eq 0) {
         $ancienDoss = Read-Host " Quel est le nom du dossier à modifier dans $absolPath ? " 
         sshCible "powershell Test-Path -Path '$absolPath\$ancienDoss'"
-        if ($LASTEXITCODE -eq TRUE) {                
+        if ($LASTEXITCODE -eq 0) {                
             $rep4 = Read-Host " Faut-il Renommer le dossier ou en Modifier les droits ? [R/M] "                
             if ($rep4 -eq "R") {
                 $newDoss = Read-Host "D'accord, quel est le nouveau nom du dossier ? "
@@ -360,10 +360,10 @@ function w_modifDoss {
 function l_modifDoss {
     $absolPath = Read-Host "Où se situe le dossier à modifier : " 
     sshCible "test -d '$absolPath'"
-    if ($LASTEXITCODE -eq TRUE) { 
+    if ($LASTEXITCODE -eq 0) { 
         $ancienDoss = Read-Host " Quel est le nom du dossier à modifier dans $absolPath ? " 
         sshCible "test -d '$absolPath/$ancienDoss'"
-        if ($LASTEXITCODE -eq TRUE) { 
+        if ($LASTEXITCODE -eq 0) { 
             $rep4 = Read-Host " Faut-il Renommer le dossier ou en Modifier les droits ? [R/M] " 
             if ($rep4 -eq "R") {
                 $newDoss = Read-Host "D'accord, quel est le nouveau nom du dossier ? " 
@@ -408,7 +408,7 @@ function w_supprDoss {
         $nomDoss = Read-Host "D'accord, quel est le nom du dossier à supprimer dans $absolPath ? "  
         $fullPath = "$absolPath/$nomDoss"                       
         sshCible "powershell Test-Path -Path '$fullPath'"
-        if ($LASTEXITCODE -eq TRUE) {                                      
+        if ($LASTEXITCODE -eq 0) {                                      
             $result = sshCible "powershell (Get-ChildItem '$fullPath' | Measure-Object).Count"
             $count = [int]$result    
             if ($count -eq 0) {
@@ -449,7 +449,7 @@ function l_supprDoss {
         $nomDoss = Read-Host "D'accord, quel est le nom du dossier à supprimer dans $absolPath ? " 
         $fullPath = "$absolPath/$nomDoss"   
         sshCible "test -d '$absolPath/$nomDoss'"
-        if ($LASTEXITCODE -eq TRUE) {
+        if ($LASTEXITCODE -eq 0) {
             $isEmpty = sshCible "[ -z ""\$(ls -A '$fullPath')"" ] && echo 'vrai' || echo 'faux'" 
             if ($isEmpty -eq "vrai") { 
                 sshCible "sudo -S rmdir '$fullPath'" 
@@ -476,7 +476,7 @@ function l_supprDoss {
 function w_fireWall {
     $rep3 = Read-Host "Voulez-vous Activer ou Désactiver le pare-feu du poste distant $ipCible ? [A/D] " 
     if ($rep3 -eq "A") {         
-        sshCible "powershell Set-NetFirewallProfile -Profile Domain, Private, Public -Enabled True"
+        sshCible "powershell Set-NetFirewallProfile -Profile Domain, Private, Public -Enabled 0"
         Write-Host "Le pare-feu cible a été activé"
     }    
     elseif ($rep3 -eq "D") {        
