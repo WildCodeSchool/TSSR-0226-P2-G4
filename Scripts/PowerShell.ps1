@@ -842,7 +842,6 @@ function AddLog {
 
 # Menu principal
 function Menu-Principal {
-    Clear-Host
     Write-Host "================================"
     Write-Host "         MENU PRINCIPAL"
     Write-Host "================================"
@@ -867,7 +866,6 @@ function Menu-Principal {
 
 # Sous-menu gestion utilisateurs
 function SsMenu-Gestion {
-    Clear-Host
     Write-Host "Quelle action voulez-vous effectuer?"
     Write-Host " 1) Création de compte"
     Write-Host " 2) Changement de mdp"
@@ -891,7 +889,6 @@ function SsMenu-Gestion {
 
 # Sous-menu administration
 function SsMenu-Admin {
-    Clear-Host
     Write-Host "Que voulez-vous faire?"
     Write-Host " 1) Redémarrer le poste"
     Write-Host " 2) Créer un répertoire"
@@ -919,7 +916,6 @@ function SsMenu-Admin {
 
 # Sous-menu recueil d'informations
 function SsMenu-Recueil {
-    Clear-Host
     Write-Host "Quelles informations voulez-vous récupérer?"
     Write-Host " 1)  DNS actuels"
     Write-Host " 2)  Liste des interfaces"
@@ -953,7 +949,6 @@ function SsMenu-Recueil {
 
 # Sous-menu logs utilisateur
 function SsMenu-LogUser {
-    Clear-Host
     Write-Host "Quelles informations voulez-vous?"
     Write-Host " 1) Date de dernière connexion d'un utilisateur"
     Write-Host " 2) Dernière modification de mdp"
@@ -973,7 +968,6 @@ function SsMenu-LogUser {
 
 # Sous-menu recherche logs
 function SsMenu-Recherche {
-    Clear-Host
     Write-Host "Quelles informations de journalisation recherchez-vous?"
     Write-Host " 1) Informations sur un utilisateur précis"
     Write-Host " 2) Informations sur un ordinateur précis"
@@ -992,7 +986,6 @@ function SsMenu-Recherche {
 # Retour menu
 function Retour-Menu {
     param($DernierMenu)
-    Clear-Host
     Write-Host "Que voulez-vous faire?"
     Write-Host " 1) Retourner au menu principal"
     Write-Host " 2) Retourner au dernier menu"
