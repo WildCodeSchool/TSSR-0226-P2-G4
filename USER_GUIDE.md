@@ -12,3 +12,5 @@ A. [Comment exécuter le script](#Comment-exécuter-le-script)
 4. [Explication de l'alias ssh cible](#Explication-de-l'alias-ssh-cible)   
 5. [FAQ](#FAQ)  
 
+# Comment exécuter le script
+<img width="961" height="198" alt="image" src="https://github.com/user-attachments/assets/d2f04338-3f02-4abc-ba2d-bfef3c7d7ec3" />
