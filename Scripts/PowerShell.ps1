@@ -75,7 +75,7 @@ function testAdd {
 function W_NewLocalUsers {
     testAdd
     foreach ($userName in $script:tableauNew) {
-        sshCible "powershell Get-LocalUser -Name "$userName"" 
+        sshCible "powershell Get-LocalUser -Name "$userName"" 2>$null
         if ($LASTEXITCODE -eq TRUE) {
             Write-Host "Utilisateur $userName déjà existant"
         } 
