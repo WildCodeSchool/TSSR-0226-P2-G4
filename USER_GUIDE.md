@@ -64,8 +64,11 @@
 ### Prise en main à distance (CLI) : Tapez sur la touche 6 pour prendre à distance le poste client
 <img width="959" height="404" alt="image" src="https://github.com/user-attachments/assets/28c14d47-2c63-4a8b-8199-dc2fa30a769d" />
 
-
-
+# Sous menu Recueil
+# Sous menu log user
+# Les 35 fonctions du script
+# Explication de l'alias ssh cible
+# FAQ
 
 
 
