@@ -98,7 +98,7 @@ function w_new_user {
     test_add
         for user_name in "${tableau_new[@]}"
         do
-            if ssh_cible "[[ Get-LocalUser -Name '$user_name' ]]"
+            if ssh_cible "Get-LocalUser -Name '$user_name'"
             then
                 echo "Utilisateur $user_name déjà existant"
             else
