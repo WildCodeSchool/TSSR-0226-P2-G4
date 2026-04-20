@@ -2,7 +2,7 @@
 
 1. [Debian → Windows 11](#Debian--Windows-11)
 2. [Debian → Ubuntu](#Debian--Ubuntu)
-3. [Commandes BASH & POWERSHELL 7](#Commandes BASH & POWERSHELL 7)
+3. [Commandes BASH & POWERSHELL 7](#Commandes-BASH-&-POWERSHELL-7)
 
 
 - Prérequis techniques à l’exécution des scripts
