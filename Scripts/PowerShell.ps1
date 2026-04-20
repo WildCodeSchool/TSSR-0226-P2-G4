@@ -125,8 +125,9 @@ function W_ChangePassword {
     testAdd
     foreach ($userName in $script:tableauNew) {
         sshCible "powershell Get-LocalUser -Name $userName" 2>$null
-        if ($LASTEXITCODE -eq 0) {    
-            sshCible "powershell `$pw = Read-Host -AsSecureString; Set-LocalUser -Name $userName -Password `$pw"
+        if ($LASTEXITCODE -eq 0) {   
+            $mdp = Read-Host "Entrez le nouveau Mot de passe: " -AsSecureString
+            sshCible "powershell net user '$userName' '$mdp'"
         }
         else {
             Write-Host "L'utilisateur $userName n'existe pas"
