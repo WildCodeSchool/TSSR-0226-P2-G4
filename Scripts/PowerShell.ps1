@@ -339,7 +339,13 @@ function w_modifDoss {
             elseif ($rep4 -eq "M") { 
                 # La réponse attendue est toute attachée Sous la forme rwx ou xw ou r 
                 $chxdroit = Read-Host "Quels droits voulez vous accorder sur le dossier $ancienDoss ? [r/w/x] "                                   
-                if ("$chxdroit" -match "^[rwx]+$") {
+                if ($chxdroit -match "^[rwx]+$") {
+                    # Droit par défaut
+                    $winDroit = "R" 
+                    if ($chxdroit -eq "rwx") { $winDroit = "M" }
+                    elseif ($chxdroit -eq "rw") { $winDroit = "W" }
+                    elseif ($chxdroit -eq "w") { $winDroit = "W" }
+                    elseif ($chxdroit -eq "x") { $winDroit = "RX" }
                     sshCible "powershell icacls '$absolPath\$ancienDoss' /grant '${script:userCible}:($chxdroit)'"
                     Write-Host "Droits mis à jour pour $ancienDoss"
                 }                                        
