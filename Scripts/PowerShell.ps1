@@ -867,7 +867,8 @@ function SsMenu-Gestion {
     Write-Host " 3) Suppression de compte"
     Write-Host " 4) Ajout à un groupe admin"
     Write-Host " 5) Ajout à un groupe"
-    Write-Host " 6) Quitter"
+    Write-Host " 6) Retour au menu Principal"
+    Write-Host " 7) Quitter"
     $choix = Read-Host "Votre choix"
     switch ($choix) {
         "1" { newUser }
@@ -875,7 +876,8 @@ function SsMenu-Gestion {
         "3" { delUser }
         "4" { addAdmin }
         "5" { addGroup }
-        "6" { Quitter }
+        "6" { Menu-Principal }
+        "7" { Quitter }
         default { Write-Host "ERREUR"; SsMenu-Gestion }
     }
 }
@@ -891,7 +893,8 @@ function SsMenu-Admin {
     Write-Host " 5) Activer/Désactiver le pare-feu"
     Write-Host " 6) Prise en main à distance (CLI)"
     Write-Host " 7) Exécution de script sur la machine"
-    Write-Host " 8) Quitter"
+    Write-Host " 8) Retour au menu Principal"
+    Write-Host " 9) Quitter"
     $choix = Read-Host "Votre choix"
     switch ($choix) {
         "1" { redemarrage }
@@ -901,7 +904,8 @@ function SsMenu-Admin {
         "5" { fireWall }
         "6" { sshCible }
         "7" { Write-Host "test" }
-        "8" { Quitter }
+        "8" { Menu-Principal }
+        "9" { Quitter }
         default { Write-Host "ERREUR"; SsMenu-Admin }
     }
 }
@@ -920,7 +924,8 @@ function SsMenu-Recueil {
     Write-Host " 8)  Carte graphique"
     Write-Host " 9)  Uptime"
     Write-Host " 10) Derniers évènements critiques"
-    Write-Host " 11) Quitter"
+    Write-Host " 11) Retour au menu Principal"
+    Write-Host " 12) Quitter"
     $choix = Read-Host "Votre choix"
     switch ($choix) {
         "1" { dnsActuel }
@@ -933,7 +938,8 @@ function SsMenu-Recueil {
         "8" { CarteGraph }
         "9" { DonneUptime }
         "10" { EventCrit }
-        "11" { Quitter }
+        "11" { Menu-Principal }
+        "12" { Quitter }
         default { Write-Host "ERREUR"; SsMenu-Recueil }
     }
 }
@@ -945,13 +951,15 @@ function SsMenu-LogUser {
     Write-Host " 1) Date de dernière connexion d'un utilisateur"
     Write-Host " 2) Dernière modification de mdp"
     Write-Host " 3) Liste des sessions ouvertes par l'utilisateur"
-    Write-Host " 4) Quitter"
+    Write-Host " 4) Retour au menu Principal"
+    Write-Host " 5) Quitter"
     $choix = Read-Host "Votre choix"
     switch ($choix) {
         "1" { lastConnexion }
         "2" { lastModifMdp }
         "3" { listOpenUser }
-        "4" { Quitter }
+        "4" { Menu-Principal }
+        "5" { Quitter }
         default { Write-Host "ERREUR"; SsMenu-LogUser }
     }
 }
@@ -962,12 +970,14 @@ function SsMenu-Recherche {
     Write-Host "Quelles informations de journalisation recherchez-vous?"
     Write-Host " 1) Informations sur un utilisateur précis"
     Write-Host " 2) Informations sur un ordinateur précis"
-    Write-Host " 3) Quitter"
+    Write-Host " 3) Retour au menu Principal"
+    Write-Host " 4) Quitter"
     $choix = Read-Host "Votre choix"
     switch ($choix) {
         "1" { rechercheUtilisateur }
         "2" { rechercheOrdinateur }
-        "3" { Quitter }
+        "3" { Menu-Principal }
+        "4" { Quitter }
         default { Write-Host "ERREUR"; SsMenu-Recherche }
     }
 }
