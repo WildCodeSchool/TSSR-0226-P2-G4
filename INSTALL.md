@@ -2,6 +2,7 @@
 
 1. [Debian → Windows 11](#Debian--Windows-11)
 2. [Debian → Ubuntu](#Debian--Ubuntu)
+3. [Commandes BASH & POWERSHELL 7](#Commandes BASH & POWERSHELL 7)
 
 
 - Prérequis techniques à l’exécution des scripts
@@ -101,5 +102,9 @@ cat authorized_keys
 
 ## Étape 4 — Tester depuis Debian
 <img width="1025" height="456" alt="connexion_debian_ubuntu" src="https://github.com/user-attachments/assets/79e1d7e1-2a13-4853-af35-e44ff9a04938" />
+
+# Commandes BASH & POWERSHELL 7
+
+
 
 
