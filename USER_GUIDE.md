@@ -13,4 +13,6 @@ A. [Comment exécuter le script](#Comment-exécuter-le-script)
 5. [FAQ](#FAQ)  
 
 # Comment exécuter le script
+## Placez-vous dans l'arborescence dans le dossier parent du script, dans le dossier Documents.  
+**Lancez le script en écrivant : .\nom_du_script et appuyez sur entrée, le script se lance.**
 <img width="961" height="198" alt="image" src="https://github.com/user-attachments/assets/d2f04338-3f02-4abc-ba2d-bfef3c7d7ec3" />
