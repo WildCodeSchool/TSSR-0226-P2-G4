@@ -245,14 +245,20 @@ function W_AddGroup {
                 }            
                 else {
                     Write-Host "D'accord, retour au menu principal"
+                    Menu-Principal
                 }
             }
             else {
-                Write-Host "L'utilisateur $userName n'existe pas"
+                sshCible "powershell Add-LocalGroupmember -Group $groupName -Member $userName" 
+                    Write-Host "L'utilisateur $userName a été ajouté avec succès au groupe $groupName"
+                }
             }
+        else {
+            Write-Host "L'utilisateur $userName n'existe pas"
         }
     }
 }
+
 
 # Choix de redémarrage Linux
 function L_Redemarrage {
@@ -331,22 +337,22 @@ function w_modifDoss {
         sshCible "powershell Test-Path -Path '$absolPath\$ancienDoss'"
         if ($LASTEXITCODE -eq 0) {                
             $rep4 = Read-Host " Faut-il Renommer le dossier ou en Modifier les droits ? [R/M] "                
-            if ($rep4 -eq "R") {
+            if ($rep4 -ceq "R") {
                 $newDoss = Read-Host "D'accord, quel est le nouveau nom du dossier ? "
                 sshCible "powershell Rename-Item -Path '$absolPath\$ancienDoss' -NewName '$newDoss'" 
                 Write-Host "Le dossier $ancienDoss a bien été renommé en $newDoss dans $absolPath"
             }
-            elseif ($rep4 -eq "M") { 
+            elseif ($rep4 -ceq "M") { 
                 # La réponse attendue est toute attachée Sous la forme rwx ou xw ou r 
                 $chxdroit = Read-Host "Quels droits voulez vous accorder sur le dossier $ancienDoss ? [r/w/x] "                                   
                 if ($chxdroit -match "^[rwx]+$") {
-                    # Droit par défaut
+                    # Droit par défaut Read
                     $winDroit = "R" 
-                    if ($chxdroit -eq "rwx") { $winDroit = "F" } # Full control
+                    if ($chxdroit -eq "rwx") { $winDroit = "F" }
                     elseif ($chxdroit -eq "rw") { $winDroit = "M" } # Modify: lire, écrire, supprimer
                     elseif ($chxdroit -eq "w") { $winDroit = "W" }
-                    elseif ($chxdroit -eq "x") { $winDroit = "RX" } # lire et exécuter
-                    sshCible "powershell icacls $absolPath\$ancienDoss /grant:r ${script:userCible}:{$winDroit}"
+                    elseif ($chxdroit -eq "x") { $winDroit = "RX" }
+                    sshCible "powershell icacls $absolPath\$ancienDoss /grant:r ${script:userCible}:$winDroit"
                     Write-Host "Droits mis à jour pour $ancienDoss"
                 }                                        
                 else {                                            
@@ -483,7 +489,7 @@ function l_supprDoss {
 function w_fireWall {
     $rep3 = Read-Host "Voulez-vous Activer ou Désactiver le pare-feu du poste distant $ipCible ? [A/D] " 
     if ($rep3 -eq "A") {         
-        sshCible "powershell Set-NetFirewallProfile -Profile Domain, Private, Public -Enabled 1"
+        sshCible "powershell Set-NetFirewallProfile -Profile Domain, Private, Public -Enabled 0"
         Write-Host "Le pare-feu cible a été activé"
     }    
     elseif ($rep3 -eq "D") {        
