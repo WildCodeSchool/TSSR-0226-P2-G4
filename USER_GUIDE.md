@@ -63,6 +63,9 @@
 <img width="959" height="404" alt="image" src="https://github.com/user-attachments/assets/28c14d47-2c63-4a8b-8199-dc2fa30a769d" />
 
 # Sous menu Recueil
+### DNS actuels : Tapez 1 pour voir vos DNS actuels
+<img width="956" height="212" alt="image" src="https://github.com/user-attachments/assets/4cbca2f4-3aa3-442b-8c71-2969959b8cdf" />
+
 # Sous menu log user
 # Les 35 fonctions du script
 # Explication de l'alias ssh cible
