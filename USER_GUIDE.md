@@ -16,3 +16,7 @@ A. [Comment exécuter le script](#Comment-exécuter-le-script)
 ## Placez-vous dans l'arborescence dans le dossier parent du script, dans le dossier Documents.  
 **Lancez le script en écrivant : .\nom_du_script et appuyez sur entrée, le script se lance.**
 <img width="961" height="198" alt="image" src="https://github.com/user-attachments/assets/d2f04338-3f02-4abc-ba2d-bfef3c7d7ec3" />
+
+# Screen du menu principal et ses 5 sous menus
+<img width="1920" height="543" alt="Capture d&#39;écran 2026-04-20 132204" src="https://github.com/user-attachments/assets/fd9f41b7-8422-48d2-a54e-f591f16f44d0" />
+
