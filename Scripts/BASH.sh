@@ -126,11 +126,12 @@ function l_change_password {
 
 function w_change_password {
     test_add
+        read -s -p "Saisissez le nouveau mot de passe pour $user_name : " new_pwd
         for user_name in "${tableau_new[@]}"
         do
             if ssh_cible "Get-LocalUser -Name '$user_name'" 2>/dev/null
             then
-                ssh_cible "$NewPwd = Read-Host -AsSecureString; Get-LocalUser -Name '$user_name' | Set-LocalUser -Password $NewPwd"
+                ssh_cible "\$NewPwd = ConvertTo-SecureString '$new_pwd' -AsPlainText -Force; Get-LocalUser -Name '$user_name' | Set-LocalUser -Password \$NewPwd"
             else
                 echo "L'utilisateur $user_name n'existe pas"
             fi
