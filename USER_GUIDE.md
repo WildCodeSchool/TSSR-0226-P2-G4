@@ -1,9 +1,9 @@
 | BACKLOG | BASH | POWERSHELL 7 |
 | :---: | :---: | :---: |
-|Création de compte utilisateur local | sudo -S adduser --allow-bad-names "$user_name" | |
-|Changement de mot de passe |sudo -S passwd "$user_name" | |
-|Suppression de compte utilisateur local |sudo -S deluser "$user_name" | |
-|Ajout à un groupe d'administration |sudo -S usermod -aG sudo "$user_name" | |
+|Création de compte utilisateur local | sudo -S adduser --allow-bad-names "$user_name" |New-LocalUser -Name $userName -NoPassword |
+|Changement de mot de passe |sudo -S passwd "$user_name" | `$pw = Read-Host -AsSecureString; Set-LocalUser -Name $userName -Password `$pw |
+|Suppression de compte utilisateur local |sudo -S deluser "$user_name" | Remove-LocalUser -Name '$user_name'|
+|Ajout à un groupe d'administration |sudo -S usermod -aG sudo "$user_name" |Add-LocalGroupmember -Group 'Administrators' -Member '$user_name' |
 |Ajout à un groupe |sudo -S usermod -aG $group_name '$user_name | Add-LocalGroupmember -Group '$group_name' -Member '$user_name'|
 |Redémarrage | sudo -S reboot|Restart-Computer -ComputerName '$ip_cible' -Force |
 |Création de répertoire | | |
