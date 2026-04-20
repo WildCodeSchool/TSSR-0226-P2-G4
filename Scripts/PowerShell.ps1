@@ -346,7 +346,7 @@ function w_modifDoss {
                     elseif ($chxdroit -eq "rw") { $winDroit = "W" }
                     elseif ($chxdroit -eq "w") { $winDroit = "W" }
                     elseif ($chxdroit -eq "x") { $winDroit = "RX" }
-                    sshCible "powershell icacls '$absolPath\$ancienDoss' /grant '${script:userCible}:{$winDroit}'"
+                    sshCible "powershell icacls $absolPath\$ancienDoss /grant:r ${script:userCible}:{$winDroit}"
                     Write-Host "Droits mis à jour pour $ancienDoss"
                 }                                        
                 else {                                            
