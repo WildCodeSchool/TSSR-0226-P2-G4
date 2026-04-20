@@ -342,10 +342,10 @@ function w_modifDoss {
                 if ($chxdroit -match "^[rwx]+$") {
                     # Droit par défaut
                     $winDroit = "R" 
-                    if ($chxdroit -eq "rwx") { $winDroit = "M" }
-                    elseif ($chxdroit -eq "rw") { $winDroit = "W" }
+                    if ($chxdroit -eq "rwx") { $winDroit = "F" } # Full control
+                    elseif ($chxdroit -eq "rw") { $winDroit = "M" } # Modify: lire, écrire, supprimer
                     elseif ($chxdroit -eq "w") { $winDroit = "W" }
-                    elseif ($chxdroit -eq "x") { $winDroit = "RX" }
+                    elseif ($chxdroit -eq "x") { $winDroit = "RX" } # lire et exécuter
                     sshCible "powershell icacls $absolPath\$ancienDoss /grant:r ${script:userCible}:{$winDroit}"
                     Write-Host "Droits mis à jour pour $ancienDoss"
                 }                                        
