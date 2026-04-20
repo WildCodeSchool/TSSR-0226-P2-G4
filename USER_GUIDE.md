@@ -11,12 +11,12 @@
 4. [Explication de l'alias ssh cible](#Explication-de-l'alias-ssh-cible)   
 5. [FAQ](#FAQ)  
 
-# 1. Comment exécuter le script
+# 1. # Comment exécuter le script
 ### Placez-vous dans l'arborescence dans le dossier parent du script, dans le dossier Documents.  
 **Lancez le script en écrivant : .\nom_du_script et appuyez sur entrée, le script se lance.**
 <img width="961" height="198" alt="image" src="https://github.com/user-attachments/assets/d2f04338-3f02-4abc-ba2d-bfef3c7d7ec3" />
 
-# 2. Menu Principal
+# 2. # Menu Principal
 ### Tapez sur la touche 1 pour accéder au menu gestion utilisateur
 <img width="956" height="257" alt="image" src="https://github.com/user-attachments/assets/1369b17e-8970-416e-8454-e768c6fb5e03" />
 
