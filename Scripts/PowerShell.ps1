@@ -91,7 +91,7 @@ function W_NewLocalUsers {
 function L_NewLocalUsers {
     testAdd
     foreach ($userName in $script:tableauNew) {
-        sshCible "grep -q '^{$userName}:' /etc/passwd"
+        sshCible "grep -q '^{$userName}:' /etc/passwd" 
         if ($LASTEXITCODE -eq TRUE) {    
             Write-Host "Utilisateur $userName déjà existant"
         } 
@@ -108,7 +108,7 @@ function L_NewLocalUsers {
 function L_ChangePassword {
     testAdd
     foreach ($userName in $script:tableauNew) {
-        sshCible "grep -q '^{$userName}:' /etc/passwd"
+        sshCible "grep -q '^{$userName}:' /etc/passwd" 
         if ($LASTEXITCODE -eq TRUE) {    
             sshCible "sudo -S passwd $userName" 
             Write-Host "Mot de passe de $userName changé avec succès" 
@@ -124,7 +124,7 @@ function L_ChangePassword {
 function W_ChangePassword {
     testAdd
     foreach ($userName in $script:tableauNew) {
-        sshCible "powershell Get-LocalUser -Name $userName"
+        sshCible "powershell Get-LocalUser -Name $userName" 2>$null
         if ($LASTEXITCODE -eq TRUE) {    
             sshCible "powershell `$pw = Read-Host -AsSecureString; Set-LocalUser -Name $userName -Password `$pw"
         }
@@ -139,7 +139,7 @@ function W_ChangePassword {
 function L_DelUser {
     testAdd
     foreach ($userName in $script:tableauNew) {
-        sshCible "grep -q '^{$userName}:' /etc/passwd"
+        sshCible "grep -q '^{$userName}:' /etc/passwd" 
         if ($LASTEXITCODE -eq TRUE) {    
             sshCible "sudo -S deluser $userName" 
             Write-Host "L'utilisateur $userName à bien été supprimé"
@@ -155,7 +155,7 @@ function L_DelUser {
 function W_DelUser {
     testAdd
     foreach ($userName in $script:tableauNew) {
-        sshCible "powershell Get-LocalUser -Name $userName"
+        sshCible "powershell Get-LocalUser -Name $userName" 2>$null
         if ($LASTEXITCODE -eq TRUE) {    
             sshCible "powershell Remove-LocalUser -Name $userName" 
             Write-Host "L'utilisateur $userName à bien été supprimé"
