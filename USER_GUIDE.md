@@ -21,7 +21,8 @@
 <img width="956" height="257" alt="image" src="https://github.com/user-attachments/assets/1369b17e-8970-416e-8454-e768c6fb5e03" />
 
 ## Tapez sur la touche 1 pour créer un nouveau utilisateur 
-<img width="958" height="245" alt="image" src="https://github.com/user-attachments/assets/e04dd925-62e2-4cb2-bb0d-db3eb2786e3e" />
+<img width="1915" height="487" alt="Capture d&#39;écran 2026-04-20 181944" src="https://github.com/user-attachments/assets/1b5bd1d5-e755-4b85-be82-a8dde46cb43c" />
+
 
 
 
