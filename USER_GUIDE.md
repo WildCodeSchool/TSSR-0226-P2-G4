@@ -11,16 +11,16 @@
 4. [Explication de l'alias ssh cible](#Explication-de-l'alias-ssh-cible)   
 5. [FAQ](#FAQ)  
 
-# 1. Comment exécuter le script
+# Comment exécuter le script
 ### Placez-vous dans l'arborescence dans le dossier parent du script, dans le dossier Documents.  
 **Lancez le script en écrivant : .\nom_du_script et appuyez sur entrée, le script se lance.**
 <img width="961" height="198" alt="image" src="https://github.com/user-attachments/assets/d2f04338-3f02-4abc-ba2d-bfef3c7d7ec3" />
 
-# 2. Menu Principal
+# Menu Principal
 ### Tapez sur la touche 1 pour accéder au menu gestion utilisateur
 <img width="956" height="257" alt="image" src="https://github.com/user-attachments/assets/1369b17e-8970-416e-8454-e768c6fb5e03" />
 
-# 2a. Sous menu Gestion utilisateur
+# Sous menu Gestion utilisateur
 ### Création de compte : Tapez sur la touche 1 pour créer un nouveau utilisateur 
 <img width="1915" height="487" alt="Capture d&#39;écran 2026-04-20 181944" src="https://github.com/user-attachments/assets/1b5bd1d5-e755-4b85-be82-a8dde46cb43c" />
 <img width="958" height="254" alt="image" src="https://github.com/user-attachments/assets/7562a0a1-34ae-44b2-bdd3-a86f3d80c670" />
@@ -38,7 +38,7 @@
 ### Ajout à un groupe : Tapez sur la touche 5 pour un utilisateur à un groupe
 <img width="959" height="554" alt="image" src="https://github.com/user-attachments/assets/a8c50fa9-f1c6-4aa1-a860-91c08bdadd93" />
 
-# 2b. Sous menu Administration 
+# Sous menu Administration 
 ### Redémarrer le poste : Tapez sur la touche 1 pour redémarrer le poste windows 11
 <img width="1897" height="612" alt="image" src="https://github.com/user-attachments/assets/9dc09b91-ac5d-45c9-966b-ffe864ab7808" />
 <img width="1902" height="612" alt="image" src="https://github.com/user-attachments/assets/5b2ab95d-eb83-4500-a462-64d214884fbe" />
