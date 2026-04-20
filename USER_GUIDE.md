@@ -55,7 +55,7 @@
 ### Supprimer un répertoire : Tapez sur la touche 4 pour supprimer un répertoire
 <img width="3256" height="1224" alt="supp_repertoire" src="https://github.com/user-attachments/assets/9d490930-c568-49b3-96ea-3238c7190727" />
 
-### Activer/Désactiver le pare-feu
+### Activer/Désactiver le pare-feu 
 
 
 
