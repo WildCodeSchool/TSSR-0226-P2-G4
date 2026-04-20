@@ -37,10 +37,10 @@ function connexionSsh {
     if ($test1 -eq "test") {
         $versionDeLOS = sshCible "uname -s" 2>$null
         if ($versionDeLOS -like "*Linux*") { 
-            $script:detectOs = 0  # Linux
+            $script:versionDeLOS = 0  # Linux
         }    
         else {
-            $script:detectOs = 1  # Windows
+            $script:versionDeLOS = 1  # Windows
         }
     }
     else {
@@ -506,7 +506,7 @@ function l_fireWall {
 # Date de dernière connexion d'un utilisateur
 function lastConnexion {
     $lastCo = Read-Host "Entrez le nom de l'utilisateur ? "  
-    if ($script:detectOs -eq 0) {
+    if ($script:versionDeLOS -eq 0) {
         sshCible "last -n 1 '$lastCo'" # linux
     }
     else {
@@ -517,7 +517,7 @@ function lastConnexion {
 # Date dernière modification password
 function lastModifMdp {
 $modifMdp = Read-Host "Entrez le nom de l'utilisateur du mdp ? "  
-    if ($script:detectOs -eq 0) {
+    if ($script:versionDeLOS -eq 0) {
         sshCible "chage -l '$modifMdp'" # linux
     }
     else {
@@ -528,7 +528,7 @@ $modifMdp = Read-Host "Entrez le nom de l'utilisateur du mdp ? "
 
 # Liste des sessions ouvertes par l'utilisateur
 function listOpenUser { 
-    if ($script:detectOs -eq 0) {
+    if ($script:versionDeLOS -eq 0) {
     sshCible "w" # linux
     }
     else {
@@ -544,7 +544,7 @@ function getTime {
 }
 # Création utilisateur
 function newUser {
-    if ($script:detectOs -eq 0) {
+    if ($script:versionDeLOS -eq 0) {
         L_NewLocalUsers
     }
     else {
@@ -555,7 +555,7 @@ function newUser {
 }
 # Changement de Mot de Passe
 function changePasswd {
-    if ($script:detectOs -eq 0) {
+    if ($script:versionDeLOS -eq 0) {
         L_ChangePassword
     }
     else {
@@ -566,7 +566,7 @@ function changePasswd {
 }
 # Suppression utilisateur
 function delUser {
-    if ($script:detectOs -eq 0) {
+    if ($script:versionDeLOS -eq 0) {
         L_DelUser
     }
     else {
@@ -577,7 +577,7 @@ function delUser {
 }
 # Ajout au groupe Admin
 function addAdmin {
-    if ($script:detectOs -eq 0) {
+    if ($script:versionDeLOS -eq 0) {
         L_AddAdmin
     }
     else {
@@ -588,7 +588,7 @@ function addAdmin {
 }
 # Ajout à un groupe utilisateur
 function addGroup {
-    if ($script:detectOs -eq 0) {
+    if ($script:versionDeLOS -eq 0) {
         L_AddGroup
     }
     else {
@@ -599,7 +599,7 @@ function addGroup {
 }
 # Redemarrage du pc distant
 function redemarrage {
-    if ($script:detectOs -eq 0) {
+    if ($script:versionDeLOS -eq 0) {
         L_Redemarrage
     }
     else {
@@ -610,7 +610,7 @@ function redemarrage {
 }
 # Création de répertoire
 function creerDoss {
-    if ($script:detectOs -eq 0) {
+    if ($script:versionDeLOS -eq 0) {
             l_creerDoss
     }
     else {
@@ -621,7 +621,7 @@ function creerDoss {
 }
 # Suppression de répertoire
 function supprDoss {
-    if ($script:detectOs -eq 0) {
+    if ($script:versionDeLOS -eq 0) {
         l_supprDoss
     }
     else {
@@ -632,7 +632,7 @@ function supprDoss {
 }
 # Modification de répertoire (changement de nom et droits d'accès)
 function modifDoss {
-    if ($script:boul_os -eq 0) {
+    if ($script:versionDeLOS -eq 0) {
         l_modifDoss
     }
     else {
@@ -643,7 +643,7 @@ function modifDoss {
 }
 # Contrôle du pare-feu
 function fireWall {
-    if ($script:boul_os -eq 0) {
+    if ($script:versionDeLOS -eq 0) {
         l_fireWall
     }
     else {
@@ -654,7 +654,7 @@ function fireWall {
 }
 
 function dnsActuel {
-    if ($script:boul_os -eq 0) {
+    if ($script:versionDeLOS -eq 0) {
         $dns = sshCible "cat /etc/resolv.conf"
     }
     else {
@@ -670,7 +670,7 @@ function dnsActuel {
 
 # ip et passerelle
 function Ips {
-    if ($script:boul_os -eq 0) {
+    if ($script:versionDeLOS -eq 0) {
         $reseau = sshCible "ip a"
     }
     else {
@@ -685,7 +685,7 @@ function Ips {
 
 #La version de l'OS de l'ordi cible
 function VersionOs {
-    if ($script:boul_os -eq 0) {
+    if ($script:versionDeLOS -eq 0) {
         $os = sshCible "uname -a"
     }
     else {
@@ -700,7 +700,7 @@ function VersionOs {
 
 #trouve le nom de la carte graphique
 function CarteGraph {
-    if ($script:boul_os -eq 0) {
+    if ($script:versionDeLOS -eq 0) {
         $carte = sshCible "lspci | grep -i 'vga'"
     }
     else {
@@ -715,7 +715,7 @@ function CarteGraph {
 
 #fonction uptime
 function DonneUptime {
-    if ($script:boul_os -eq 0) {
+    if ($script:versionDeLOS -eq 0) {
         $uptime = sshCible "uptime -p"
     }
     else {
@@ -730,7 +730,7 @@ function DonneUptime {
 
 #version BIOS
 function VersBios {
-    if ($script:boul_os -eq 0) {
+    if ($script:versionDeLOS -eq 0) {
         $bios = sshCible "sudo dmidecode -t bios"
     }
     else {
@@ -745,7 +745,7 @@ function VersBios {
 
 #Table Arp
 function Arp {
-    if ($script:boul_os -eq 0) {
+    if ($script:versionDeLOS -eq 0) {
         $arp = sshCible "ip n"
     }
     else {
@@ -760,7 +760,7 @@ function Arp {
 
 # evenements critiques
 function EventCrit {
-    if ($script:boul_os -eq 0) {
+    if ($script:versionDeLOS -eq 0) {
         $event = sshCible "journalctl -p crit -n 10"
     }
     else {
@@ -775,7 +775,7 @@ function EventCrit {
     
 #table de routage
 function TableRoutage {
-    if ($script:boul_os -eq 0) {
+    if ($script:versionDeLOS -eq 0) {
         $routage = sshCible "ip r"
     }
     else {
@@ -790,7 +790,7 @@ function TableRoutage {
 
 #liste des interfaces reseaux
 function Interface {
-    if ($script:boul_os -eq 0) {
+    if ($script:versionDeLOS -eq 0) {
         $interface = sshCible "ip link show"
     }
     else {
@@ -805,7 +805,7 @@ function Interface {
 # Recherche evenement par utilisateur
 function rechercheUtilisateur {
     $userRech = Read-Host "Entrez le nom de l'utilisateur pour la recherche des evenements:" 
-        if ($script:boul_os -eq 0) {    
+        if ($script:versionDeLOS -eq 0) {    
             sshCible "grep '$userRech' /var/log/log_evt.log"  
         }
         else {
@@ -816,7 +816,7 @@ function rechercheUtilisateur {
 # Recherche evenement par ordinateur
 function rechercheOrdinateur {
     $ordiRech = Read-Host "Entrez l'adresse IP pour la recherche des evenements:" ordi_rech
-        if ($script:boul_os -eq 0) {
+        if ($script:versionDeLOS -eq 0) {
             sshCible "grep '$ordiRech' /var/log/log_evt.log"  
         }
         else {
