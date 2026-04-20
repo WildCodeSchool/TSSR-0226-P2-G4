@@ -914,7 +914,7 @@ function SsMenu-Admin {
         "4" { supprDoss }
         "5" { fireWall }
         "6" { sshCible }
-        "7" { Write-Host "test" }
+        "7" { Write-Host "test"; SsMenu-Admin }
         "8" { Menu-Principal }
         "9" { Quitter }
         default { Write-Host "ERREUR"; SsMenu-Admin }
