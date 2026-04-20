@@ -98,12 +98,9 @@ function w_new_user {
     test_add
         for user_name in "${tableau_new[@]}"
         do
-        local test2=ssh_cible "Get-LocalUser -Name '$user_name'"
-            if [[ "$test2" -eq 0 ]] 
+            if [[ $(ssh_cible "Get-LocalUser -Name '$user_name'") -eq 0 ]] 2>/dev/null
             then
-                echo "Utilisateur $user_name déjà existant"
-            else
-                ssh_cible "New-LocalUser -Name '$user_name'" && echo "Utilisateur $user_name créé avec succès" 
+                ssh_cible "New-LocalUser -Name '$user_name' -NoPassword"
             fi
         done
 }
@@ -130,7 +127,7 @@ function w_change_password {
         read -s -p "Saisissez le nouveau mot de passe pour $user_name : " new_pwd
         for user_name in "${tableau_new[@]}"
         do
-            if ssh_cible "Get-LocalUser -Name '$user_name'" 2>/dev/null
+            if [[ $(ssh_cible "Get-LocalUser -Name '$user_name'") -eq 0 ]] 2>/dev/null
             then
                 ssh_cible "\$NewPwd = ConvertTo-SecureString '$new_pwd' -AsPlainText -Force; Get-LocalUser -Name '$user_name' | Set-LocalUser -Password \$NewPwd"
             else
@@ -160,7 +157,7 @@ function w_del_user {
     test_add
         for user_name in "${tableau_new[@]}"
         do
-            if ssh_cible "Get-LocalUser -Name '$user_name'" 2>/dev/null
+            if [[ $(ssh_cible "Get-LocalUser -Name '$user_name'") -eq 0 ]] 2>/dev/null
             then
                 ssh_cible "Remove-LocalUser -Name '$user_name'" && echo "L'utilisateur $user_name à bien été supprimé"
             else
@@ -190,7 +187,7 @@ function w_add_admin {
     test_add
         for user_name in "${tableau_new[@]}"
         do
-            if ssh_cible "Get-LocalUser -Name '$user_name'" 2>/dev/null
+            if [[ $(ssh_cible "Get-LocalUser -Name '$user_name'") -eq 0 ]] 2>/dev/null
             then
                 ssh_cible "Add-LocalGroupmember -Group 'Administrators' -Member '$user_name'" && echo "L'utilisateur $user_name a été ajouté avec succès au groupe Administrateur"
             else
@@ -231,7 +228,7 @@ function w_add_group {
     test_add
         for user_name in "${tableau_new[@]}"
         do
-            if ssh_cible "Get-LocalUser -Name '$user_name'"
+            if [[ $(ssh_cible "Get-LocalUser -Name '$user_name'") -eq 0 ]]
             then
                 read -p "Dans quel groupe voulez-vous ajouter $user_name ? " group_name
                     if ! ssh_cible "Get-LocalGroup -Name '$group_name'" 2>/dev/null
