@@ -235,9 +235,9 @@ function W_AddGroup {
         if ($LASTEXITCODE -eq 0) {    
             $groupName = Read-Host "Dans quel groupe voulez-vous ajouter $userName ? "
             sshCible "powershell Get-LocalGroup -Name $groupName"
-            if ($LASTEXITCODE -eq 0) {    
+            if ($LASTEXITCODE -eq 1) {    
                 $Rep = Read-Host "Le groupe choisi n'existe pas, voulez-vous le créer ? [o/n] "
-                If ($Rep -eq "o") {
+                if ($Rep -ceq "o") {
                     sshCible "powershell New-LocalGroup -Name $groupName"
                     Write-Host "Groupe $groupName créé"
                     sshCible "powershell Add-LocalGroupmember -Group $groupName -Member $userName" 
