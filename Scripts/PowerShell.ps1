@@ -206,7 +206,7 @@ function L_AddGroup {
         if ($LASTEXITCODE -eq 0) {    
             $groupName = Read-Host "Dans quel groupe voulez-vous ajouter $userName ? "
             sshCible "grep -q '^{$groupName}:' /etc/group"
-            if ($LASTEXITCODE -eq FALSE) {    
+            if ($LASTEXITCODE -eq 0) {    
                 $Rep = Read-Host "Le groupe choisi n'existe pas, voulez-vous le créer ? [o/n] "
                 If ($Rep -eq "o") {
                     sshCible "sudo -S groupadd $groupName" 
@@ -234,7 +234,7 @@ function W_AddGroup {
         if ($LASTEXITCODE -eq 0) {    
             $groupName = Read-Host "Dans quel groupe voulez-vous ajouter $userName ? "
             sshCible "powershell Get-LocalGroup -Name $groupName"
-            if ($LASTEXITCODE -eq FALSE) {    
+            if ($LASTEXITCODE -eq 0) {    
                 $Rep = Read-Host "Le groupe choisi n'existe pas, voulez-vous le créer ? [o/n] "
                 If ($Rep -eq "o") {
                     sshCible "powershell New-LocalGroup -Name $groupName"
@@ -289,7 +289,7 @@ function w_creerDoss {
             Write-Host "Le dossier $nomDoss a bien été créé dans $absolPath"                                 
         }
         else {
-            <# Action when all if and elseif conditions are false #>
+            <# Action when all if and elseif conditions are 0 #>
             Write-Host "D'accord, retour au menu principal"
         }
     }
@@ -480,7 +480,7 @@ function w_fireWall {
         Write-Host "Le pare-feu cible a été activé"
     }    
     elseif ($rep3 -eq "D") {        
-        sshCible "powershell Set-NetFirewallProfile -Profile Domain, Private, Public -Enabled False" 
+        sshCible "powershell Set-NetFirewallProfile -Profile Domain, Private, Public -Enabled 0" 
         Write-Host "Le pare-feu cible a été désactivé"
     }
     else {        
