@@ -280,7 +280,7 @@ function W_Redemarrage {
 # Création de répertoire Windows
 function w_creerDoss {
     $absolPath = Read-Host "Où voulez-vous créer votre dossier : " 
-    sshCible "powershell Test-Path -Path '$absolPath'" 
+    sshCible "powershell Test-Path -Path '$absolPath'" 2>$null
     if ($LASTEXITCODE -ne 0) {
         $rep1 = Read-Host " Le chemin vers le dossier n'existe pas, voulez-vous le créer ? [o/n] "                  
         if ("$rep1" -eq "o") {
@@ -324,7 +324,7 @@ function l_creerDoss {
 # Modification de répertoire (changement de nom ou de droits d'accès) Windows
 function w_modifDoss {
     $absolPath = Read-Host "Où se situe le dossier à modifier : " 
-    sshCible "powershell Test-Path -Path '$absolPath'"
+    sshCible "powershell Test-Path -Path '$absolPath'" 2>$null
     if ($LASTEXITCODE -eq TRUE) {
         $ancienDoss = Read-Host " Quel est le nom du dossier à modifier dans $absolPath ? " 
         sshCible "powershell Test-Path -Path '$absolPath\$ancienDoss'"
