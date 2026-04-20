@@ -1,4 +1,4 @@
-A. [Utilisation : comment exécuter le script](#Utilisation-:-comment-exécuter-le-script)  
+A. [Comment exécuter le script](#Comment-exécuter-le-script)  
 1. [Screen du menu principal et ses 5 sous menus](#Screen-du-menu-principal-et-ses-5-sous-menus) 
 2. [Menu Principal (6)](#Menu-Principal-(6))  
 2a. [Sous menu gestion (7)](#Sous-menu-gestion-(7))  
