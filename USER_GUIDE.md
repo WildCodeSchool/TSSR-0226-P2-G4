@@ -55,7 +55,11 @@
 ### Supprimer un répertoire : Tapez sur la touche 4 pour supprimer un répertoire
 <img width="3256" height="1224" alt="supp_repertoire" src="https://github.com/user-attachments/assets/9d490930-c568-49b3-96ea-3238c7190727" />
 
-### Activer/Désactiver le pare-feu 
+### Activer/Désactiver le pare-feu : Tapez sur la touche 5 pour activer le pare-feu Windows Defender
+<img width="1742" height="612" alt="image" src="https://github.com/user-attachments/assets/88b2d98b-15fe-4a33-a0d0-5e24ed4c151d" />
+
+
+
 
 
 
