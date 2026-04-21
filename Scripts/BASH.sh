@@ -673,7 +673,7 @@ function dns_actuel {
     echo "$dns" >> DNS_"$cibleordi"_"$date".txt
     echo "$dns"
 add_log "DNS"
-retour_menu ss_menu_receuil
+retour_menu ss_menu_recueil
 }
 
 # IP et passerelle
@@ -688,7 +688,7 @@ function passerelle_ip {
     echo "$reseau" >> reseau_"$cibleordi"_"$date".txt
     echo "$reseau"
 add_log "reseau"
-retour_menu ss_menu_receuil
+retour_menu ss_menu_recueil
 }
 
 # La version de l'OS de l'ordi cible
@@ -702,7 +702,7 @@ function version_OS {
     echo "$os" >> version_OS_"$cibleordi"_"$date".txt
     echo "$os"
 add_log "version_OS"
-retour_menu ss_menu_receuil
+retour_menu ss_menu_recueil
 }
 
 # Trouve le nom de la carte graphique
@@ -717,7 +717,7 @@ function carte_graph {
     echo "$carte" >> carte_"$cibleordi"_"$date".txt
     echo "$carte"
 add_log "carte"
-retour_menu ss_menu_receuil
+retour_menu ss_menu_recueil
 }
 
 # Fonction uptime
@@ -731,7 +731,7 @@ function  donne_uptime {
     echo "$var1" >> uptime_"$cibleordi"_"$date".txt
     echo "$var1"
 add_log "uptime"
-retour_menu ss_menu_receuil
+retour_menu ss_menu_recueil
 }
 
 # Version BIOS
@@ -746,7 +746,7 @@ function vers_bios {
     echo "$bios" >> bios_"$cibleordi"_"$date".txt
     echo "$bios"
 add_log "bios"
-retour_menu ss_menu_receuil
+retour_menu ss_menu_recueil
 }
 
 # Table ARP
@@ -760,7 +760,7 @@ function table_arp {
     echo "$var_arp" >> arp_"$cibleordi"_"$date".txt
     echo "$var_arp"
 add_log "arp"
-retour_menu ss_menu_receuil
+retour_menu ss_menu_recueil
 }
 
 # Evènements critiques
@@ -774,7 +774,7 @@ function event_crit {
     echo "$event" >> critiques_"$cibleordi"_"$date".txt
     echo "$event"
 add_log "critiques"
-retour_menu ss_menu_receuil
+retour_menu ss_menu_recueil
 }
 
 # Table de routage
@@ -788,7 +788,7 @@ function table_routage {
     echo "$routage"
     echo "$routage" >> routage_"$cibleordi"_"$date".txt
 add_log "routage"
-retour_menu ss_menu_receuil
+retour_menu ss_menu_recueil
 }
 
 # Liste des interfaces reseaux
@@ -802,7 +802,7 @@ function interfaces {
     echo "$interfaces" >> interfaces_"$cibleordi"_"$date".txt
     echo "$interfaces"
 add_log "interfaces"
-retour_menu ss_menu_receuil
+retour_menu ss_menu_recueil
 }
 
 # Recherche evenement par utilisateur
@@ -835,13 +835,13 @@ function menu_principal {
     echo "================================"
     echo "         MENU PRINCIPAL"
     echo "================================"
-    echo -e "Que voulez-vous faire?\n 1)Gestion utilisateur \n 2)Administration \n 3)Receuil d'information \n 4)Consultation des logs \n 5)Surveillance Utilisation du Script\n 6)Quitter"
+    echo -e "Que voulez-vous faire?\n 1)Gestion utilisateur \n 2)Administration \n 3)recueil d'information \n 4)Consultation des logs \n 5)Surveillance Utilisation du Script\n 6)Quitter"
     local choix
     read choix
         case $choix in 
             1)  ss_menu_gestion ;;
             2)  ss_menu_Admin  ;;
-            3)  ss_menu_receuil ;;
+            3)  ss_menu_recueil ;;
             4)  ss_menu_recherche ;;
             5)  ss_menu_log_user ;;
             6)  quitter     ;;
@@ -886,7 +886,7 @@ function ss_menu_Admin {
             ss_menu_Admin ;;
         esac
 }
-function ss_menu_receuil {
+function ss_menu_recueil {
     clear
     echo -e "Quelles informations voulez vous recuperer?\n 1)DNS actuels\n 2)Liste des interfaces\n 3)Tables ARP\n 4)Table de routage\n 5)Version BIOS\n 6)IP,masque et passerelle\n 7)Version OS"
     echo -e " 8)Carte graphique\n 9)Uptime\n 10)Derniers evenements critiques\n 11)Retour au Menu Principal\n 12)Quitter"
@@ -906,7 +906,7 @@ function ss_menu_receuil {
             11)menu_principal ;;
             12) quitter ;;
             *) echo "ERREUR" 
-            ss_menu_receuil ;;
+            ss_menu_recueil ;;
         esac
 }
 function ss_menu_recherche {
