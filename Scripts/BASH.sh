@@ -507,7 +507,7 @@ $modif_mdp = Read-Host "Entrez le nom de l'utilisateur du mdp ? " modif_mdp
 
 # Liste des sessions ouvertes par l'utilisateur
 function w_list_open_user { 
-    ssh_cible w
+    ssh_cible "query user"
     retour_menu ss_menu_log_user
 }
 
@@ -923,7 +923,7 @@ function ss_menu_log_user {
         case $choix in 
             1)last_connexion ;;
             2)last_modif_mdp ;;
-            3)list_open_user ;;
+            3)last_list_open_user ;;
             4)menu_principal ;;
             5)quitter ;;
             *)echo "ERREUR" 
