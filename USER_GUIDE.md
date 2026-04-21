@@ -16,8 +16,8 @@ B. [Debian → Ubuntu](#Debian--Ubuntu)
 2d. [Sous menu recherche](#Sous-menu-recherche)    
 2e. [Sous menu log user](#Sous-menu-log-user)
 
-3. [Explication de l'alias ssh cible](#Explication-de-l'alias-ssh-cible)   
-5. [FAQ](#FAQ)  
+3. [Explication de l'alias ssh cible](#Explication-de-l'alias-ssh-cible)
+4. [FAQ](#FAQ)
 
 # Windows Server → Windows 11
 # Comment exécuter le script
@@ -124,12 +124,50 @@ B. [Debian → Ubuntu](#Debian--Ubuntu)
 -------------------------------------------------------------------------------------------------
 
 # Debian → Ubuntu
+# Comment exécuter le script
+### Placez-vous dans l'arborescence à la racine.  
+**Lancez le script en écrivant : bash [nom_du_script] et appuyez sur entrée, le script se lance.**
+<img width="1922" height="308" alt="Capture d&#39;écran 2026-04-21 214251" src="https://github.com/user-attachments/assets/e54a0a3a-9606-4621-aa37-bb8869519909" />
+
+# Menu Principal
+<img width="958" height="209" alt="image" src="https://github.com/user-attachments/assets/681d3d4b-5c50-4202-b3e4-cf1a7a28930c" />
+
+# Sous menu Gestion utilisateur
+### Création de compte : Tapez sur la touche 1 pour créer un nouveau utilisateur 
+<img width="959" height="499" alt="image" src="https://github.com/user-attachments/assets/592b5beb-ff68-4f64-b4a1-6e3e1162d636" />
+<img width="962" height="170" alt="image" src="https://github.com/user-attachments/assets/6a4f0ea5-f780-4851-b8af-321a246e876d" />
+
+### Changement de mdp : Tapez sur la touche 2 pour changer de mdp
+<img width="1920" height="673" alt="1-2-changement-mdp" src="https://github.com/user-attachments/assets/807f163e-dd68-4ddf-b73e-c09756b8fe22" />
+
+### Suppression de compte : Tapez sur la touche 3 pour supprimer un compte
+<img width="955" height="269" alt="image" src="https://github.com/user-attachments/assets/cc027823-d319-4fa5-a3fa-f1ec232bee56" />
+
+### Ajout à un groupe admin : Tapez sur la touche 4 pour ajouter l'utilisateur à un compte admin
+<img width="959" height="281" alt="image" src="https://github.com/user-attachments/assets/4df73674-e891-4a2c-846d-4a66aa826014" />
+
+### Ajout à un groupe : Tapez sur la touche 5 pour un utilisateur à un groupe
+<img width="960" height="173" alt="image" src="https://github.com/user-attachments/assets/8973607c-6cb4-4ad9-a566-0e081ca8763d" />
+
+# Sous menu Administration 
+### Redémarrer le poste : Tapez sur la touche 1 pour redémarrer le poste windows 11
+<img width="3815" height="1284" alt="2-1-redemarrage-pc-graphique" src="https://github.com/user-attachments/assets/d5f22604-2a55-46d0-8264-450bae8c49ae" />
+<img width="3820" height="1284" alt="2-1-redemarrage-pc" src="https://github.com/user-attachments/assets/875e25b4-d63c-4737-b6a0-0c11f7e62502" />
+
+### Créer un répertoire : Tapez sur la touche 2 pour créer un répertoire
+<img width="1451" height="481" alt="image" src="https://github.com/user-attachments/assets/d475dae0-406a-4a6d-9e56-8f8b437c7a3e" />
+
+### Modifier un répertoire : Tapez sur la touche 3 pour modifier le nom d'un répertoire [R]
+<img width="1451" height="483" alt="image" src="https://github.com/user-attachments/assets/dc1b0ec1-8e6e-4453-94b5-0cf4373d9f09" />
+
+### Modifer un répertoire : Tapez sur la touche 3 pour modfier les droits d'un répertoire en tapant [M]
+
+
 
 
 
 
 # Explication de l'alias ssh cible
-
 # FAQ
 
 
