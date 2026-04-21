@@ -30,7 +30,7 @@ function ask_cible {
     echo -e "Bonjour et bienvenue sur ce script d'administration \n"
     read -p "Quelle est l'ip de la machine cliente?  Veuillez rentrer une ip correcte sous la forme **.**.**.**" ip_cible
     test_ip
-    read -p "Veuillez rentrer le nom exacte de l'utilisateur cible  " user_cible
+    read -p "Veuillez rentrer le nom exacte de l'utilisateur cible : " user_cible
 }
 
 # Prépare un alias pour la connexion ssh
@@ -429,7 +429,7 @@ function l_modif_doss {
                                         read -p "Quels droits voulez vous accorder sur le dossier $ancien_doss ? [r/w/x] " chxdroit
                                             if [[ "$chxdroit" =~ ^[rwx]+$ ]]
                                                 then
-                                                    ssh_cible "sudo -S chmod u+$chxdroit '$absol_path/$ancien_doss'"
+                                                    ssh_cible "sudo -S chmod u+$chxdroit '$absol_path/$ancien_doss'" && echo "Les droits $chxdroit ont été accordés avec succès au dossier $ancien_doss"
                                                 else
                                                     echo "Ce type de droit n'existe pas"
                                             fi
