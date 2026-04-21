@@ -684,7 +684,7 @@ function dnsActuel {
     }
     else {
         # Correction : Get-DnsClientServerAddress (sans le 's' à Client)
-        $dns = sshCible "powershell -Command ""Get-DnsClientServerAddress -AddressFamily IPv4 | Select-Object -ExpandProperty ServerAddresses""" 
+        $dns = sshCible "powershell -Command "Get-DnsClientServerAddress -AddressFamily IPv4 | Select-Object -ExpandProperty ServerAddresses"" 
     }
     Write-Host "DNS trouvé : $dns"
     getTime
@@ -756,7 +756,8 @@ function DonneUptime {
 #version BIOS
 function VersBios {
     if ($script:versionDeLOS -eq 0) {
-        $bios = sshCible "sudo dmidecode -t bios"
+        $Inter = "sudo -S dmidecode -t bios"
+        $bios = sshCible "$Inter"
     }
     else {
         $bios = sshCible "powershell -Command ""Get-CimInstance Win32_BIOS | Select SMBIOSBIOSVersion, Manufacturer"""
