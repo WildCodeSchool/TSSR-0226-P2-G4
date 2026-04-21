@@ -93,16 +93,11 @@
 ### Derniers évènements critiques : Tapez sur la touche 10 pour récupérer les derniers évènements critiques
 <img width="961" height="601" alt="image" src="https://github.com/user-attachments/assets/22aa7d46-bbdc-4a29-91fc-1d6172b52e8d" />
 
+### Informations sur un utilisateur précis : Tapez 1 pour récupérer l'information sur un utilisateur précis
+<img width="959" height="344" alt="image" src="https://github.com/user-attachments/assets/2d5524b8-7700-4958-b8e0-d17d0acdd761" />
 
-
-
-
-
-
-
-
-### 
-
+### Informations sur ordinateur précis : Tapez 2 pour récupérer l'information sur un ordinateur précis
+<img width="1920" height="574" alt="4-2-information-ordinateur png" src="https://github.com/user-attachments/assets/5c1b7bb3-e2f9-49a6-aecf-3e6b57ba4bfc" />
 
 
 # Sous menu log user
