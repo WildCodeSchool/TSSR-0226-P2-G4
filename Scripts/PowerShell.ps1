@@ -1,3 +1,4 @@
+
 function Test-AdminContext {
     $UserIsAdmin = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")
 
@@ -108,9 +109,11 @@ function L_NewLocalUsers {
 function L_ChangePassword {
     testAdd
     foreach ($userName in $script:tableauNew) {
-        $commande1 = "grep -q '^{$userName}:' /etc/passwd"
+        $commande1 = "grep -q '^${userName}:' /etc/passwd"
         sshCible $commande1
-        if ($LASTEXITCODE -eq 1) {    
+        Write-Host "Debug : $LASTEXITCODE"
+        if ($LASTEXITCODE -eq 0) {  
+            Write-Host "arrrrrrrrrrrrraaarr"  
             sshCible "sudo -S passwd $userName" 
             Write-Host "Mot de passe de $userName changé avec succès" 
         }
@@ -174,7 +177,7 @@ function L_AddAdmin {
     testAdd
     foreach ($userName in $script:tableauNew) {
         sshCible "grep -q '^{$userName}:' /etc/passwd"
-        if ($LASTEXITCODE -eq 1) {    
+        if ($LASTEXITCODE -eq 0) {    
             sshCible "sudo -S usermod -aG sudo $userName" 
             Write-Host "L'utilisateur $userName a été ajouté au groupe Admin"
         }    
@@ -204,7 +207,7 @@ function W_AddAdmin {
 function L_AddGroup {
     testAdd
     foreach ($userName in $script:tableauNew) {
-            $commande1 = "grep -q '^${$userName}:' /etc/passwd"
+        $commande1 = "grep -q '^${userName}:' /etc/passwd"
         sshCible $commande1
         if ($LASTEXITCODE -eq 1) {    
             $groupName = Read-Host "Dans quel groupe voulez-vous ajouter $userName ? "
@@ -771,9 +774,10 @@ function Arp {
     else {
         $arp = sshCible "Get-NetNeighbor"
     }
-    Write-Host "$($arp)"
+    $arp
     getTime
-    Add-Content -Path "Arp_${cibleordi}_${script:date}.txt" -Value $arp
+    $arpText = $arp | Out-String
+    Add-Content -Path "Arp_${cibleordi}_${script:date}.txt" -Value $arpText
     AddLog -Arg "Arp"
     SsMenu-Recueil
 }
