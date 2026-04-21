@@ -744,6 +744,7 @@ retour_menu ss_menu_receuil
 function vers_bios {
     if [[ $detect_os -eq 0 ]]
         then
+            echo "Entrez le mdp sudo: "
             local bios=$(ssh_cible "sudo -S dmidecode -t bios system")
         else
             local bios=$(ssh_cible "Get-CimInstance Win32_BIOS | Select-Object SMBIOSBIOSVersion, Manufacturer, ReleaseDate")
