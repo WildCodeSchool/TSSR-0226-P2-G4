@@ -388,7 +388,7 @@ function l_modifDoss {
         if ($LASTEXITCODE -eq 0) { 
             $rep4 = Read-Host " Faut-il Renommer le dossier ou en Modifier les droits ? [R/M] " 
             if ($rep4 -eq "R") {
-                $newDoss = Read-Host "D'accord, quel est le nouveau nom du dossier ? " 
+                $newDoss = Read-Host "D'accord, quel est le nouveau nom du dossier ? "
                 sshCible "sudo -S mv '$absolPath/$ancienDoss' '$absolPath/$newDoss'" 
                 Write-Host "Le dossier $ancienDoss a bien été renommé en $newDoss dans $absolPath"
             }
@@ -458,6 +458,7 @@ function w_supprDoss {
 function l_supprDoss {
     $absolPath = Read-Host "Où se trouve le dossier à supprimer ? " 
     sshCible "test -d '$absolPath'"
+    Write-Host "debug: $LASTEXITCODE"
     if ($LASTEXITCODE -ne 0) {    
         $rep1 = Read-Host " Le chemin vers le dossier n'existe pas, voulez-vous rentrer un autre chemin ? [o/n] " 
         if ($rep1 -eq "o") {
@@ -472,7 +473,8 @@ function l_supprDoss {
         $fullPath = "$absolPath/$nomDoss"   
         sshCible "test -d '$absolPath/$nomDoss'"
         if ($LASTEXITCODE -eq 0) {
-            $isEmpty = sshCible "[ -z ""\$(ls -A '$fullPath')"" ] && echo 'vrai' || echo 'faux'" 
+            $varIntermediaire = '[[ -z "$(ls -A ' + "'$fullPath'" + ')" ]] && echo vrai || echo faux'
+            $isEmpty = sshCible $varIntermediaire
             if ($isEmpty -eq "vrai") { 
                 sshCible "sudo -S rmdir '$fullPath'" 
                 Write-Host "Le dossier $nomDoss a bien été supprimé dans $absolPath"
