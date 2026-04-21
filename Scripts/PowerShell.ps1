@@ -141,7 +141,7 @@ function L_DelUser {
     testAdd
     foreach ($userName in $script:tableauNew) {
         sshCible "grep -q '^{$userName}:' /etc/passwd" 
-        if ($LASTEXITCODE -eq 0) {    
+        if ($LASTEXITCODE -eq 1) {    
             sshCible "sudo -S deluser $userName" 
             Write-Host "L'utilisateur $userName à bien été supprimé"
         }
@@ -173,7 +173,7 @@ function L_AddAdmin {
     testAdd
     foreach ($userName in $script:tableauNew) {
         sshCible "grep -q '^{$userName}:' /etc/passwd"
-        if ($LASTEXITCODE -eq 0) {    
+        if ($LASTEXITCODE -eq 1) {    
             sshCible "sudo -S usermod -aG sudo $userName" 
             Write-Host "L'utilisateur $userName a été ajouté au groupe Admin"
         }    
@@ -203,13 +203,15 @@ function W_AddAdmin {
 function L_AddGroup {
     testAdd
     foreach ($userName in $script:tableauNew) {
-        sshCible "grep -q '^{$userName}:' /etc/passwd"
-        if ($LASTEXITCODE -eq 0) {    
+            $commande1 = "grep -q '^${$userName}:' /etc/passwd"
+        sshCible $commande1
+        if ($LASTEXITCODE -eq 1) {    
             $groupName = Read-Host "Dans quel groupe voulez-vous ajouter $userName ? "
-            sshCible "grep -q '^{$groupName}:' /etc/group"
-            if ($LASTEXITCODE -eq 0) {    
+            $commande2 = "grep -q '^${$groupName}:' /etc/group"
+            sshCible $commande2
+            if ($LASTEXITCODE -eq 1) {    
                 $Rep = Read-Host "Le groupe choisi n'existe pas, voulez-vous le créer ? [o/n] "
-                If ($Rep -eq "o") {
+                If ($Rep -ceq "o") {
                     sshCible "sudo -S groupadd $groupName" 
                     Write-Host "Groupe $groupName créé"
                     sshCible "sudo -S usermod -aG $groupName $userName"
@@ -220,9 +222,12 @@ function L_AddGroup {
                 }
             }
             else {
-                Write-Host "L'utilisateur $userName n'existe pas"
+                sshCible "sudo -S usermod -aG $groupName $userName"
             }
         }
+        else {
+                Write-Host "L'utilisateur $userName n'existe pas"
+            }
     }
 }
 
