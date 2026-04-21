@@ -398,7 +398,7 @@ function w_modif_doss {
                                         read -p "Quels droits voulez vous accorder sur le dossier $ancien_doss ? [r/w/x] " chxdroit
                                             if [[ "$chxdroit" =~ ^[rwx]+$ ]]
                                                 then 
-                                                        ssh_cible "powershell.exe -Command \ 'icacls '$absol_path\\$ancien_doss' /grant '${user_name}:({$chxdroit})''"
+                                                        ssh_cible "powershell.exe -Command \ 'icacls '$absol_path\\$ancien_doss' /grant '${user_name}:({$chxdroit})''" && echo "Les droits $chxdroit ont été accordés avec succès au dossier $ancien_doss"
                                                 else
                                                     echo "Ce type de droit n'existe pas"
                                             fi
