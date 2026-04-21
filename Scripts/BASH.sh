@@ -945,7 +945,7 @@ function ss_menu_recherche {
         esac
 }
 function retour_menu {
-    echo -e "Que voulez vous faire?\n 1)Retourner au menu principal\n 2)Retourner au dernier menu\n 3)Quitter"
+    echo -e "Que voulez vous faire?\n 1)Retourner au menu Principal\n 2)Retourner au menu Précédent\n 3)Quitter"
     local choix
     local fonction="$1"
     read choix
