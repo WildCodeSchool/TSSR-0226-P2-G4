@@ -9,14 +9,12 @@ A. [Windows Server → Windows 11](#Windows-Server--Windows-11)
 
 B. [Debian → Ubuntu](#Debian--Ubuntu)
 1. [Comment exécuter le script](#Comment-exécuter-le-script)
-2. [Menu Principal](#Menu-Principal) 
+2. [Menu Principal](#Menu-Principal)  
 2a. [Sous menu Gestion utilisateur](#Sous-menu-gestion-utilisateur)  
 2b. [Sous menu Administration](#Sous-menu-Administration)  
 2c. [Sous menu Recueil](#Sous-menu-Recueil)    
 2d. [Sous menu recherche](#Sous-menu-recherche)    
 2e. [Sous menu log user](#Sous-menu-log-user)
-
-
 
 3. [Explication de l'alias ssh cible](#Explication-de-l'alias-ssh-cible)   
 5. [FAQ](#FAQ)  
