@@ -690,7 +690,7 @@ function dnsActuel {
     getTime
     Add-Content -Path "DNS_${cibleordi}_${script:date}.txt" -Value $dns
     AddLog -Arg "DNS"
-    SsMenu-Recueil
+    Retour-Menu SsMenu-Recueil
 }
 
 # ip et passerelle
@@ -705,7 +705,7 @@ function Ips {
     getTime
     Add-Content -Path "Reseau_${cibleordi}_${script:date}.txt" -Value $reseau
     AddLog -Arg "reseau"
-    SsMenu-Recueil
+    Retour-Menu SsMenu-Recueil
 }
 
 #La version de l'OS de l'ordi cible
@@ -720,7 +720,7 @@ function VersionOs {
     getTime # Ajout de l'appel pour peupler $script:date
     Add-Content -Path "VersionOS_${cibleordi}_${script:date}.txt" -Value $os
     AddLog -Arg "Os"
-    SsMenu-Recueil
+    Retour-Menu SsMenu-Recueil
 }
 
 #trouve le nom de la carte graphique
@@ -735,7 +735,7 @@ function CarteGraph {
     getTime
     Add-Content -Path "GPU_${cibleordi}_${script:date}.txt" -Value $carte
     AddLog -Arg "Carte"
-    SsMenu-Recueil
+    Retour-Menu SsMenu-Recueil
 }
 
 #fonction uptime
@@ -750,7 +750,7 @@ function DonneUptime {
     getTime # Ajout de l'appel pour peupler $script:date
     Add-Content -Path "Uptime_${cibleordi}_${script:date}.txt" -Value $uptime
     AddLog -Arg "Uptime"
-    SsMenu-Recueil
+    Retour-Menu SsMenu-Recueil
 }   
 
 #version BIOS
@@ -766,7 +766,7 @@ function VersBios {
     getTime
     Add-Content -Path "Bios_${cibleordi}_${script:date}.txt" -Value $bios
     AddLog -Arg "Bios"
-    SsMenu-Recueil
+    Retour-Menu SsMenu-Recueil
 }
 
 #Table Arp
@@ -781,7 +781,7 @@ function Arp {
     getTime
     Add-Content -Path "Arp_${cibleordi}_${script:date}.txt" -Value $arp
     AddLog -Arg "Arp"
-    SsMenu-Recueil
+    Retour-Menu SsMenu-Recueil
 }
 
 # evenements critiques
@@ -796,7 +796,7 @@ function EventCrit {
     getTime
     Add-Content -Path "Event_${cibleordi}_${script:date}.txt" -Value $event
     AddLog -Arg "Event"
-    SsMenu-Recueil
+    Retour-Menu SsMenu-Recueil
 }
     
 #table de routage
@@ -811,7 +811,7 @@ function TableRoutage {
     getTime
     Add-Content -Path "Routage_${cibleordi}_${script:date}.txt" -Value $routage
     AddLog -Arg "Routage"
-    SsMenu-Recueil
+    Retour-Menu SsMenu-Recueil
 }
 
 #liste des interfaces reseaux
@@ -826,7 +826,7 @@ function Interface {
     getTime
     Add-Content -Path "Interfaces_${cibleordi}_${script:date}.txt" -Value $interface
     AddLog -Arg "Interfaces"
-    SsMenu-Recueil
+    Retour-Menu SsMenu-Recueil
 }
 # Recherche evenement par utilisateur
 function rechercheUtilisateur {
@@ -837,7 +837,7 @@ function rechercheUtilisateur {
         else {
             Write-Warning "Vous n'avez pas entré de nom d'utilisateur."
         }
-        SsMenu-Recherche
+        Retour-Menu SsMenu-Recherche
 }
 # Recherche evenement par ordinateur
 function rechercheOrdinateur {
@@ -848,7 +848,7 @@ function rechercheOrdinateur {
         else {
             Write-Warning "Saisie vide ! Recherche annulée."
         }
-        SsMenu-Recherche
+        Retour-Menu SsMenu-Recherche
 }
 # ajout d'une action passée en argument au fichier log
 function AddLog {
@@ -862,6 +862,7 @@ function AddLog {
 
 # Menu principal
 function Menu-Principal {
+    Clear-Host
     Write-Host "================================"
     Write-Host "         MENU PRINCIPAL"
     Write-Host "================================"
@@ -886,6 +887,7 @@ function Menu-Principal {
 
 # Sous-menu gestion utilisateurs
 function SsMenu-Gestion {
+    Clear-Host
     Write-Host "Quelle action voulez-vous effectuer?"
     Write-Host " 1) Création de compte"
     Write-Host " 2) Changement de mdp"
@@ -909,6 +911,7 @@ function SsMenu-Gestion {
 
 # Sous-menu administration
 function SsMenu-Admin {
+    Clear-Host
     Write-Host "Que voulez-vous faire?"
     Write-Host " 1) Redémarrer le poste"
     Write-Host " 2) Créer un répertoire"
@@ -936,6 +939,7 @@ function SsMenu-Admin {
 
 # Sous-menu recueil d'informations
 function SsMenu-Recueil {
+    Clear-Host
     Write-Host "Quelles informations voulez-vous récupérer?"
     Write-Host " 1)  DNS actuels"
     Write-Host " 2)  Liste des interfaces"
@@ -969,6 +973,7 @@ function SsMenu-Recueil {
 
 # Sous-menu logs utilisateur
 function SsMenu-LogUser {
+    Clear-Host
     Write-Host "Quelles informations voulez-vous?"
     Write-Host " 1) Date de dernière connexion d'un utilisateur"
     Write-Host " 2) Dernière modification de mdp"
@@ -988,6 +993,7 @@ function SsMenu-LogUser {
 
 # Sous-menu recherche logs
 function SsMenu-Recherche {
+    Clear-Host
     Write-Host "Quelles informations de journalisation recherchez-vous?"
     Write-Host " 1) Informations sur un utilisateur précis"
     Write-Host " 2) Informations sur un ordinateur précis"
@@ -1017,6 +1023,7 @@ function Retour-Menu {
         "3" { Quitter }
         default { Write-Host "ERREUR"; Retour-Menu -DernierMenu $DernierMenu }
     }
+    Clear-Host
 }
 # Lancement du script
 Test-AdminContext
