@@ -479,7 +479,7 @@ read -p "Entrez le nom de l'utilisateur ? " last_co
 }
 
 # Date de dernière modification du mot de passe
-function l_last_modif_mdp {
+function l_modif_mdp {
 read -p "Entrez le nom de l'utilisateur du mdp ? " modif_mdp 
     ssh_cible "chage -l '$modif_mdp'"
     retour_menu ss_menu_log_user
