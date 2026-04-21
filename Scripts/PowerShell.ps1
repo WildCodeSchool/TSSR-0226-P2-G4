@@ -776,8 +776,7 @@ function Arp {
     }
     $arp
     getTime
-    $arpText = $arp | Out-String
-    Add-Content -Path "Arp_${cibleordi}_${script:date}.txt" -Value $arpText
+    Add-Content -Path "Arp_${cibleordi}_${script:date}.txt" -Value $arp
     AddLog -Arg "Arp"
     SsMenu-Recueil
 }
@@ -805,7 +804,7 @@ function TableRoutage {
     else {
         $routage = sshCible "Get-NetRoute"
     }
-    Write-Host "$($routage)"
+    $routage
     getTime
     Add-Content -Path "Routage_${cibleordi}_${script:date}.txt" -Value $routage
     AddLog -Arg "Routage"
