@@ -93,14 +93,27 @@
 ### Derniers évènements critiques : Tapez sur la touche 10 pour récupérer les derniers évènements critiques
 <img width="961" height="601" alt="image" src="https://github.com/user-attachments/assets/22aa7d46-bbdc-4a29-91fc-1d6172b52e8d" />
 
+# Sous menu recherche
 ### Informations sur un utilisateur précis : Tapez 1 pour récupérer l'information sur un utilisateur précis
 <img width="959" height="344" alt="image" src="https://github.com/user-attachments/assets/2d5524b8-7700-4958-b8e0-d17d0acdd761" />
 
 ### Informations sur ordinateur précis : Tapez 2 pour récupérer l'information sur un ordinateur précis
 <img width="1920" height="574" alt="4-2-information-ordinateur png" src="https://github.com/user-attachments/assets/5c1b7bb3-e2f9-49a6-aecf-3e6b57ba4bfc" />
 
-
 # Sous menu log user
+### Date de dernière connexion d'un utilisateur : Tapez 1 pour récupérer la date de dernière connexion d'un utilisateur
+<img width="1908" height="524" alt="5-1-date-derniere-connexion" src="https://github.com/user-attachments/assets/027a80c0-4e86-4492-b3b3-cf11a47fe689" />
+
+### Dernière modification mdp : Tapez 2 pour récupérer la dare de dernière modification d'un utilisateur
+<img width="958" height="271" alt="image" src="https://github.com/user-attachments/assets/ed3aca0e-cb48-44b1-b97e-2c909e09508e" />
+
+### Liste des sessions ouvertes par l'utilisateur : Tapez 3 pour récupérer la liste des sessions ouvertes par l'utilisateur
+<img width="1917" height="525" alt="5-3-liste-des-sessions-utilisateur png" src="https://github.com/user-attachments/assets/3511de4e-98e5-4048-b02d-eacf238aad7c" />
+
+
+
+
+
 # Les 35 fonctions du script
 # Explication de l'alias ssh cible
 # FAQ
