@@ -835,7 +835,7 @@ function menu_principal {
     echo "================================"
     echo "         MENU PRINCIPAL"
     echo "================================"
-    echo -e "Que voulez-vous faire?\n 1)Gestion utilisateur \n 2)Administration \n 3)recueil d'information \n 4)Consultation des logs \n 5)Surveillance Utilisation du Script\n 6)Quitter"
+    echo -e "Que voulez-vous faire?\n 1)Gestion utilisateur \n 2)Administration \n 3)Recueil d'informations \n 4)Consultation des logs \n 5)Surveillance Utilisation du Script\n 6)Quitter"
     local choix
     read choix
         case $choix in 
@@ -886,6 +886,20 @@ function ss_menu_Admin {
             ss_menu_Admin ;;
         esac
 }
+function ss_menu_recherche {
+    clear
+    echo -e "Quelles informations de journalisation recherchez vous?\n 1)Informations sur un utilisateur precis\n 2)Informations sur un ordinateur précis\n 3)Retour au Menu Principal\n 4)Quitter"
+    local choix
+    read choix
+        case $choix in 
+            1)recherche_utilisateur ;;
+            2)recherche_ordinateur ;;
+            3)menu_principal ;;
+            4)quitter ;;
+            *)echo "ERREUR" 
+            ss_menu_recherche ;;
+        esac
+}
 function ss_menu_recueil {
     clear
     echo -e "Quelles informations voulez vous recuperer?\n 1)DNS actuels\n 2)Liste des interfaces\n 3)Tables ARP\n 4)Table de routage\n 5)Version BIOS\n 6)IP,masque et passerelle\n 7)Version OS"
@@ -907,20 +921,6 @@ function ss_menu_recueil {
             12) quitter ;;
             *) echo "ERREUR" 
             ss_menu_recueil ;;
-        esac
-}
-function ss_menu_recherche {
-    clear
-    echo -e "Quelles informations de journalisation recherchez vous?\n 1)Informations sur un utilisateur precis\n 2)Informations sur un ordinateur précis\n 3)Retour au Menu Principal\n 4)Quitter"
-    local choix
-    read choix
-        case $choix in 
-            1)recherche_utilisateur ;;
-            2)recherche_ordinateur ;;
-            3)menu_principal ;;
-            4)quitter ;;
-            *)echo "ERREUR" 
-            ss_menu_recherche ;;
         esac
 }
 function ss_menu_log_user {
