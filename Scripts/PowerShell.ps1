@@ -108,9 +108,9 @@ function L_NewLocalUsers {
 function L_ChangePassword {
     testAdd
     foreach ($userName in $script:tableauNew) {
-        sshCible "grep -q '^{$userName}:' /etc/passwd" 
-        if ($LASTEXITCODE -eq 0) {    
-            sshCible "sudo -S passwd $userName" 
+        sshCible $commande1
+        if ($LASTEXITCODE -eq 1) {    
+            sshCible "sudo -S chpasswd $userName" 
             Write-Host "Mot de passe de $userName changé avec succès" 
         }
         else {
