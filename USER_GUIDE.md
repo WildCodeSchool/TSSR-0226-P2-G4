@@ -4,9 +4,8 @@
 2b. [Sous menu Administration](#Sous-menu-Administration)  
 2c. [Sous menu Recueil](#Sous-menu-Recueil)    
 2d. [Sous menu recherche](#Sous-menu-recherche)    
-2e. [Sous menu log user](#Sous-menu-log-user)
-3. [Les 35 fonctions du script](#Les-35-fonctions-du-script)   
-4. [Explication de l'alias ssh cible](#Explication-de-l'alias-ssh-cible)   
+2e. [Sous menu log user](#Sous-menu-log-user)   
+3. [Explication de l'alias ssh cible](#Explication-de-l'alias-ssh-cible)   
 5. [FAQ](#FAQ)  
 
 # Comment exécuter le script
@@ -110,12 +109,10 @@
 ### Liste des sessions ouvertes par l'utilisateur : Tapez 3 pour récupérer la liste des sessions ouvertes par l'utilisateur
 <img width="1917" height="525" alt="5-3-liste-des-sessions-utilisateur png" src="https://github.com/user-attachments/assets/3511de4e-98e5-4048-b02d-eacf238aad7c" />
 
+-------------------------------------------------------------------------------------------------
 
-
-
-
-# Les 35 fonctions du script
 # Explication de l'alias ssh cible
+
 # FAQ
 
 
