@@ -11,6 +11,7 @@ B. [Debian → Ubuntu](#Debian--Ubuntu)
 3. [Explication de l'alias ssh cible](#Explication-de-l'alias-ssh-cible)   
 5. [FAQ](#FAQ)  
 
+# Windows Server → Windows 11
 # Comment exécuter le script
 ### Placez-vous dans l'arborescence dans le dossier parent du script, dans le dossier Documents.  
 **Lancez le script en écrivant : .\nom_du_script et appuyez sur entrée, le script se lance.**
