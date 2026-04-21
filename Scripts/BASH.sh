@@ -809,7 +809,7 @@ retour_menu ss_menu_receuil
 function recherche_utilisateur {
     read -p "Entrez le nom de l'utilisateur pour la recherche des evenements:" user_rech
         grep "$user_rech" /var/log/log_evt.log  
-retour_menu ss_menu_receuil
+retour_menu ss_menu_recherche
 }
 
 
@@ -817,7 +817,7 @@ retour_menu ss_menu_receuil
 function recherche_ordinateur {
     read -p "Entrez l'adresse IP pour la recherche des evenements:" ordi_rech
         grep "$ordi_rech" /var/log/log_evt.log  
-retour_menu ss_menu_receuil
+retour_menu ss_menu_recherche
 }
 
 
