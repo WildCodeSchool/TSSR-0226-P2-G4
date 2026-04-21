@@ -699,7 +699,7 @@ function Ips {
     else {
         $reseau = sshCible "ipconfig /all"
     }
-    Write-Host $reseau
+    $reseau
     getTime
     Add-Content -Path "Reseau_${cibleordi}_${script:date}.txt" -Value $reseau
     AddLog -Arg "reseau"
@@ -742,9 +742,9 @@ function DonneUptime {
         $uptime = sshCible "uptime -p"
     }
     else {
-        $uptime = sshCible "powershell -Command ""(Get-Date) - (Get-CimInstance Win32_OperatingSystem).LastBootUpTime"""
+        $uptime = sshCible "powershell ""(Get-Date) - (Get-CimInstance Win32_OperatingSystem).LastBootUpTime"""
     }
-    Write-Host "$($uptime)"
+    $uptime
     getTime # Ajout de l'appel pour peupler $script:date
     Add-Content -Path "Uptime_${cibleordi}_${script:date}.txt" -Value $uptime
     AddLog -Arg "Uptime"
@@ -789,7 +789,7 @@ function EventCrit {
     else {
         $event = sshCible "Get-EventLog -LogName System -EntryType Error -Newest 10"
     }
-    Write-Host "$($event)"
+    $event
     getTime
     Add-Content -Path "Event_${cibleordi}_${script:date}.txt" -Value $event
     AddLog -Arg "Event"
