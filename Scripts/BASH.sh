@@ -475,40 +475,34 @@ function w_fire_wall {
 function l_last_connexion {
 read -p "Entrez le nom de l'utilisateur ? " last_co 
     ssh_cible "last -1 '$last_co'"
-    retour_menu ss_menu_log_user
-}
-
-# Date de dernière modification du mot de passe
-function l_modif_mdp {
-read -p "Entrez le nom de l'utilisateur du mdp ? " modif_mdp 
-    ssh_cible "chage -l '$modif_mdp'"
-    retour_menu ss_menu_log_user
-}
-
-# Liste des sessions ouvertes par l'utilisateur
-function l_list_open_user { 
-    ssh_cible w
-    retour_menu ss_menu_log_user
 }
 
 # Date de dernière connexion d'un utilisateur
 function w_last_connexion {
 $last_co = Read-Host "Entrez le nom de l'utilisateur ? "  
     ssh_cible "last -1 '$last_co'"
-    retour_menu ss_menu_log_user
+}
+
+# Date de dernière modification du mot de passe
+function l_modif_mdp {
+read -p "Entrez le nom de l'utilisateur du mdp ? " modif_mdp 
+    ssh_cible "chage -l '$modif_mdp'"
 }
 
 # Date de dernière modification du mot de passe
 function w_last_modif_mdp {
 $modif_mdp = Read-Host "Entrez le nom de l'utilisateur du mdp ? " modif_mdp 
     ssh_cible "chage -l '$modif_mdp'"
-    retour_menu ss_menu_log_user
+}
+
+# Liste des sessions ouvertes par l'utilisateur
+function l_list_open_user { 
+    ssh_cible w
 }
 
 # Liste des sessions ouvertes par l'utilisateur
 function w_list_open_user { 
     ssh_cible "query user"
-    retour_menu ss_menu_log_user
 }
 
 # Heure courante
@@ -841,7 +835,7 @@ function menu_principal {
     echo "================================"
     echo "         MENU PRINCIPAL"
     echo "================================"
-    echo -e "Que voulez-vous faire?\n 1)Gestion utilisateur \n 2)Administration \n 3)Receuil d'information \n 4)Consultation des logs \n 5)Consultation des logs d'utilisation du script\n 6)Quitter"
+    echo -e "Que voulez-vous faire?\n 1)Gestion utilisateur \n 2)Administration \n 3)Receuil d'information \n 4)Consultation des logs \n 5)Surveillance Utilisation du Script\n 6)Quitter"
     local choix
     read choix
         case $choix in 
@@ -915,21 +909,6 @@ function ss_menu_receuil {
             ss_menu_receuil ;;
         esac
 }
-function ss_menu_log_user {
-    clear
-    echo -e "Quelle informations voulez vous?\n 1)Date de dernière connexion d'un utilisateur\n 2)Dernière modification de mdp\n 3)Listes des cessions ouvertes par l'utilisateur\n 4)Retour au Menu Principal\n 5)Quitter"
-    local choix
-    read choix
-        case $choix in 
-            1)last_connexion ;;
-            2)last_modif_mdp ;;
-            3)last_list_open_user ;;
-            4)menu_principal ;;
-            5)quitter ;;
-            *)echo "ERREUR" 
-            ss_menu_log_user ;;
-        esac
-}
 function ss_menu_recherche {
     clear
     echo -e "Quelles informations de journalisation recherchez vous?\n 1)Informations sur un utilisateur precis\n 2)Informations sur un ordinateur précis\n 3)Retour au Menu Principal\n 4)Quitter"
@@ -942,6 +921,21 @@ function ss_menu_recherche {
             4)quitter ;;
             *)echo "ERREUR" 
             ss_menu_recherche ;;
+        esac
+}
+function ss_menu_log_user {
+    clear
+    echo -e "Quelle informations voulez vous?\n 1)Date de dernière connexion d'un utilisateur\n 2)Dernière modification de Mot de Passe\n 3)Listes des cessions ouvertes par l'utilisateur\n 4)Retour au Menu Principal\n 5)Quitter"
+    local choix
+    read choix
+        case $choix in 
+            1)last_connexion ;;
+            2)last_modif_mdp ;;
+            3)last_list_open_user ;;
+            4)menu_principal ;;
+            5)quitter ;;
+            *)echo "ERREUR" 
+            ss_menu_log_user ;;
         esac
 }
 function retour_menu {
