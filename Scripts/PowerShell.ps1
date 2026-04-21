@@ -828,30 +828,21 @@ function Interface {
 # Recherche evenement par utilisateur
 function rechercheUtilisateur {
     $userRech = Read-Host "Entrez le nom de l'utilisateur pour la recherche des evenements:" 
-        if ($script:versionDeLOS -eq 0) {    
-            sshCible "grep '$userRech' /var/log/log_evt.log"  
-        }
-        else {
-        sshCible "powershell Select-String -Path 'C:\logs\log_evt.log' -Pattern '$userRech'"
-        }
+        Select-String -Path "C:\Windows\System32\LogFiles\log_evt.log -Pattern '$userRech'"
         Retour-Menu SsMenu-Recueil
 }
 # Recherche evenement par ordinateur
 function rechercheOrdinateur {
-    $ordiRech = Read-Host "Entrez l'adresse IP pour la recherche des evenements:" ordi_rech
-        if ($script:versionDeLOS -eq 0) {
-            sshCible "grep '$ordiRech' /var/log/log_evt.log"  
-        }
-        else {
-            sshCible "powershell Select-String -Path 'C:\log_evt.log' -Pattern '$ordiRech'"
-        }
+    $ordiRech = Read-Host "Entrez l'adresse IP pour la recherche des evenements:"
+        Select-String -Path "C:\Windows\System32\LogFiles\log_evt.log' -Pattern '$ordiRech'"
         Retour-Menu SsMenu-Recueil
 }
 # ajout d'une action passée en argument au fichier log
 function AddLog {
     param([string]$Arg)
+    $userCourant = "$env:USERNAME"
     getTime
-    Add-Content -Path "C:\Windows\System32\LogFiles\log_evt.log" -Value "${script:date}_${script:heure}_$Arg"
+    Add-Content -Path "C:\Windows\System32\LogFiles\log_evt.log" -Value "${script:date}_${script:heure}_${userCourant}_$Arg"
 }
 ########################################################
 ########################################################
