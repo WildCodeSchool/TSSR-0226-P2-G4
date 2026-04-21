@@ -115,6 +115,8 @@ B. [Debian → Ubuntu](#Debian--Ubuntu)
 
 -------------------------------------------------------------------------------------------------
 
+# Debian → Ubuntu
+
 # Explication de l'alias ssh cible
 
 # FAQ
