@@ -655,7 +655,7 @@ function last_modif_mdp {
             w_modif_mdp
     fi
 add_log "last_modif_mdp"
-retour_menu ss_log_user
+retour_menu ss_menu_log_user
 }
 
 function last_list_open_user {
@@ -666,7 +666,7 @@ function last_list_open_user {
             w_list_open_user
     fi
 add_log "list_open_user"
-retour_menu ss_log_user
+retour_menu ss_menu_log_user
 }
 # Dns actuel
 function dns_actuel {
