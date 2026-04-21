@@ -66,6 +66,45 @@
 ### DNS actuels : Tapez 1 pour voir vos DNS actuels
 <img width="956" height="212" alt="image" src="https://github.com/user-attachments/assets/4cbca2f4-3aa3-442b-8c71-2969959b8cdf" />
 
+### Liste des interfaces : Tapez sur la touche 2 pour récupérer vos interfaces
+<img width="1911" height="491" alt="3-2-liste-des-interfaces" src="https://github.com/user-attachments/assets/8ebd0a57-280f-40cf-9ae6-05dd7da21e50" />
+
+### Tables ARP : Tapez sur la touche 3 por récupérer les tables ARP
+<img width="1918" height="1230" alt="3-3-tables-arp png" src="https://github.com/user-attachments/assets/f3075849-155b-45ff-901d-7429d900898f" />
+
+### Table de routage : Tapez sur la touche 4 pour récupérer la version BIOS
+<img width="1921" height="1224" alt="3-4-table-routage png" src="https://github.com/user-attachments/assets/086dad88-9999-4e4f-b6d3-a597dfcf69f5" />
+
+### Version BIOS : Tapez sur la touche 5 pour récupérer la version BIOS
+<img width="961" height="230" alt="image" src="https://github.com/user-attachments/assets/92e77122-25ea-4f7b-a932-7bf405aed925" />
+
+### IP, masque et passerelle : Tapez sur la touche 6 pour récupérer l'IP, le masque et la passerelle
+<img width="959" height="580" alt="image" src="https://github.com/user-attachments/assets/df6019fd-b06a-4083-9512-abeba1a793ba" />
+
+### Version OS : Tapez sur la touche 7 pour récupérer la version OS
+<img width="935" height="215" alt="image" src="https://github.com/user-attachments/assets/6fd26f93-84a7-4aa7-b5da-93f9aace05ad" />
+
+### Carte graphique : Tapez sur la touche 8 pour récupérer la carte graphique
+<img width="956" height="217" alt="image" src="https://github.com/user-attachments/assets/4bbe16f2-2efe-48cc-9530-f8e3219a3892" />
+
+### Uptime : Tapez sur la touche 9 pour récupérer Uptime
+<img width="954" height="377" alt="image" src="https://github.com/user-attachments/assets/83c41622-90e3-4d6f-9854-600985a80c46" />
+
+### Derniers évènements critiques : Tapez sur la touche 10 pour récupérer les derniers évènements critiques
+<img width="961" height="601" alt="image" src="https://github.com/user-attachments/assets/22aa7d46-bbdc-4a29-91fc-1d6172b52e8d" />
+
+
+
+
+
+
+
+
+
+### 
+
+
+
 # Sous menu log user
 # Les 35 fonctions du script
 # Explication de l'alias ssh cible
