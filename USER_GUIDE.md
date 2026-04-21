@@ -1,3 +1,6 @@
+A. [Windows Server → Windows 11](#Windows-Server--Windows-11)
+B. [Debian → Ubuntu](#Debian--Ubuntu)
+
 1. [Comment exécuter le script](#Comment-exécuter-le-script)
 2. [Menu Principal](#Menu-Principal)  
 2a. [Sous menu Gestion utilisateur](#Sous-menu-gestion-utilisateur)  
