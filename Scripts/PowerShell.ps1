@@ -837,7 +837,7 @@ function rechercheUtilisateur {
         else {
             Write-Warning "Vous n'avez pas entré de nom d'utilisateur."
         }
-        SsMenu-Recueil
+        SsMenu-Recherche
 }
 # Recherche evenement par ordinateur
 function rechercheOrdinateur {
@@ -848,7 +848,7 @@ function rechercheOrdinateur {
         else {
             Write-Warning "Saisie vide ! Recherche annulée."
         }
-        SsMenu-Recueil
+        SsMenu-Recherche
 }
 # ajout d'une action passée en argument au fichier log
 function AddLog {
