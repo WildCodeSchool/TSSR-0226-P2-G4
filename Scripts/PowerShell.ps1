@@ -193,7 +193,7 @@ function W_AddAdmin {
     testAdd
     foreach ($userName in $script:tableauNew) {
         sshCible "powershell Get-LocalUser -Name $userName"
-        sshCible "powershell Add-LocalGroupmember -Group 'Administrators' -Member $userName"
+        sshCible "powershell Add-LocalGroupmember -Group 'Administrateurs' -Member $userName"
         Write-Host "L'utilisateur $userName a été ajouté avec succès au groupe Administrateur"
     }
     else {
