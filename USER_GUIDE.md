@@ -181,6 +181,7 @@ B. [Debian → Ubuntu](#Debian--Ubuntu)
 ### Tables ARP : Tapez sur la touche 3 por récupérer les tables ARP
 <img width="957" height="298" alt="image" src="https://github.com/user-attachments/assets/f998eb6b-7399-43c8-bf9d-036252c1431e" />
 
+### Table de routage : Tapez sur la touche 4 pour récupérer la version BIOS
 
 
 
