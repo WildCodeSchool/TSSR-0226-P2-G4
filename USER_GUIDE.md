@@ -16,9 +16,6 @@ B. [Debian → Ubuntu](#Debian--Ubuntu)
 2d. [Sous menu recherche](#Sous-menu-recherche)    
 2e. [Sous menu log user](#Sous-menu-log-user)
 
-4. [Explication de l'alias ssh cible](#Explication-de-l'alias-ssh-cible)
-5. [FAQ](#FAQ)
-   
 # Windows Server → Windows 11
 # Comment exécuter le script
 ### Placez-vous dans l'arborescence dans le dossier parent du script, dans le dossier Documents.  
