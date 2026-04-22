@@ -666,9 +666,9 @@ retour_menu ss_menu_log_user
 function dns_actuel {
         if [[ $detect_os -eq 0 ]]
             then
-                local dns=$(ssh_cible "cat /etc/resolv.conf")
+                local dns=$(ssh_cible "resolvectl status | grep 'DNS'")
             else
-                local dns=$(ssh_cible "ipconfig /all | grep 'DNS'")
+                local dns=$(ssh_cible "Get-DnsClientServerAddress")
         fi
     echo "$dns" >> DNS_"$cibleordi"_"$date".txt
     echo "$dns"
