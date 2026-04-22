@@ -214,20 +214,3 @@ B. [Debian → Ubuntu](#Debian--Ubuntu)
 
 ### Liste des sessions ouvertes par l'utilisateur : Tapez 3 pour récupérer la liste des sessions ouvertes par l'utilisateur
 <img width="962" height="236" alt="image" src="https://github.com/user-attachments/assets/2724e40f-778e-4465-ab73-9d13d6931183" />
-
-# Explication de l'alias ssh cible
-# FAQ
-
-
-
-
-
-
-
-
-
-
-
-
-
-
