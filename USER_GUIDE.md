@@ -5,10 +5,10 @@ A. [Windows Server → Windows 11](#Windows-Server--Windows-11)
 2b. [Sous menu Administration](#Sous-menu-Administration)  
 2c. [Sous menu Recueil](#Sous-menu-Recueil)    
 2d. [Sous menu recherche](#Sous-menu-recherche)    
-2e. [Sous menu log user](#Sous-menu-log-user)   
+2e. [Sous menu log user](#Sous-menu-log-user)  
 
-B. [Debian → Ubuntu](#Debian--Ubuntu)
-1. [Comment exécuter le script](#Comment-exécuter-le-script)
+B. [Debian → Ubuntu](#Debian--Ubuntu)  
+1. [Comment exécuter le script](#Comment-exécuter-le-script)  
 2. [Menu Principal](#Menu-Principal)  
 2a. [Sous menu Gestion utilisateur](#Sous-menu-gestion-utilisateur)  
 2b. [Sous menu Administration](#Sous-menu-Administration)  
@@ -16,9 +16,9 @@ B. [Debian → Ubuntu](#Debian--Ubuntu)
 2d. [Sous menu recherche](#Sous-menu-recherche)    
 2e. [Sous menu log user](#Sous-menu-log-user)
 
-3. [Explication de l'alias ssh cible](#Explication-de-l'alias-ssh-cible)
-4. [FAQ](#FAQ)
-
+4. [Explication de l'alias ssh cible](#Explication-de-l'alias-ssh-cible)
+5. [FAQ](#FAQ)
+   
 # Windows Server → Windows 11
 # Comment exécuter le script
 ### Placez-vous dans l'arborescence dans le dossier parent du script, dans le dossier Documents.  
@@ -161,6 +161,28 @@ B. [Debian → Ubuntu](#Debian--Ubuntu)
 <img width="1451" height="483" alt="image" src="https://github.com/user-attachments/assets/dc1b0ec1-8e6e-4453-94b5-0cf4373d9f09" />
 
 ### Modifer un répertoire : Tapez sur la touche 3 pour modfier les droits d'un répertoire en tapant [M]
+<img width="959" height="329" alt="image" src="https://github.com/user-attachments/assets/12fb606f-2f62-4284-8998-352f015f1908" />
+
+### Supprimer un répertoire : Tapez sur la touche 4 pour supprimer un répertoire
+<img width="1603" height="484" alt="image" src="https://github.com/user-attachments/assets/47d74c91-50aa-4b56-94c7-d8d31ec079c2" />
+
+### Désactiver le pare-feu : Tapez sur la touche 5 pour désactiver le pare-feu et tapez [D]
+<img width="962" height="281" alt="image" src="https://github.com/user-attachments/assets/977ef751-2bb3-4514-a445-0519dcc2a5c2" />
+
+### Prise en main à distance (CLI) : Tapez sur la touche 6 pour prendre à distance le poste client
+<img width="961" height="401" alt="image" src="https://github.com/user-attachments/assets/f1ab2a04-7530-4bc6-bd9c-8f0e413b07f3" />
+
+### DNS actuels : Tapez 1 pour voir vos DNS actuels
+<img width="956" height="496" alt="image" src="https://github.com/user-attachments/assets/a2f847ee-4aef-4932-82c5-6ce3bf6d3556" />
+
+### Liste des interfaces : Tapez sur la touche 2 pour récupérer vos interfaces
+<img width="959" height="332" alt="image" src="https://github.com/user-attachments/assets/9d1e3e01-f8a1-4101-ad21-93d9cacdd6df" />
+
+### Tables ARP : Tapez sur la touche 3 por récupérer les tables ARP
+<img width="957" height="298" alt="image" src="https://github.com/user-attachments/assets/f998eb6b-7399-43c8-bf9d-036252c1431e" />
+
+
+
 
 
 
