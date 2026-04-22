@@ -8,13 +8,13 @@ A. [Windows Server → Windows 11](#Windows-Server--Windows-11)
 2e. [Sous menu log user](#Sous-menu-log-user)  
 
 B. [Debian → Ubuntu](#Debian--Ubuntu)  
-1. [Comment exécuter le script](#Comment-exécuter-le-script)  
-2. [Menu Principal](#Menu-Principal)  
-2a. [Sous menu Gestion utilisateur](#Sous-menu-gestion-utilisateur)  
-2b. [Sous menu Administration](#Sous-menu-Administration)  
-2c. [Sous menu Recueil](#Sous-menu-Recueil)    
-2d. [Sous menu recherche](#Sous-menu-recherche)    
-2e. [Sous menu log user](#Sous-menu-log-user)
+1. [Comment exécuter le script d](#Comment-exécuter-le-script-d)  
+2. [Menu Principal d](#Menu-Principal-d)  
+2a. [Sous menu Gestion utilisateur d](#Sous-menu-gestion-utilisateur-d)  
+2b. [Sous menu Administration d](#Sous-menu-Administration-d)  
+2c. [Sous menu Recueil d](#Sous-menu-Recueil-d)    
+2d. [Sous menu recherche d](#Sous-menu-recherche-d)    
+2e. [Sous menu log user d](#Sous-menu-log-user-d)
 
 # Windows Server → Windows 11
 # Comment exécuter le script
@@ -22,11 +22,11 @@ B. [Debian → Ubuntu](#Debian--Ubuntu)
 **Lancez le script en écrivant : .\nom_du_script et appuyez sur entrée, le script se lance.**
 <img width="961" height="198" alt="image" src="https://github.com/user-attachments/assets/d2f04338-3f02-4abc-ba2d-bfef3c7d7ec3" />
 
-# Menu Principal
+# Menu Principal 
 ### Tapez sur la touche 1 pour accéder au menu gestion utilisateur
 <img width="956" height="257" alt="image" src="https://github.com/user-attachments/assets/1369b17e-8970-416e-8454-e768c6fb5e03" />
 
-# Sous menu Gestion utilisateur
+# Sous menu Gestion utilisateur 
 ### Création de compte : Tapez sur la touche 1 pour créer un nouveau utilisateur 
 <img width="1915" height="487" alt="Capture d&#39;écran 2026-04-20 181944" src="https://github.com/user-attachments/assets/1b5bd1d5-e755-4b85-be82-a8dde46cb43c" />
 <img width="958" height="254" alt="image" src="https://github.com/user-attachments/assets/7562a0a1-34ae-44b2-bdd3-a86f3d80c670" />
@@ -70,7 +70,7 @@ B. [Debian → Ubuntu](#Debian--Ubuntu)
 ### Prise en main à distance (CLI) : Tapez sur la touche 6 pour prendre à distance le poste client
 <img width="959" height="404" alt="image" src="https://github.com/user-attachments/assets/28c14d47-2c63-4a8b-8199-dc2fa30a769d" />
 
-# Sous menu Recueil
+# Sous menu Recueil 
 ### DNS actuels : Tapez 1 pour voir vos DNS actuels
 <img width="956" height="212" alt="image" src="https://github.com/user-attachments/assets/4cbca2f4-3aa3-442b-8c71-2969959b8cdf" />
 
@@ -101,14 +101,14 @@ B. [Debian → Ubuntu](#Debian--Ubuntu)
 ### 10 derniers évènements critiques : Tapez sur la touche 10 pour récupérer les derniers evenements critiques
 <img width="961" height="601" alt="image" src="https://github.com/user-attachments/assets/22aa7d46-bbdc-4a29-91fc-1d6172b52e8d" />
 
-# Sous menu recherche
+# Sous menu recherche 
 ### Informations sur un utilisateur précis : Tapez 1 pour récupérer l'information sur un utilisateur précis
 <img width="959" height="344" alt="image" src="https://github.com/user-attachments/assets/2d5524b8-7700-4958-b8e0-d17d0acdd761" />
 
 ### Informations sur ordinateur précis : Tapez 2 pour récupérer l'information sur un ordinateur précis
 <img width="1920" height="574" alt="4-2-information-ordinateur png" src="https://github.com/user-attachments/assets/5c1b7bb3-e2f9-49a6-aecf-3e6b57ba4bfc" />
 
-# Sous menu log user
+# Sous menu log user 
 ### Date de dernière connexion d'un utilisateur : Tapez 1 pour récupérer la date de dernière connexion d'un utilisateur
 <img width="1908" height="524" alt="5-1-date-derniere-connexion" src="https://github.com/user-attachments/assets/027a80c0-4e86-4492-b3b3-cf11a47fe689" />
 
@@ -126,10 +126,10 @@ B. [Debian → Ubuntu](#Debian--Ubuntu)
 **Lancez le script en écrivant : bash [nom_du_script] et appuyez sur entrée, le script se lance.**
 <img width="1922" height="308" alt="Capture d&#39;écran 2026-04-21 214251" src="https://github.com/user-attachments/assets/e54a0a3a-9606-4621-aa37-bb8869519909" />
 
-# Menu Principal
+# Menu Principal d
 <img width="958" height="209" alt="image" src="https://github.com/user-attachments/assets/681d3d4b-5c50-4202-b3e4-cf1a7a28930c" />
 
-# Sous menu Gestion utilisateur
+# Sous menu Gestion utilisateur d
 ### Création de compte : Tapez sur la touche 1 pour créer un nouveau utilisateur 
 <img width="959" height="499" alt="image" src="https://github.com/user-attachments/assets/592b5beb-ff68-4f64-b4a1-6e3e1162d636" />
 <img width="962" height="170" alt="image" src="https://github.com/user-attachments/assets/6a4f0ea5-f780-4851-b8af-321a246e876d" />
@@ -146,7 +146,7 @@ B. [Debian → Ubuntu](#Debian--Ubuntu)
 ### Ajout à un groupe : Tapez sur la touche 5 pour un utilisateur à un groupe
 <img width="960" height="173" alt="image" src="https://github.com/user-attachments/assets/8973607c-6cb4-4ad9-a566-0e081ca8763d" />
 
-# Sous menu Administration 
+# Sous menu Administration d
 ### Redémarrer le poste : Tapez sur la touche 1 pour redémarrer le poste windows 11
 <img width="3815" height="1284" alt="2-1-redemarrage-pc-graphique" src="https://github.com/user-attachments/assets/d5f22604-2a55-46d0-8264-450bae8c49ae" />
 <img width="3820" height="1284" alt="2-1-redemarrage-pc" src="https://github.com/user-attachments/assets/875e25b4-d63c-4737-b6a0-0c11f7e62502" />
@@ -199,13 +199,13 @@ B. [Debian → Ubuntu](#Debian--Ubuntu)
 ### Derniers évènements critiques : Tapez sur la touche 10 pour récupérer les derniers évènements critiques
 <img width="1915" height="448" alt="3-10-dernier-evenements-critiques-debian" src="https://github.com/user-attachments/assets/90766d76-37a8-4eae-9496-3f02b657168f" />
 
-# Sous menu recherche
+# Sous menu recherche d
 ### Informations sur un utilisateur précis : Tapez 1 pour récupérer l'information sur un utilisateur précis
 <img width="1918" height="1277" alt="4-1-recherche-utilisateur-debian" src="https://github.com/user-attachments/assets/2da67446-5c64-45b9-b1bd-c34ded754b1d" />
 
 ### Informations sur ordinateur précis : Tapez 2 pour récupérer l'information sur un ordinateur précis
 
-# Sous menu log user
+# Sous menu log user d
 ### Date de dernière connexion d'un utilisateur : Tapez 1 pour récupérer la date de dernière connexion d'un utilisateur
 <img width="959" height="180" alt="image" src="https://github.com/user-attachments/assets/19206bd0-4a3b-4a1d-beb9-e4871f623742" />
 
