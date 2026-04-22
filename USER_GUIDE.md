@@ -101,7 +101,7 @@ B. [Debian → Ubuntu](#Debian--Ubuntu)
 ### Uptime : Tapez sur la touche 9 pour récupérer Uptime
 <img width="954" height="377" alt="image" src="https://github.com/user-attachments/assets/83c41622-90e3-4d6f-9854-600985a80c46" />
 
-### Derniers évènements critiques : Tapez sur la touche 10 pour récupérer les derniers évènements critiques
+### 10 derniers évènements critiques : Tapez sur la touche 10 pour récupérer les derniers evenements critiques
 <img width="961" height="601" alt="image" src="https://github.com/user-attachments/assets/22aa7d46-bbdc-4a29-91fc-1d6172b52e8d" />
 
 # Sous menu recherche
@@ -182,14 +182,41 @@ B. [Debian → Ubuntu](#Debian--Ubuntu)
 <img width="957" height="298" alt="image" src="https://github.com/user-attachments/assets/f998eb6b-7399-43c8-bf9d-036252c1431e" />
 
 ### Table de routage : Tapez sur la touche 4 pour récupérer la version BIOS
+<img width="1914" height="574" alt="3-4-table-routage-debian" src="https://github.com/user-attachments/assets/b3721d69-3526-45dc-b5f9-0d9e2232f2f8" />
 
+### Version BIOS : Tapez sur la touche 5 pour récupérer la version BIOS
+<img width="1917" height="254" alt="3-5-version-bios-debian" src="https://github.com/user-attachments/assets/1c848ff2-2031-44e9-bb4a-1f6f40bf5d81" />
 
+### IP, masque et passerelle : Tapez sur la touche 6 pour récupérer l'IP, le masque et la passerelle
+<img width="1919" height="675" alt="3-6-ip-passerelle-masque-debian" src="https://github.com/user-attachments/assets/1e2dd641-73fc-4883-adfc-2db7f3541193" />
 
+### Version OS : Tapez sur la touche 7 pour récupérer la version OS
+<img width="1911" height="234" alt="3-7-version-os-debian" src="https://github.com/user-attachments/assets/6c7827fb-6666-4ba2-8779-02b608767852" />
 
+### Carte graphique : Tapez sur la touche 8 pour récupérer la carte graphique
+<img width="1917" height="229" alt="3-8-carte-graphique-debian" src="https://github.com/user-attachments/assets/ba47217a-7910-4629-8399-ec3705274f46" />
 
+### Uptime : Tapez sur la touche 9 pour récupérer Uptime
+<img width="1921" height="204" alt="3-9-uptime-debian" src="https://github.com/user-attachments/assets/c0ea0d07-72f1-4bd1-a662-7027d9f7ec8b" />
 
+### Derniers évènements critiques : Tapez sur la touche 10 pour récupérer les derniers évènements critiques
+<img width="1915" height="448" alt="3-10-dernier-evenements-critiques-debian" src="https://github.com/user-attachments/assets/90766d76-37a8-4eae-9496-3f02b657168f" />
 
+# Sous menu recherche
+### Informations sur un utilisateur précis : Tapez 1 pour récupérer l'information sur un utilisateur précis
+<img width="1918" height="1277" alt="4-1-recherche-utilisateur-debian" src="https://github.com/user-attachments/assets/2da67446-5c64-45b9-b1bd-c34ded754b1d" />
 
+### Informations sur ordinateur précis : Tapez 2 pour récupérer l'information sur un ordinateur précis
+
+# Sous menu log user
+### Date de dernière connexion d'un utilisateur : Tapez 1 pour récupérer la date de dernière connexion d'un utilisateur
+<img width="959" height="180" alt="image" src="https://github.com/user-attachments/assets/19206bd0-4a3b-4a1d-beb9-e4871f623742" />
+
+### Dernière modification mdp : Tapez 2 pour récupérer la dare de dernière modification d'un utilisateur
+<img width="964" height="279" alt="image" src="https://github.com/user-attachments/assets/ea30a4a4-4e97-4cbb-9026-aa25afcd32e6" />
+
+### Liste des sessions ouvertes par l'utilisateur : Tapez 3 pour récupérer la liste des sessions ouvertes par l'utilisateur
+<img width="962" height="236" alt="image" src="https://github.com/user-attachments/assets/2724e40f-778e-4465-ab73-9d13d6931183" />
 
 # Explication de l'alias ssh cible
 # FAQ
