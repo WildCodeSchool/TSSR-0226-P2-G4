@@ -493,7 +493,7 @@ read -p "Entrez le nom de l'utilisateur du mot de passe : " modif_mdp
 # Date de dernière modification du mot de passe
 function w_modif_mdp {
 read -p "Entrez le nom de l'utilisateur du mot de passe : " modif_mdp 
-    ssh_cible "chage -l '$modif_mdp'"
+    ssh_cible "Get-LocalUser '$modif_mdp' | Select-Object Name, PasswordLastSet"
 }
 
 # Liste des sessions ouvertes par l'utilisateur
