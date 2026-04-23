@@ -27,6 +27,7 @@ function test_ip {
 }
 # Demande l'ip et le compte distant
 function ask_cible {
+clear
     echo -e "Bonjour et bienvenue sur ce script d'administration \n"
     read -p "Quelle est l'ip de la machine cliente?  Veuillez rentrer une ip correcte sous la forme **.**.**.**" ip_cible
     test_ip
