@@ -474,31 +474,31 @@ function w_fire_wall {
 
 # Date de dernière connexion d'un utilisateur
 function l_last_connexion {
-read -p "Entrez le nom de l'utilisateur ? " last_co 
+read -p "Entrez le nom de l'utilisateur : " last_co 
     ssh_cible "last -1 '$last_co'"
 }
 
 # Date de dernière connexion d'un utilisateur
 function w_last_connexion {
-$last_co = Read-Host "Entrez le nom de l'utilisateur ? "  
-    ssh_cible "Get-LocalUser '$lastCo' | Select-Object Name, LastLogon"
+read -p "Entrez le nom de l'utilisateur : " last_co
+    ssh_cible "Get-LocalUser '$last_co' | Select-Object Name, LastLogon"
 }
 
 # Date de dernière modification du mot de passe
 function l_modif_mdp {
-read -p "Entrez le nom de l'utilisateur du mdp ? " modif_mdp 
+read -p "Entrez le nom de l'utilisateur du mot de passe : " modif_mdp 
     ssh_cible "chage -l '$modif_mdp'"
 }
 
 # Date de dernière modification du mot de passe
 function w_modif_mdp {
-$modif_mdp = Read-Host "Entrez le nom de l'utilisateur du mdp ? " modif_mdp 
+read -p "Entrez le nom de l'utilisateur du mot de passe : " modif_mdp 
     ssh_cible "chage -l '$modif_mdp'"
 }
 
 # Liste des sessions ouvertes par l'utilisateur
 function l_list_open_user { 
-    ssh_cible w
+    ssh_cible "w"
 }
 
 # Liste des sessions ouvertes par l'utilisateur
