@@ -480,7 +480,7 @@ read -p "Entrez le nom de l'utilisateur ? " last_co
 # Date de dernière connexion d'un utilisateur
 function w_last_connexion {
 $last_co = Read-Host "Entrez le nom de l'utilisateur ? "  
-    ssh_cible "last -1 '$last_co'"
+    ssh_cible "Get-LocalUser '$lastCo' | Select-Object Name, LastLogon"
 }
 
 # Date de dernière modification du mot de passe
@@ -490,7 +490,7 @@ read -p "Entrez le nom de l'utilisateur du mdp ? " modif_mdp
 }
 
 # Date de dernière modification du mot de passe
-function w_last_modif_mdp {
+function w_modif_mdp {
 $modif_mdp = Read-Host "Entrez le nom de l'utilisateur du mdp ? " modif_mdp 
     ssh_cible "chage -l '$modif_mdp'"
 }
