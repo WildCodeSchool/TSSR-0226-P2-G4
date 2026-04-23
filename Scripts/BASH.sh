@@ -827,15 +827,23 @@ get_time
     echo ""$date"_"$heure"_"$utilisateur"_"$ip_cible"_"$1"" >> /var/log/log_evt.log
 }
 
+# Créer un affichage pour tous les menus
+function Affichage {
+echo "==================================================="
 
-# Menu principal
+echo "          $menu          "
+
+echo -e "===================================================\n"
+}
+
+# Les Menus 
 
 function menu_principal {
     clear
     echo "================================"
     echo "         MENU PRINCIPAL"
     echo "================================"
-    echo -e "Que voulez-vous faire?\n 1)Gestion utilisateur \n 2)Administration \n 3)Recueil d'informations \n 4)Consultation des logs \n 5)Surveillance Utilisation du Script\n 6)Quitter"
+    echo -e "\nDans quel sous-Menu voulez-vous aller ?\n 1)Gestion Utilisateur \n 2)Administration \n 3)Recueil d'informations \n 4)Consultation des logs \n 5)Surveillance Utilisateur\n 6)Quitter"
     local choix
     read choix
         case $choix in 
@@ -851,8 +859,10 @@ function menu_principal {
 }
 
 function ss_menu_gestion {
+    local menu="MENU DE GESTION DES UTILISATEURS"
     clear
-    echo -e "Quelle action voulez vous effectuer? \n 1)Création de compte \n 2)Changement de mdp \n 3)Suppression de compte \n 4)Ajout à un groupe admin \n 5)Ajout à un groupe \n 6)Retour au Menu Principal \n 7)Quitter"
+    Affichage
+    echo -e "\nQuelle action voulez-vous effectuer ? \n 1)Création de compte \n 2)Changement de mdp \n 3)Suppression de compte \n 4)Ajout à un groupe admin \n 5)Ajout à un groupe \n 6)Retour au Menu Principal \n 7)Quitter"
     local choix
     read choix
         case $choix in
@@ -868,8 +878,10 @@ function ss_menu_gestion {
         esac
 }
 function ss_menu_Admin {
+    local menu="     MENU D'ADMINISTRATION"
     clear
-    echo -e "Que voulez-vous faire? \n 1)Redemarrer le poste \n 2)Créer un repertoire \n 3)Modifier un repertoire \n 4)Supprimer un repertoire \n 5)Activer/Désactiver le parefeu \n 6)Prise en main a distance (CLI) \n 7)Execution de script sur la machine \n 8)Retour au Menu Principal \n 9)Quitter"
+    Affichage
+    echo -e "\nQuelle action voulez-vous effectuer ? \n 1)Redemarrer le poste \n 2)Créer un repertoire \n 3)Modifier un repertoire \n 4)Supprimer un repertoire \n 5)Activer/Désactiver le parefeu \n 6)Prise en main a distance (CLI) \n 7)Work in Progress \n 8)Retour au Menu Principal \n 9)Quitter"
     local choix 
     read choix
         case $choix in 
@@ -887,8 +899,10 @@ function ss_menu_Admin {
         esac
 }
 function ss_menu_recherche {
+    local menu=" MENU DE RECUEIL D'INFORMATIONS"
     clear
-    echo -e "Quelles informations de journalisation recherchez vous?\n 1)Informations sur un utilisateur precis\n 2)Informations sur un ordinateur précis\n 3)Retour au Menu Principal\n 4)Quitter"
+    Affichage
+    echo -e "\nQuelles informations de journalisation recherchez-vous ?\n 1)Informations sur un utilisateur precis\n 2)Informations sur un ordinateur précis\n 3)Retour au Menu Principal\n 4)Quitter"
     local choix
     read choix
         case $choix in 
@@ -901,8 +915,10 @@ function ss_menu_recherche {
         esac
 }
 function ss_menu_recueil {
+    local menu=" MENU DE CONSULTATION DES LOGS"
     clear
-    echo -e "Quelles informations voulez vous recuperer?\n 1)DNS actuels\n 2)Liste des interfaces\n 3)Tables ARP\n 4)Table de routage\n 5)Version BIOS\n 6)IP,masque et passerelle\n 7)Version OS"
+    Affichage
+    echo -e "\nQuelles informations voulez-vous récupérer ?\n 1)DNS actuels\n 2)Liste des interfaces\n 3)Tables ARP\n 4)Table de routage\n 5)Version BIOS\n 6)IP,masque et passerelle\n 7)Version OS"
     echo -e " 8)Carte graphique\n 9)Uptime\n 10)Derniers evenements critiques\n 11)Retour au Menu Principal\n 12)Quitter"
     local choix
     read choix
@@ -924,8 +940,10 @@ function ss_menu_recueil {
         esac
 }
 function ss_menu_log_user {
+    local menu="      MENU DE SURVEILLANCE"
     clear
-    echo -e "Quelle informations voulez vous?\n 1)Date de dernière connexion d'un utilisateur\n 2)Dernière modification de Mot de Passe\n 3)Listes des cessions ouvertes par l'utilisateur\n 4)Retour au Menu Principal\n 5)Quitter"
+    Affichage
+    echo -e "\nQuelles informations voulez-vous récupérer ?\n 1)Date de dernière connexion d'un utilisateur\n 2)Dernière modification de Mot de Passe\n 3)Listes des cessions ouvertes par l'utilisateur\n 4)Retour au Menu Principal\n 5)Quitter"
     local choix
     read choix
         case $choix in 
@@ -939,7 +957,7 @@ function ss_menu_log_user {
         esac
 }
 function retour_menu {
-    echo -e "Que voulez vous faire?\n 1)Retourner au menu Principal\n 2)Retourner au menu Précédent\n 3)Quitter"
+    echo -e "\nQue voulez-vous faire ?\n 1)Retourner au menu Principal\n 2)Retourner au menu Précédent\n 3)Quitter"
     local choix
     local fonction="$1"
     read choix
@@ -950,7 +968,6 @@ function retour_menu {
             *)echo "ERREUR" 
             retour_menu ;;
         esac
-        clear
 }
 
 ask_cible
