@@ -488,7 +488,7 @@ chmod 777 $lieu/$scr
     if [[ -e $lieu/$scr ]] # rajouter un if pour verifier et creer le chemin client
         then 
             scp $lieu/$scr $user_cible@$ip_cible:/MesScriptsSSH 
-            ssh_cible "sudo -S bash /MesScriptsSSH/recup_os.sh)"
+            ssh_cible "sudo -S bash /MesScriptsSSH/recup_os.sh"
         else
             echo -e "${RED}Une erreur s'est produite${NC}"
     fi
