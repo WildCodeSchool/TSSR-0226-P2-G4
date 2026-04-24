@@ -872,9 +872,15 @@ echo -e " 1 - Le Menu Gestion renvoi vers des choix de gestion de comptes utilis
 echo -e " 3 - Le Menu Recueil d'informations viendra afficher les paramètres de la machine cible ainsi que les évènements critiques\n\n 4 - Le Menu Consultation des logs permet de consulter les actions effectuées grâce au script en se basant sur les logs\n\n"
 echo -e " 5 - Le Menu Surveillance Utilisateur permet de vérifier les dernieres modifications apportées au compte administrateur du script ainsi que les sessions qu'il a pu ouvrir"
 echo -e "\n\n\n Profitez bien de notre Script${NC}"
-retour_menu
+echo -e " Maintenant que vous êtes bien renseignés, que voulez-vous faire ?\n\n 1) Revenir au Menu Principal \n 2) Quitter le Script"
+read men
+    case $men in
+        1) menu_principal ;;
+        2) quitter ;;
+        *) echo "ERREUR"
+        infos ;;
+    esac
 }
-
 # Les Menus 
 
 function menu_principal {
