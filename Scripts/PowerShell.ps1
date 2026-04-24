@@ -193,7 +193,7 @@ function W_AddAdmin {
     testAdd
     foreach ($userName in $script:tableauNew) {
         sshCible "powershell Get-LocalUser -Name $userName"
-        sshCible "powershell Add-LocalGroupmember -Group 'Administrateurs' -Member $userName"
+        sshCible "powershell Add-LocalGroupmember -Group 'Administrators' -Member $userName"
         Write-Host "L'utilisateur $userName a été ajouté avec succès au groupe Administrateur"
     }
     else {
@@ -499,7 +499,8 @@ function l_supprDoss {
 # Activation du Pare-feu
 function w_fireWall {
     $rep3 = Read-Host "Voulez-vous Activer ou Désactiver le pare-feu du poste distant $ipCible ? [A/D] " 
-    if ($rep3 -eq "A") {         
+    if ($rep3 -eq "A") {  
+        Write-Host "Application en cours, veuillez patienter..."       
         sshCible "powershell Set-NetFirewallProfile -Profile Domain,Private,Public -Enabled 1"
         Write-Host "Le pare-feu cible a été activé"
         Retour-Menu
@@ -855,7 +856,7 @@ function AddLog {
     param([string]$Arg)
     $userCourant = "$env:USERNAME"
     getTime
-    Add-Content -Path "C:\Windows\System32\LogFiles\log_evt.log" -Value "${script:date}_${script:heure}_${userCourant}_${Arg}_sur_${script:ipCible}"
+    Add-Content -Path "C:\Windows\System32\LogFiles\log_evt.log" -Value "${script:date}_${script:heure}_${userCourant}_${Arg}_${script:ipCible}"
 }
 ########################################################
 ########################################################
