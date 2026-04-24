@@ -865,14 +865,14 @@ function infos {
     local menu="GUIDE D'UTILISATION DU SCRIPT"
     clear
     Affichage 
-echo -e "${YELLOW}Voici quelques informations pour vous permettre de mieux comprendre comment fonctionne ce script : "
+echo -e "${GRAS}${YELLOW}Voici quelques informations pour vous permettre de mieux comprendre comment fonctionne ce script : "
 echo -e "\n\n\n\n - Pour faire un choix dans le menu vous devez simplement sélectionner un numéro parmis ceux proposés\n\n - Evitez les espaces ou les caractères qui ne figurent pas dans les choix proposés pour eviter tout problème\n\n"
 echo -e " - Il est recommandé de quitter le Script proprement en utilisant la commande prévue à cet effet pour que les logs s'inscrivent correctement\n\n "
 echo -e " 1 - Le Menu Gestion renvoi vers des choix de gestion de comptes utilisateurs opérés sur la machine distante choisie en début de Script\n\n 2 - Le Menu d'Administration renvoi vers de la gestion de dossiers, de pare-feu et la possibilité de redémarrer le poste distant\n\n"
 echo -e " 3 - Le Menu Recueil d'informations viendra afficher les paramètres de la machine cible ainsi que les évènements critiques\n\n 4 - Le Menu Consultation des logs permet de consulter les actions effectuées grâce au script en se basant sur les logs\n\n"
 echo -e " 5 - Le Menu Surveillance Utilisateur permet de vérifier les dernieres modifications apportées au compte administrateur du script ainsi que les sessions qu'il a pu ouvrir"
-echo -e "\n\n\n Profitez bien de notre Script${NC}"
-echo -e " Maintenant que vous êtes bien renseignés, que voulez-vous faire ?\n\n 1) Revenir au Menu Principal \n 2) Quitter le Script"
+echo -e "\n\n\n Profitez bien de notre Script !${NC}"
+echo -e "\n\n\n Maintenant que vous êtes bien renseignés, que voulez-vous faire ?\n\n 1) Revenir au Menu Principal \n 2) Quitter le Script"
 read men
     case $men in
         1) menu_principal ;;
