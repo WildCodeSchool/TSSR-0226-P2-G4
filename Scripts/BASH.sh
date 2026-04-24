@@ -484,10 +484,11 @@ function w_fire_wall {
 function l_send_script {
 read -p "Où se trouve le Script ? " lieu
 read -p "Quel est le script que vous souhaiter envoyer chez le client ? " scr
-chmod 764 $lieu/$scr
+chmod 777 $lieu/$scr
     if [[ -e $lieu/$scr ]] # rajouter un if pour verifier et creer le chemin client
         then 
-            scp $lieu/$scr $user_cible@$ip_cible:/MesScriptsSSH && ssh_cible "echo '$(bash scriptDes.sh)'"
+            scp $lieu/$scr $user_cible@$ip_cible:/MesScriptsSSH 
+            ssh_cible "sudo -S bash /MesScriptsSSH/recup_os.sh)"
         else
             echo -e "${RED}Une erreur s'est produite${NC}"
     fi
