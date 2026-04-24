@@ -13,15 +13,23 @@ var_ss=1
 user_cible="wilder"
 verif_link="[[ -z \$(find '$absol_path/$nom_doss' -mindepth 1 -print -quit) ]]"
 ########## declaration fonctions ##########
+# Variables d'Embellissement
+RED='\033[0;31m'     # Rouge
+GREEN='\033[0;32m'   # Vert
+BLUE='\033[0;34m'    # Bleu
+NC='\033[0m'         # No Color (réinitialisation)
+GRAS='\e[1m'         # Mise en Gras
+
+exstpas="echo -e '${RED}L'utilisateur $user_name n'existe pas'"
 # Fonction test ip
 function test_ip {
     local regex='^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])$' #merci claude pour le regex, notez que j'ai passé 20 min a comprendre comment il marche
 
     if [[ "$ip_cible" =~ $regex ]]
         then
-            echo "IP valide : $ip_cible"
+            echo -e "${GREEN}IP valide : $ip_cible"
         else
-            echo "Erreur : '$ip_cible' n'est pas une adresse IP valide"
+            echo -e "${RED}Erreur : '$ip_cible' n'est pas une adresse IP valide"
             ask_cible
         fi
 }
@@ -52,7 +60,7 @@ function connexion_ssh {
                     detect_os=1  # Windows
             fi
         else
-            echo "erreur"
+            echo -e "${RED}erreur"
             exit 1
     fi
 }
@@ -86,9 +94,9 @@ function l_new_user {
         do
             if ssh_cible "grep -q '^$user_name:' /etc/passwd"
             then
-                echo "Utilisateur $user_name déjà existant"
+                echo -e "${RED}Utilisateur $user_name déjà existant"
             else
-                ssh_cible "sudo -S adduser --allow-bad-names '$user_name'" && echo "Utilisateur $user_name créé avec succès"
+                ssh_cible "sudo -S adduser --allow-bad-names '$user_name'" && echo -e "${GREEN}Utilisateur $user_name créé avec succès"
             fi
         done
 }
@@ -114,9 +122,9 @@ function l_change_password {
         do
             if ssh_cible "sudo -S grep -q '^$user_name:' /etc/passwd"
             then
-                ssh_cible "sudo -S passwd '$user_name'" && echo "Mot de passe de $user_name changé avec succès" 
+                ssh_cible "sudo -S passwd '$user_name'" && echo -e "${GREEN}Mot de passe de $user_name changé avec succès" 
             else
-                echo "L'utilisateur $user_name n'existe pas"
+                $exstpas
             fi
         done
 }
@@ -132,7 +140,7 @@ function w_change_password {
             then
                 ssh_cible "\$NewPwd = ConvertTo-SecureString '$new_pwd' -AsPlainText -Force; Get-LocalUser -Name '$user_name' | Set-LocalUser -Password \$NewPwd"
             else
-                echo "L'utilisateur $user_name n'existe pas"
+                $exstpas
             fi
         done
 }
@@ -145,9 +153,9 @@ function l_del_user {
         do
             if ssh_cible "grep -q '^$user_name:' /etc/passwd"
             then
-                ssh_cible "sudo -S deluser '$user_name'" && echo "L'utilisateur $user_name à bien été supprimé"
+                ssh_cible "sudo -S deluser '$user_name'" && echo -e "${GREEN}L'utilisateur $user_name à bien été supprimé"
             else
-                echo "L'utilisateur $user_name n'existe pas"
+                $exstpas
             fi
         done
 }
@@ -160,9 +168,9 @@ function w_del_user {
         do
             if ! [[ $(ssh_cible "Get-LocalUser -Name '$user_name'") -eq 0 ]] 2>/dev/null
             then
-                ssh_cible "Remove-LocalUser -Name '$user_name'" && echo "L'utilisateur $user_name à bien été supprimé"
+                ssh_cible "Remove-LocalUser -Name '$user_name'" && echo -e "${GREEN}L'utilisateur $user_name à bien été supprimé"
             else
-                echo "L'utilisateur $user_name n'existe pas"
+                $exstpas
             fi
         done
 }
@@ -175,9 +183,9 @@ function l_add_admin {
         do
             if ssh_cible "grep -q '^$user_name:' /etc/passwd"
             then
-                ssh_cible "sudo -S usermod -aG sudo '$user_name'" && echo "L'utilisateur $user_name a été ajouté au groupe Admin"
+                ssh_cible "sudo -S usermod -aG sudo '$user_name'" && echo -e "${GREEN}L'utilisateur $user_name a été ajouté au groupe Admin"
             else
-                echo "L'utilisateur $user_name n'existe pas"
+                $exstpas
             fi
         done
 }
@@ -190,9 +198,9 @@ function w_add_admin {
         do
             if ! [[ $(ssh_cible "Get-LocalUser -Name '$user_name'") -eq 0 ]] 2>/dev/null
             then
-                ssh_cible "Add-LocalGroupmember -Group 'Administrators' -Member '$user_name'" && echo "L'utilisateur $user_name a été ajouté avec succès au groupe Administrateur"
+                ssh_cible "Add-LocalGroupmember -Group 'Administrateurs' -Member '$user_name'" && echo -e "${GREEN}L'utilisateur $user_name a été ajouté avec succès au groupe Administrateur"
             else
-                echo "L'utilisateur $user_name n'existe pas"
+                $exstpas
             fi
         done
 }
@@ -211,14 +219,14 @@ function l_add_group {
                         read -p "Le groupe choisi n'existe pas, voulez-vous le créer ? [o/n] " rep
                             if [ "$rep" = "o" ]
                             then
-                                ssh_cible "sudo -S groupadd '$group_name'" && echo "Groupe $group_name créé"
+                                ssh_cible "sudo -S groupadd '$group_name'" && echo -e "${GREEN}Groupe $group_name créé"
                             else
                                 echo "D'accord, retour au menu principal"
                             fi
                     fi
-                ssh_cible "sudo -S usermod -aG $group_name '$user_name'" && echo "L'utilisateur $user_name a été ajouté avec succès au groupe $group_name"
+                ssh_cible "sudo -S usermod -aG $group_name '$user_name'" && echo -e "${GREEN}L'utilisateur $user_name a été ajouté avec succès au groupe $group_name"
             else
-                echo "L'utilisateur $user_name n'existe pas"
+                $exstpas
             fi
         done
 }
@@ -237,14 +245,14 @@ function w_add_group {
                         read -p "Le groupe choisi n'existe pas, voulez-vous le créer ? [o/n] " rep
                             if [ "$rep" = "o" ]
                             then
-                                ssh_cible "New-LocalGroup '$group_name'" && echo "Groupe $group_name créé" 2>/dev/null
+                                ssh_cible "New-LocalGroup '$group_name'" && echo -e "${GREEN}Groupe $group_name créé" 2>/dev/null
                             else
                                 echo "D'accord, retour au menu principal"
                             fi
                     fi
-                    ssh_cible "Add-LocalGroupmember -Group '$group_name' -Member '$user_name'" && echo "L'utilisateur $user_name a été ajouté avec succès au groupe $group_name"
+                    ssh_cible "Add-LocalGroupmember -Group '$group_name' -Member '$user_name'" && echo -e "${GREEN}L'utilisateur $user_name a été ajouté avec succès au groupe $group_name"
             else
-                echo "L'utilisateur $user_name n'existe pas"
+                $exstpas
             fi
         done
 }
@@ -254,9 +262,9 @@ function l_redemarrage {
     read -p "$user_cible@$ip_cible est-ce bien la machine que vous souhaitez redémarrer ? [o/n] " rep5
         if [[ "$rep5" = "o" ]]
             then 
-                ssh_cible "sudo -S reboot" && echo " La machine cible est en cours de redémarrage "
+                ssh_cible "sudo -S reboot" && echo -e "${GREEN} La machine cible est en cours de redémarrage "
             else
-                echo "D'accord, retour au menu principal"
+                echo "D'accord, retour au menu"
         fi
 }
 
@@ -265,9 +273,9 @@ function w_redemarrage {
     read -p "$user_cible@$ip_cible est-ce bien la machine que vous souhaitez redémarrer ? [o/n] " rep5
         if [[ "$rep5" = "o" ]]
             then 
-                ssh_cible "Restart-Computer -ComputerName '$ip_cible' -Force" && echo " La machine cible est en cours de redémarrage "
+                ssh_cible "Restart-Computer -ComputerName '$ip_cible' -Force" && echo -e "${GREEN} La machine cible est en cours de redémarrage "
             else
-                echo "D'accord, retour au menu principal"
+                echo "D'accord, retour au menu"
         fi
 }
 
@@ -281,13 +289,13 @@ function l_creer_doss {
                                 if [[ "$rep1" = "o" ]]
                                         then
                                                 read -p "D'accord, quel est le nom du dossier à créer dans $absol_path ? " nom_doss
-                                                ssh_cible "sudo -S mkdir -p '$absol_path/$nom_doss'" && echo "Le dossier $nom_doss a bien été créé dans $absol_path"
+                                                ssh_cible "sudo -S mkdir -p '$absol_path/$nom_doss'" && echo -e "${GREEN}Le dossier $nom_doss a bien été créé dans $absol_path"
                                         else
-                                                echo "D'accord, retour au menu principal"
+                                                echo "D'accord, retour au menu"
                                 fi
                 else 
                         read -p "D'accord, quel est le nom du dossier à créer dans $absol_path ? " nom_doss
-                        ssh_cible "sudo -S mkdir -p '$absol_path/$nom_doss'" && echo "Le dossier $nom_doss a bien été créé dans $absol_path"
+                        ssh_cible "sudo -S mkdir -p '$absol_path/$nom_doss'" && echo -e "${GREEN}Le dossier $nom_doss a bien été créé dans $absol_path"
         fi
 }
 
@@ -302,13 +310,13 @@ function w_creer_doss {
                                 if [[ "$rep1" = "o" ]]
                                         then
                                                 read -p "D'accord, quel est le nom du dossier à créer dans $absol_path ? " nom_doss
-                                                ssh_cible "New-Item -ItemType Directory -Path '$absol_path/$nom_doss'" && echo "Le dossier $nom_doss a bien été créé dans $absol_path"
+                                                ssh_cible "New-Item -ItemType Directory -Path '$absol_path/$nom_doss'" && echo -e "${GREEN}Le dossier $nom_doss a bien été créé dans $absol_path"
                                         else
-                                                echo "D'accord, retour au menu principal"
+                                                echo "D'accord, retour au menu"
                                 fi
                 else 
                         read -p "D'accord, quel est le nom du dossier à créer dans $absol_path ? " nom_doss
-                        ssh_cible "New-Item -ItemType Directory -Path '$absol_path/$nom_doss'" && echo "Le dossier $nom_doss a bien été créé dans $absol_path"
+                        ssh_cible "New-Item -ItemType Directory -Path '$absol_path/$nom_doss'" && echo -e "${GREEN}Le dossier $nom_doss a bien été créé dans $absol_path"
         fi
 }
 
@@ -330,18 +338,18 @@ function w_suppr_doss {
                                         then
                                                 if [[ $(ssh_cible Get-ChildItem "$absol_path/$nom_doss" | Measure-Object).Count -eq 0 ]]
                                                         then
-                                                                ssh_cible "Remove-Item -Recurse -Force '$absol_path/$nom_doss'" && echo "Le dossier $nom_doss a bien été supprimé dans $absol_path"
+                                                                ssh_cible "Remove-Item -Recurse -Force '$absol_path/$nom_doss'" && echo -e "${GREEN}Le dossier $nom_doss a bien été supprimé dans $absol_path"
                                                         else
                                                                 read -p "Le dossier choisi n'est pas vide, voulez vous continuer et supprimer son contenu ? [o/n] " rep2
                                                                 if [[ "$rep2" = "o" ]]
                                                                         then
-                                                                                ssh_cible "Remove-Item '$absol_path/$nom_doss'" && echo "Le dossier $nom_doss et son contenu ont bien été supprimé dans $absol_path"
+                                                                                ssh_cible "Remove-Item '$absol_path/$nom_doss'" && echo -e "${GREEN}Le dossier $nom_doss et son contenu ont bien été supprimé dans $absol_path"
                                                                         else 
                                                                                 echo "D'accord, retour au menu"
                                                                 fi
                                                 fi
                                         else 
-                                                echo "La valeur saisie n'existe pas ou n'est pas un dossier"
+                                                echo -e "${RED}La valeur saisie n'existe pas ou n'est pas un dossier"
                                 fi
         fi
 }
@@ -365,18 +373,18 @@ function l_suppr_doss {
                                         then
                                                 if ssh_cible "$verif_link"
                                                         then
-                                                                ssh_cible "sudo -S rmdir '$absol_path/$nom_doss'" && echo "Le dossier $nom_doss a bien été supprimé dans $absol_path"
+                                                                ssh_cible "sudo -S rmdir '$absol_path/$nom_doss'" && echo -e "${GREEN}Le dossier $nom_doss a bien été supprimé dans $absol_path"
                                                         else
                                                                 read -p "Le dossier choisi n'est pas vide, voulez vous continuer et supprimer son contenu ? [o/n] " rep2
                                                                 if [[ "$rep2" = "o" ]]
                                                                         then
-                                                                                ssh_cible "sudo -S rm -r '$absol_path/$nom_doss'" && echo "Le dossier $nom_doss et son contenu ont bien été supprimé dans $absol_path"
+                                                                                ssh_cible "sudo -S rm -r '$absol_path/$nom_doss'" && echo -e "${GREEN}Le dossier $nom_doss et son contenu ont bien été supprimé dans $absol_path"
                                                                         else 
                                                                                 echo "D'accord, retour au menu"
                                                                 fi
                                                 fi
                                         else 
-                                                echo "La valeur saisie n'existe pas ou n'est pas un dossier"
+                                                echo -e "${RED}La valeur saisie n'existe pas ou n'est pas un dossier"
                                 fi
         fi
 }
@@ -393,22 +401,22 @@ function w_modif_doss {
                                 if [[ "$rep4" = "R" ]]
                                     then
                                         read -p "D'accord, quel est le nouveau nom du dossier ? " new_doss
-                                        ssh_cible "Rename-Item -Path '$absol_path/$ancien_doss' -NewName '$absol_path/$new_doss'" && echo "Le dossier $ancien_doss a bien été renommé en $new_doss dans $absol_path"
+                                        ssh_cible "Rename-Item -Path '$absol_path/$ancien_doss' -NewName '$absol_path/$new_doss'" && echo -e "${GREEN}Le dossier $ancien_doss a bien été renommé en $new_doss dans $absol_path"
                                 elif [[ "$rep4" = "M" ]]
                                     then # La réponse attendue est toute attachée Sous la forme rwx ou xw ou r 
                                         read -p "Quels droits voulez vous accorder sur le dossier $ancien_doss ? [r/w/x] " chxdroit
                                             if [[ "$chxdroit" =~ ^[rwx]+$ ]]
                                                 then 
-                                                        ssh_cible "powershell.exe -Command \ 'icacls '$absol_path\\$ancien_doss' /grant '${user_name}:({$chxdroit})''" && echo "Les droits $chxdroit ont été accordés avec succès au dossier $ancien_doss"
+                                                        ssh_cible "powershell.exe -Command \ 'icacls '$absol_path\\$ancien_doss' /grant '${user_name}:({$chxdroit})''" && echo -e "${GREEN}Les droits $chxdroit ont été accordés avec succès au dossier $ancien_doss"
                                                 else
-                                                    echo "Ce type de droit n'existe pas"
+                                                    echo -e "${RED}Ce type de droit n'existe pas"
                                             fi
                                 fi
                         else
-                            echo " Le dossier $ancien_doss n'existe pas "
+                            echo -e "${RED} Le dossier $ancien_doss n'existe pas "
                     fi
             else 
-                echo " Le chemin vers le dossier n'existe pas "
+                echo -e "${RED} Le chemin vers le dossier n'existe pas "
         fi
 }
 
@@ -424,22 +432,22 @@ function l_modif_doss {
                                 if [[ "$rep4" = "R" ]]
                                     then
                                         read -p "D'accord, quel est le nouveau nom du dossier ? " new_doss
-                                        ssh_cible "sudo -S mv '$absol_path/$ancien_doss' '$absol_path/$new_doss'" && echo "Le dossier $ancien_doss a bien été renommé en $new_doss dans $absol_path"
+                                        ssh_cible "sudo -S mv '$absol_path/$ancien_doss' '$absol_path/$new_doss'" && echo -e "${GREEN}Le dossier $ancien_doss a bien été renommé en $new_doss dans $absol_path"
                                 elif [[ "$rep4" = "M" ]]
                                     then # La réponse attendue est toute attachée Sous la forme rwx ou xw ou r 
                                         read -p "Quels droits voulez vous accorder sur le dossier $ancien_doss ? [r/w/x] " chxdroit
                                             if [[ "$chxdroit" =~ ^[rwx]+$ ]]
                                                 then
-                                                    ssh_cible "sudo -S chmod u+$chxdroit '$absol_path/$ancien_doss'" && echo "Les droits $chxdroit ont été accordés avec succès au dossier $ancien_doss"
+                                                    ssh_cible "sudo -S chmod u+$chxdroit '$absol_path/$ancien_doss'" && echo -e "${GREEN}Les droits $chxdroit ont été accordés avec succès au dossier $ancien_doss"
                                                 else
-                                                    echo "Ce type de droit n'existe pas"
+                                                    echo -e "${RED}Ce type de droit n'existe pas"
                                             fi
                                 fi
                         else
-                            echo " Le dossier $ancien_doss n'existe pas "
+                            echo -e "${RED} Le dossier $ancien_doss n'existe pas "
                     fi
             else 
-                echo " Le chemin vers le dossier n'existe pas "
+                echo -e "${RED} Le chemin vers le dossier n'existe pas "
         fi
 }
 
@@ -448,12 +456,12 @@ function l_fire_wall {
     read -p "Voulez-vous Activer ou Désactiver le pare-feu du poste distant $ip_cible ? [A/D] " rep3
         if [[ "$rep3" = "A" ]]
             then 
-                ssh_cible "sudo -S ufw enable" && echo "Le pare-feu cible a été activé"
+                ssh_cible "sudo -S ufw enable" && echo -e "${GREEN}Le pare-feu cible a été activé"
         elif [[ "$rep3" = "D" ]]
             then
-                ssh_cible "sudo -S ufw disable" && echo "Le pare-feu cible a été désactivé"
+                ssh_cible "sudo -S ufw disable" && echo -e "${GREEN}Le pare-feu cible a été désactivé"
         else
-            echo "Demande invalide"
+            echo -e "${RED}Demande invalide"
         fi
 }
 
@@ -463,13 +471,27 @@ function w_fire_wall {
     read -p "Voulez-vous Activer ou Désactiver le pare-feu du poste distant $ip_cible ? [A/D] " rep3
         if [[ "$rep3" = "A" ]]
             then 
-                ssh_cible "Set-NetFirewallProfile -Profile Domain,Private,Public -Enabled True" && echo "Le pare-feu cible a été activé"
+                ssh_cible "Set-NetFirewallProfile -Profile Domain,Private,Public -Enabled True" && echo -e "${GREEN}Le pare-feu cible a été activé"
         elif [[ "$rep3" = "D" ]]
             then
-                ssh_cible "Set-NetFirewallProfile -Profile Domain,Private,Public -Enabled False" && echo "Le pare-feu cible a été désactivé"
+                ssh_cible "Set-NetFirewallProfile -Profile Domain,Private,Public -Enabled False" && echo -e "${GREEN}Le pare-feu cible a été désactivé"
         else
-            echo "Demande invalide"
+            echo -e "${RED}Demande invalide"
         fi
+}
+# Envoie de script vers machine distante
+function l_send_script {
+read -p "Où se trouve le Script ? " lieu
+read -p "Quel est le script que vous souhaiter envoyer chez le client ? " scr
+chmod 764 $lieu/$scr
+    if [[ -e $lieu/$scr ]] # rajouter un if pour verifier et creer le chemin client
+        then 
+            scp $lieu/$scr $user_cible@$ip_cible:/MesScriptsSSH && ssh_cible "echo '$(bash scriptDes.sh)'"
+        else
+            echo -e "${RED}Une erreur s'est produite"
+    fi
+add_log "send_script"
+retour_menu ss_menu_Admin
 }
 
 # Date de dernière connexion d'un utilisateur
@@ -830,21 +852,32 @@ get_time
 
 # Créer un affichage pour tous les menus
 function Affichage {
-echo "==================================================="
+echo -e "${GREEN}${GRAS}===================================================${NC}"
 
-echo "          $menu          "
+echo -e "${GREEN}${GRAS}          $menu          ${NC}"
 
-echo -e "===================================================\n"
+echo -e "${GREEN}${GRAS}===================================================\n${NC}"
+}
+# Fonction de tutoriel d'utilisation du script
+function infos {
+echo "Voici quelques informations pour vous permettre de mieux comprendre comment fonctionne ce script : "
+echo -e "\n\n\n\n - Pour faire un choix dans le menu vous devez simplement sélectionner un numéro parmis ceux proposés\n\n - Evitez les espaces ou les caractères qui ne figurent pas dans les choix proposés pour eviter tout problème\n\n"
+echo -e " - Il est recommandé de quitter le Script proprement en utilisant la commande prévue à cet effet pour que les logs s'inscrivent correctement\n\n "
+echo -e " 1 - Le Menu Gestion renvoi vers des choix de gestion de comptes utilisateurs opérés sur la machine distante choisie en début de Script\n\n 2 - Le Menu d'Administration renvoi vers de la gestion de dossiers, de pare-feu et la possibilité de redémarrer le poste distant\n\n"
+echo -e " 3 - Le Menu Recueil d'informations viendra afficher les paramètres de la machine cible ainsi que les évènements critiques\n\n 4 - Le Menu Consultation des logs permet de consulter les actions effectuées grâce au script en se basant sur les logs\n\n"
+echo -e " 5 - Le Menu Surveillance Utilisateur permet de vérifier les dernieres modifications apportées au compte administrateur du script ainsi que les sessions qu'il a pu ouvrir"
+echo -e "\n\n\n Profitez bien de notre Script"
+retour_menu
 }
 
 # Les Menus 
 
 function menu_principal {
     clear
-    echo "================================"
-    echo "         MENU PRINCIPAL"
-    echo "================================"
-    echo -e "\nDans quel sous-Menu voulez-vous aller ?\n 1)Gestion Utilisateur \n 2)Administration \n 3)Recueil d'informations \n 4)Consultation des logs \n 5)Surveillance Utilisateur\n 6)Quitter"
+    echo -e "${BLUE}${GRAS}===================================================${NC}"
+    echo -e "${BLUE}${GRAS}                  MENU PRINCIPAL${NC}"
+    echo -e "${BLUE}${GRAS}===================================================${NC}"
+    echo -e "\nDans quel sous-Menu voulez-vous aller ?\n\n 1) Gestion Utilisateur \n 2) Administration \n 3) Recueil d'informations \n 4) Consultation des logs \n 5) Surveillance Utilisateur\n 6) Tutoriel\n 7) Quitter"
     local choix
     read choix
         case $choix in 
@@ -853,7 +886,8 @@ function menu_principal {
             3)  ss_menu_recueil ;;
             4)  ss_menu_recherche ;;
             5)  ss_menu_log_user ;;
-            6)  quitter     ;;
+            6)  infos  ;;
+            7)  quitter  ;;
             *) echo "ERREUR" 
             menu_principal ;;
         esac
@@ -863,7 +897,7 @@ function ss_menu_gestion {
     local menu="MENU DE GESTION DES UTILISATEURS"
     clear
     Affichage
-    echo -e "\nQuelle action voulez-vous effectuer ? \n 1)Création de compte \n 2)Changement de mdp \n 3)Suppression de compte \n 4)Ajout à un groupe admin \n 5)Ajout à un groupe \n 6)Retour au Menu Principal \n 7)Quitter"
+    echo -e "\nQuelle action voulez-vous effectuer ? \n\n 1) Création de compte \n 2) Changement de mdp \n 3) Suppression de compte \n 4) Ajout à un groupe admin \n 5) Ajout à un groupe \n 6) Retour au Menu Principal \n 7) Quitter"
     local choix
     read choix
         case $choix in
@@ -882,7 +916,7 @@ function ss_menu_Admin {
     local menu="     MENU D'ADMINISTRATION"
     clear
     Affichage
-    echo -e "\nQuelle action voulez-vous effectuer ? \n 1)Redemarrer le poste \n 2)Créer un repertoire \n 3)Modifier un repertoire \n 4)Supprimer un repertoire \n 5)Activer/Désactiver le parefeu \n 6)Prise en main a distance (CLI) \n 7)Work in Progress \n 8)Retour au Menu Principal \n 9)Quitter"
+    echo -e "\nQuelle action voulez-vous effectuer ? \n\n 1) Redemarrer le poste \n 2) Créer un repertoire \n 3) Modifier un repertoire \n 4) Supprimer un repertoire \n 5) Activer/Désactiver le parefeu \n 6) Prise en main a distance (CLI) \n 7) Exécution de script sur la machine distante \n 8) Retour au Menu Principal \n 9) Quitter"
     local choix 
     read choix
         case $choix in 
@@ -892,35 +926,19 @@ function ss_menu_Admin {
             4)suppr_doss ;;
             5)fire_wall ;;
             6)ssh_cible ;;
-            7)echo "test" ;;
+            7)send_script ;;
             8)menu_principal ;;
             9) quitter ;;
             *)echo "ERREUR" 
             ss_menu_Admin ;;
         esac
 }
-function ss_menu_recherche {
+function ss_menu_recueil {
     local menu=" MENU DE RECUEIL D'INFORMATIONS"
     clear
     Affichage
-    echo -e "\nQuelles informations de journalisation recherchez-vous ?\n 1)Informations sur un utilisateur precis\n 2)Informations sur un ordinateur précis\n 3)Retour au Menu Principal\n 4)Quitter"
-    local choix
-    read choix
-        case $choix in 
-            1)recherche_utilisateur ;;
-            2)recherche_ordinateur ;;
-            3)menu_principal ;;
-            4)quitter ;;
-            *)echo "ERREUR" 
-            ss_menu_recherche ;;
-        esac
-}
-function ss_menu_recueil {
-    local menu=" MENU DE CONSULTATION DES LOGS"
-    clear
-    Affichage
-    echo -e "\nQuelles informations voulez-vous récupérer ?\n 1)DNS actuels\n 2)Liste des interfaces\n 3)Tables ARP\n 4)Table de routage\n 5)Version BIOS\n 6)IP,masque et passerelle\n 7)Version OS"
-    echo -e " 8)Carte graphique\n 9)Uptime\n 10)Derniers evenements critiques\n 11)Retour au Menu Principal\n 12)Quitter"
+    echo -e "\nQuelles informations voulez-vous récupérer ?\n\n 1) DNS actuels\n 2) Liste des interfaces\n 3) Tables ARP\n 4) Table de routage\n 5) Version BIOS\n 6) IP,masque et passerelle\n 7) Version OS"
+    echo -e " 8) Carte graphique\n 9) Uptime\n 10) Derniers evenements critiques\n 11) Retour au Menu Principal\n 12) Quitter"
     local choix
     read choix
         case $choix in 
@@ -940,11 +958,28 @@ function ss_menu_recueil {
             ss_menu_recueil ;;
         esac
 }
+function ss_menu_recherche {
+    local menu=" MENU DE CONSULTATION DES LOGS"
+    clear
+    Affichage
+    echo -e "\nQuelles informations de journalisation recherchez-vous ?\n\n 1) Informations sur un utilisateur précis\n 2) Informations sur un ordinateur précis\n 3) Retour au Menu Principal\n 4) Quitter"
+    local choix
+    read choix
+        case $choix in 
+            1)recherche_utilisateur ;;
+            2)recherche_ordinateur ;;
+            3)menu_principal ;;
+            4)quitter ;;
+            *)echo "ERREUR" 
+            ss_menu_recherche ;;
+        esac
+}
+
 function ss_menu_log_user {
     local menu="      MENU DE SURVEILLANCE"
     clear
     Affichage
-    echo -e "\nQuelles informations voulez-vous récupérer ?\n 1)Date de dernière connexion d'un utilisateur\n 2)Dernière modification de Mot de Passe\n 3)Listes des cessions ouvertes par l'utilisateur\n 4)Retour au Menu Principal\n 5)Quitter"
+    echo -e "\nQuelles informations voulez-vous récupérer ?\n\n 1) Date de dernière connexion d'un utilisateur\n 2) Dernière modification de Mot de Passe\n 3) Listes des cessions ouvertes par l'utilisateur\n 4) Retour au Menu Principal\n 5) Quitter"
     local choix
     read choix
         case $choix in 
@@ -958,7 +993,7 @@ function ss_menu_log_user {
         esac
 }
 function retour_menu {
-    echo -e "\nQue voulez-vous faire ?\n 1)Retourner au menu Principal\n 2)Retourner au menu Précédent\n 3)Quitter"
+    echo -e "\nQue voulez-vous faire ?\n\n 1) Retourner au menu Principal\n 2) Retourner au menu Précédent\n 3) Quitter"
     local choix
     local fonction="$1"
     read choix
@@ -969,6 +1004,7 @@ function retour_menu {
             *)echo "ERREUR" 
             retour_menu ;;
         esac
+        clear
 }
 
 ask_cible
