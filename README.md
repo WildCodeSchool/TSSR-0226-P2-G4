@@ -19,36 +19,18 @@
 
 -----------------------------------------------------------------------------------------------------------------------------------------
 
-Gestion des utilisateurs | Gestion admin | Collecte d'infos | Recherche d'infos | Traitement d'infos |
-| --- | --- | --- | --- | --- |
-
-* Création de compte utilisateur local
-* Changement de mot de passe
-* Suppression de compte utilisateur local
-* Ajout à un groupe d'administration
-* Ajout à un groupe
-* Redémarrage
-* Création de répertoire
-* Suppression de répertoire
-* Prise de main à distance (CLI)
-* Activation du pare-feu
-* Exécution de script sur la machine distante
-* Modification de répertoire
-* DNS actuels
-* Liste des interfaces
-* Table ARP
-* Table de routage
-* BIOS/UEFI version
-* Adresse IP, masque, passerelle
-* Version de l'OS
-* Carte graphique
-* Uptime
-* 10 derniers événements critiques
-* Recherche des evenements dans le fichier log_evt.log pour un utilisateur
-* Recherche des evenements dans le fichier log_evt.log pour un ordinateur
-* Date de dernière connexion d’un utilisateur
-* Date de dernière modification du mot de passe
-* Liste des sessions ouvertes par l'utilisateur
+| Gestion des utilisateurs                | Gestion admin                               | Recueil d'infos                  | Consultation des Logs                                                    | Surveillance utilisateurs                     |
+| --------------------------------------- | ------------------------------------------- | -------------------------------- | ------------------------------------------------------------------------ | --------------------------------------------- |
+| Création de compte utilisateur local    | Redémarrage                                 | DNS actuels                      | Recherche des evenements dans le fichier log_evt.log pour un utilisateur | Date de dernière connexion d’un utilisateur   |
+| Changement de mot de passe              | Création de répertoire                      | Liste des interfaces             | Recherche des evenements dans le fichier log_evt.log pour un ordinateur  | Date de dernière modification du mot de passe |
+| Suppression de compte utilisateur local | Modification de répertoire                  | Table ARP                        |                                                                          | Liste des sessions ouvertes par l'utilisateur |
+| Ajout à un groupe d'administration      | Suppression de répertoire                   | Table de routage                 |                                                                          |                                               |
+| Ajout à un groupe                       | Prise de main à distance (CLI)              | BIOS/UEFI version                |                                                                          |                                               |
+|                                         | Activation du pare-feu                      | Adresse IP, masque, passerelle   |                                                                          |                                               |
+|                                         | Exécution de script sur la machine distante | Version de l'OS                  |                                                                          |                                               |
+|                                         |                                             | Carte graphique                  |                                                                          |                                               |
+|                                         |                                             | Uptime                           |                                                                          |                                               |
+|                                         |                                             | 10 derniers événements critiques |                                                                          |                                               |
 
 # _Membre du groupe et Rôle des Membres_
 
