@@ -87,7 +87,7 @@ function test_add {
     fi
 }
 
-# Création de compte Linux
+# Création de compte Linux en demandant le nom d'utilisateur à créer 
 
 function l_new_user {
     test_add
@@ -102,7 +102,7 @@ function l_new_user {
         done
 }
 
-# Création de compte Windows
+# Création de compte Windows en demandant le nom d'utilisateur à créer
 
 function w_new_user {
     test_add
@@ -115,7 +115,7 @@ function w_new_user {
         done
 }
 
-# Changement de mot de passe Linux
+# Changement de mot de passe Linux en demandant le nom d'utilisateur concerné (message d'erreur si compte inexistant)
 
 function l_change_password {
     test_add
@@ -130,7 +130,7 @@ function l_change_password {
         done
 }
 
-# Changement de mot de passe Windows
+# Changement de mot de passe Windows en demandant le nom d'utilisateur concerné (message d'erreur si compte inexistant)
 
 function w_change_password {
     test_add
@@ -146,7 +146,7 @@ function w_change_password {
         done
 }
 
-# Suppression de compte Linux
+# Suppression de compte Linux en demandant le nom d'utilisateur concerné (message d'erreur si compte inexistant)
 
 function l_del_user {
     test_add
@@ -161,7 +161,7 @@ function l_del_user {
         done
 }
 
-# Supression de compte Windows
+# Supression de compte Windows en demandant le nom d'utilisateur concerné (message d'erreur si compte inexistant)
 
 function w_del_user {
     test_add
@@ -176,7 +176,7 @@ function w_del_user {
         done
 }
 
-# Ajout à un groupe d'administration Linux
+# Ajout à un groupe d'administration Linux en demandant le nom d'utilisateur concerné (message d'erreur si compte inexistant)
 
 function l_add_admin {
     test_add
@@ -191,7 +191,7 @@ function l_add_admin {
         done
 }
 
-# Ajout à un groupe d'administration Windows
+# Ajout à un groupe d'administration Windows en demandant le nom d'utilisateur concerné (message d'erreur si compte inexistant)
 
 function w_add_admin {
     test_add
@@ -206,7 +206,8 @@ function w_add_admin {
         done
 }
 
-# Ajout à un groupe Linux
+# Ajout à un groupe Linux en demandant le nom d'utilisateur ainsi que le groupe concerné (message d'erreur si compte inexistant)
+# Possibilité de créer le groupe si inexistant
 
 function l_add_group {
     test_add
@@ -232,7 +233,8 @@ function l_add_group {
         done
 }
 
-#Ajout à un groupe Windows
+# Ajout à un groupe Windows en demandant le nom d'utilisateur ainsi que le groupe concerné (message d'erreur si compte inexistant)
+# Possibilité de créer le groupe si inexistant
 
 function w_add_group {
     test_add
@@ -258,7 +260,7 @@ function w_add_group {
         done
 }
 
-# Choix de redémarrage Linux
+# Choix de redémarrage Linux (la machine connectée au départ du script est celle visée)
 function l_redemarrage {
     read -p "$user_cible@$ip_cible est-ce bien la machine que vous souhaitez redémarrer ? [o/n] " rep5
         if [[ "$rep5" = "o" ]]
@@ -269,7 +271,7 @@ function l_redemarrage {
         fi
 }
 
-# Choix de redémarrage Windows
+# Choix de redémarrage Windows (la machine connectée au départ du script est celle visée)
 function w_redemarrage {
     read -p "$user_cible@$ip_cible est-ce bien la machine que vous souhaitez redémarrer ? [o/n] " rep5
         if [[ "$rep5" = "o" ]]
@@ -280,7 +282,7 @@ function w_redemarrage {
         fi
 }
 
-# Création de répertoire Linux
+# Création de répertoire Linux avec possibilité de créer le chemin absolu si inexistant
 
 function l_creer_doss {
     read -p "Où voulez-vous créer votre dossier : " absol_path
@@ -301,7 +303,7 @@ function l_creer_doss {
 }
 
 
-# Création de répertoire Windows
+# Création de répertoire Windows avec possibilité de créer le chemin absolu si inexistant
 
 function w_creer_doss {
     read -p "Où voulez-vous créer votre dossier : " absol_path
@@ -452,7 +454,7 @@ function l_modif_doss {
         fi
 }
 
-# Activation du Pare-feu
+# Activation du Pare-feu (la machine connectée au départ du script est celle visée)
 function l_fire_wall {
     read -p "Voulez-vous Activer ou Désactiver le pare-feu du poste distant $ip_cible ? [A/D] " rep3
         if [[ "$rep3" = "A" ]]
@@ -467,7 +469,7 @@ function l_fire_wall {
 }
 
 
-# Activation du Pare-feu
+# Activation du Pare-feu (la machine connectée au départ du script est celle visée)
 function w_fire_wall {
     read -p "Voulez-vous Activer ou Désactiver le pare-feu du poste distant $ip_cible ? [A/D] " rep3
         if [[ "$rep3" = "A" ]]
@@ -480,7 +482,8 @@ function w_fire_wall {
             echo -e "${RED}Demande invalide${NC}"
         fi
 }
-# Envoie de script vers machine distante
+# Envoie de script vers machine distante (la machine connectée au départ du script est celle visée) 
+# Le dossier "/MesScriptsSSH" doit etre créé au préalable
 function l_send_script {
 read -p "Où se trouve le Script ? " lieu
 read -p "Quel est le script que vous souhaiter envoyer chez le client ? " scr
@@ -488,7 +491,7 @@ chmod 777 $lieu/$scr
     if [[ -e $lieu/$scr ]] # rajouter un if pour verifier et creer le chemin client
         then 
             scp $lieu/$scr $user_cible@$ip_cible:/MesScriptsSSH 
-            ssh_cible "sudo -S bash /MesScriptsSSH/recup_os.sh"
+            ssh_cible "sudo -S bash /MesScriptsSSH/$scr"
         else
             echo -e "${RED}Une erreur s'est produite${NC}"
     fi
